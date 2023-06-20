@@ -136,7 +136,7 @@ body {
 .border-button a {
   font-size: 14px;
   color: #fff;
-  background-color: transparent;
+  background-color: #7453fc;
   border: 1px solid #7453fc;
   padding: 12px 30px;
   display: inline-block;
@@ -161,8 +161,10 @@ body {
 }
 
 .border-button a:hover {
-  background-color: #7453fc;
-  color: #fff;
+  background-color: #fff;
+  color: #7453fc;
+  border: 1px solid #fff;
+
 }
 
 .main-button a {
@@ -372,7 +374,7 @@ Header Style
   background: transparent;
   display: flex;
   background-color: #fff;
-  padding: 15px 30px;
+  padding: 5px 30px;
   border-radius: 50px;
 }
 
