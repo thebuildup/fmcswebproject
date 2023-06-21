@@ -405,7 +405,7 @@ Header Style
 
 .header-area .main-nav .nav {
   display: inline-flex;
-  flex-basis: 70%;
+  flex-basis: 100%;
   justify-content: flex-end;
   vertical-align: middle;
   text-align: right;
