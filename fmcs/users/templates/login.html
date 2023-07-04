@@ -32,7 +32,7 @@
                         <li><a href="details.html">Teams</a></li>
                         <li><a href="author.html">Leaderboard</a></li>
                         {% if user.is_authenticated %}
-                        <li>User: {{ user.get_username }}</li>
+                        <li><a>{{ user.get_username }}</a>></li>
                         <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
                         {% else %}
                         <li><a href="{% url 'login'%}">Join The Community</a></li>
@@ -72,7 +72,12 @@
                                                 <input type="password" class="form-style" placeholder="Password" name="password" required>
                                                 <i class="input-icon uil uil-lock-alt"></i>
                                             </div>
-                                            <a href="{% url 'home' %}" class="btn mt-4">Login</a>
+                                                <button type="submit" class="btn mt-4" href="{% url 'home'%}?next={{request.path}}">Log In</button>
+                                            </form>
+                                            {% if form.errors %}
+                                            <p>Error</p>
+                                            {% endif %}
+
                                             <p class="mb-0 mt-4 text-center"><a href="" class="link">Forgot your
                                                 password?</a></p>
                                         </div>

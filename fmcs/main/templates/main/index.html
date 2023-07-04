@@ -53,11 +53,16 @@
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
-                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="{% url 'home' %}" class="active">Home</a></li>
                         <li><a href="explore.html">Events</a></li>
                         <li><a href="details.html">Teams</a></li>
                         <li><a href="author.html">Leaderboard</a></li>
-                        <li><a href="reg">Join The Community</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a>{{ user.get_username }}</a></li>
+                        <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+                        {% else %}
+                        <li><a href="{% url 'login'%}">Join The Community</a></li>
+                        {% endif %}
                     </ul>
                     <a class='menu-trigger'>
                         <span>Menu</span>

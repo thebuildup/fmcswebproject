@@ -7,5 +7,5 @@ def index(request):
     # return HttpRequest("<h4>Hello</h4>")
     return render(request, 'main/index.html')
 
-def registr(request):
-    return render(request, 'main/registration.html')
+# def registr(request):
+#     return render(request, 'main/registration.html')
