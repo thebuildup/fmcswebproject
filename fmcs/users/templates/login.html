@@ -53,6 +53,8 @@
             <div class="row full-height justify-content-center">
                 <div class="col-12 text-center align-self-center py-5">
                     <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                        <form method="post">
+                        {% csrf_token %}
                         <h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
                         <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
                         <label for="reg-log"></label>
@@ -62,21 +64,15 @@
                                     <div class="center-wrap">
                                         <div class="section text-center">
                                             <h4 class="mb-4 pb-3">Log In</h4>
-                                            <form method="post">
-                                            {% csrf_token %}
                                             <div class="form-group">
-                                                <input type="text" class="form-style" placeholder="Nickname" name="nickname" required>
+                                                <input type="text" class="form-style" placeholder="Nickname" name="nickname">
                                                 <i class="input-icon uil uil-user"></i>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="password" class="form-style" placeholder="Password" name="password" required>
+                                                <input type="password" class="form-style" placeholder="Password" name="password">
                                                 <i class="input-icon uil uil-lock-alt"></i>
                                             </div>
-                                                <button type="submit" class="btn mt-4" href="{% url 'home'%}?next={{request.path}}">Log In</button>
-                                            </form>
-                                            {% if form.errors %}
-                                            <p>Error</p>
-                                            {% endif %}
+                                                <button type="submit" class="btn mt-4">Log In</button>
 
                                             <p class="mb-0 mt-4 text-center"><a href="" class="link">Forgot your
                                                 password?</a></p>
@@ -88,23 +84,24 @@
                                         <div class="section text-center">
                                             <h4 class="mb-3 pb-3">Sign Up</h4>
                                             <div class="form-group">
-                                                <input type="text" class="form-style" placeholder="Nickname">
+                                                <input type="text" class="form-style" placeholder="Nickname" name="new_nickname">
                                                 <i class="input-icon uil uil-user"></i>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="email" class="form-style" placeholder="Email">
+                                                <input type="email" class="form-style" placeholder="Email" name="new_email">
                                                 <i class="input-icon uil uil-at"></i>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="password" class="form-style" placeholder="Password">
+                                                <input type="password" class="form-style" placeholder="Password" name="new_password">
                                                 <i class="input-icon uil uil-lock-alt"></i>
                                             </div>
-                                            <a href="" class="btn mt-4">Register</a>
+                                                <button type="submit" class="btn mt-4">Register</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>

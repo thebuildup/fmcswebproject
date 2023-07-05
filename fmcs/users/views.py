@@ -27,17 +27,67 @@ from django.contrib.auth import authenticate, login
 #         form = SignUpForm()
 #     return render(request, 'users/signup.html', {'form': form})
 
-
+# Create your views here.
 def login_view(request):
     if request.method == "POST":
-        nickname = request.POST.get('nickname')
-        password = request.POST.get('password')
-        user = authenticate(request, username=nickname, password=password)
-        if user is not None:
+        if 'new_nickname' in request.POST:
+            new_username = request.POST.get('new_nickname')
+            new_email = request.POST.get('new_email')
+            new_password = request.POST.get('new_password')
+            if User.objects.filter(username=new_username).exists():
+                return render(request, 'login.html', {'error': 'Username already exists'})
+            if User.objects.filter(email=new_email).exists():
+                return render(request, 'login.html', {'error': 'Email already exists'})
+            new_user = User.objects.create_user(new_username, new_email, new_password)
+            new_user.save()
+            user = authenticate(request, username=new_username, password=new_password)
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, "Error")
+            username = request.POST.get('nickname')
+            password = request.POST.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.error(request, "Error")
     return render(request, 'login.html')
 
-# Create your views here.
+
+# def register_request(request):
+#     # if not Group.objects.filter(name='Managers').exists():
+#     #     Group.objects.create(name='Managers')
+#     #
+#     # customer_group = Group.objects.get(name='Managers')
+#     if request.method == "POST":
+#         new_username = request.POST.get('new_nickname')
+#         new_email = request.POST.get('new_email')
+#         new_password = request.POST.get('new_password')
+#         print(new_username)
+#         print(new_email)
+#         print(new_password)
+#         # Проверка, что все поля заполнены
+#         # if not new_username or not new_email or not new_password:
+#         #     return render(request, 'login.html', {'error': 'Please fill all fields'})
+#
+#         # Создание нового пользователя
+#         new_user = User.objects.create_user(new_username, new_email, new_password)
+#         new_user.save()
+#         return redirect('home')
+#     return render(request, 'home')
+
+def register_view(request):
+    if request.method == "POST":
+        print(request.POST)
+        new_username = request.POST.get('new_username')
+        new_email = request.POST.get('new_email')
+        new_password = request.POST.get('new_password')
+        if User.objects.filter(username=new_username).exists():
+            return render(request, 'login.html', {'error': 'Username already exists'})
+        if User.objects.filter(email=new_email).exists():
+            return render(request, 'login.html', {'error': 'Email already exists'})
+        new_user = User.objects.create_user(new_username, new_email, new_password)
+        new_user.save()
+        return redirect('home')
+    return render(request, 'login.html')
