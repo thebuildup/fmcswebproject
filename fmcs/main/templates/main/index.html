@@ -54,9 +54,9 @@
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li><a href="{% url 'home' %}" class="active">Home</a></li>
-                        <li><a href="explore.html">Events</a></li>
-                        <li><a href="details.html">Teams</a></li>
-                        <li><a href="author.html">Leaderboard</a></li>
+                        <li><a href="{% url '404' %}">Events</a></li>
+                        <li><a href="{% url '404' %}">Teams</a></li>
+                        <li><a href="{% url '404' %}">Leaderboard</a></li>
                         {% if user.is_authenticated %}
                         <li><a>{{ user.get_username }}</a></li>
                         <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>

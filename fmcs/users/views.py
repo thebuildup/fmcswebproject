@@ -79,17 +79,5 @@ def login_view(request):
 #         return redirect('home')
 #     return render(request, 'home')
 
-def register_view(request):
-    if request.method == "POST":
-        print(request.POST)
-        new_username = request.POST.get('new_username')
-        new_email = request.POST.get('new_email')
-        new_password = request.POST.get('new_password')
-        if User.objects.filter(username=new_username).exists():
-            return render(request, 'login.html', {'error': 'Username already exists'})
-        if User.objects.filter(email=new_email).exists():
-            return render(request, 'login.html', {'error': 'Email already exists'})
-        new_user = User.objects.create_user(new_username, new_email, new_password)
-        new_user.save()
-        return redirect('home')
-    return render(request, 'login.html')
+def profile(request):
+    return render(request, 'profile.html')

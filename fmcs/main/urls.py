@@ -21,6 +21,7 @@ urlpatterns = [
     path("", views.index, name="home"),
     # path("reg", views.registr)
     path('accounts/', include('django.contrib.auth.urls')),
+    path('404', views.page_not_found_view, name="404"),
 ]
 
-handler404 = "main.views.page_not_found_view"
+# handler404 = "main.views.page_not_found_view"
