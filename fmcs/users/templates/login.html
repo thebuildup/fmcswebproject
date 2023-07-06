@@ -64,6 +64,13 @@
                                     <div class="center-wrap">
                                         <div class="section text-center">
                                             <h4 class="mb-4 pb-3">Log In</h4>
+                                            {% if messages %}
+                                                <ul class="messages">
+                                                    {% for message in messages %}
+                                            <p class="mb-0 mt-4 text-center" style="color: #c98dfc; text-shadow: 1px 1px 2px #000000; text-indent: -40px;">{{message}}</p>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
                                             <div class="form-group">
                                                 <input type="text" class="form-style" placeholder="Nickname" name="nickname">
                                                 <i class="input-icon uil uil-user"></i>
@@ -73,13 +80,6 @@
                                                 <i class="input-icon uil uil-lock-alt"></i>
                                             </div>
                                                 <button type="submit" class="btn mt-4">Log In</button>
-                                                {% if messages %}
-                                                    <ul class="messages">
-                                                        {% for message in messages %}
-                                                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                                                        {% endfor %}
-                                                    </ul>
-                                                {% endif %}
                                             <p class="mb-0 mt-4 text-center"><a href="" class="link">Forgot your
                                                 password?</a></p>
                                         </div>
@@ -88,7 +88,13 @@
                                 <div class="card-back">
                                     <div class="center-wrap">
                                         <div class="section text-center">
-                                            <h4 class="mb-3 pb-3">Sign Up</h4>
+                                            <h4 class="mb-3 pb-3">Sign Up</h4>                                    {% if messages %}
+                                            <ul class="messages">
+                                                {% for message in messages %}
+                                            <p class="mb-0 mt-4 text-center" style="color: #c98dfc; text-shadow: 1px 1px 2px #000000; text-indent: -40px;">{{message}}</p>
+                                                {% endfor %}
+                                            </ul>
+                                            {% endif %}
                                             <div class="form-group">
                                                 <input type="text" class="form-style" placeholder="Nickname" name="new_nickname">
                                                 <i class="input-icon uil uil-user"></i>

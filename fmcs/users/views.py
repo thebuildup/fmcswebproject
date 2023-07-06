@@ -30,19 +30,20 @@ from django.contrib.auth import authenticate, login
 # Create your views here.
 def login_view(request):
     if request.method == "POST":
-        if 'new_nickname' in request.POST:
+        if 'new_nickname' in request.POST and request.POST['new_nickname'].strip():
             new_username = request.POST.get('new_nickname')
             new_email = request.POST.get('new_email')
             new_password = request.POST.get('new_password')
             if User.objects.filter(username=new_username).exists():
-                return render(request, 'login.html', {'error': 'Username already exists'})
-            if User.objects.filter(email=new_email).exists():
-                return render(request, 'login.html', {'error': 'Email already exists'})
-            new_user = User.objects.create_user(new_username, new_email, new_password)
-            new_user.save()
-            user = authenticate(request, username=new_username, password=new_password)
-            login(request, user)
-            return redirect('home')
+                messages.error(request, "Username already exists")
+            elif User.objects.filter(email=new_email).exists():
+                messages.error(request, "Email already exists")
+            else:
+                new_user = User.objects.create_user(new_username, new_email, new_password)
+                new_user.save()
+                user = authenticate(request, username=new_username, password=new_password)
+                login(request, user)
+                return redirect('home')
         else:
             username = request.POST.get('nickname')
             password = request.POST.get('password')
@@ -52,7 +53,8 @@ def login_view(request):
                 return redirect('home')
             else:
                 messages.error(request, "Invalid username or password")
-    return render(request, 'login.html')
+    context = {'error': messages.get_messages(request)}
+    return render(request, 'login.html', context)
 
 
 # def register_request(request):

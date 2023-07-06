@@ -26,6 +26,10 @@ h6 span{
   padding: 0 20px;
   font-weight: 700;
 }
+
+h7 {
+    text-align: center
+}
 .section{
   position: relative;
   width: 100%;
