@@ -14,3 +14,7 @@ def index(request):
 # def page_not_found_view(request, exception):
 def page_not_found_view(request):
     return render(request, '404.html', status=404)
+
+
+def events_view(request):
+    return render(request, 'main/explore.html')
