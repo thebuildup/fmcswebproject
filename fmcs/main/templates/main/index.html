@@ -59,7 +59,7 @@
                         <li><a href="{% url '404' %}">Teams</a></li>
                         <li><a href="{% url '404' %}">Leaderboard</a></li>
                         {% if user.is_authenticated %}
-                        <li><a>{{ user.get_username }}</a></li>
+                        <li><a href="{% url 'user_profile' user_id=user.id %}">{{ user.get_username }}</a></li>
                         <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
                         {% else %}
                         <li><a href="{% url 'login'%}">Join The Community</a></li>
@@ -84,7 +84,7 @@
                 <div class="header-text">
                     <h6>FOOTBALL MANAGER CHAMPIONSHIP SERIES</h6>
                     <h2>Create, Play &amp; Win Games with FMCS.</h2>
-                    <p>Test Text</p>
+                    <!--                    <p>Test Text</p>-->
                     <div class="buttons">
                         <div class="border-button">
                             <a href="{% url '404' %}">Our Leaderboard</a>
