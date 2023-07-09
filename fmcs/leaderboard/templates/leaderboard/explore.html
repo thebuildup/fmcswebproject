@@ -23,13 +23,7 @@
     <link rel="stylesheet" href="{% static 'css/owl.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-    <!--
 
-    TemplateMo 577 Liberty Market
-
-    https://templatemo.com/tm-577-liberty-market
-
-    -->
 </head>
 
 <body>
@@ -99,6 +93,7 @@
                 <div class="col-lg-12">
                     <div class="owl-features owl-carousel">
                         {% for event in events_list %}
+                        {% for org in org_list %}
                         <div class="item">
                             <div class="thumb">
                                 <img src="{% static 'images/featured-04.jpg' %}" alt="" style="border-radius: 20px;">
@@ -108,345 +103,100 @@
                                         <span class="author">
                         <img src="{% static 'images/author.jpg' %}" alt=""
                              style="max-width: 50px; max-height: 50px; border-radius: 50%;">
-                        <h6>FMCS<br><a href="#">@FMChampSeries</a></h6>
+                        <h6>{{event.org_name}}<br><a href="#">@{{org.description}}</a></h6>
+                        <h6>{{event.status_name}}<br></h6>
                       </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         {% endfor %}
-<!--                        <div class="item">-->
-<!--                            <div class="thumb">-->
-<!--                                <img src="{% static 'images/featured-02.jpg' %}" alt="" style="border-radius: 20px;">-->
-<!--                                <div class="hover-effect">-->
-<!--                                    <div class="content">-->
-<!--                                        <h4>Bored Ape Kennel Club</h4>-->
-<!--                                        <span class="author">-->
-<!--                        <img src="{% static 'images/author.jpg' %}" alt=""-->
-<!--                             style="max-width: 50px; max-height: 50px; border-radius: 50%;">-->
-<!--                        <h6>Liberty Artist<br><a href="#">@libertyart</a></h6>-->
-<!--                      </span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="item">-->
-<!--                            <div class="thumb">-->
-<!--                                <img src="{% static 'images/featured-03.jpg' %}" alt="" style="border-radius: 20px;">-->
-<!--                                <div class="hover-effect">-->
-<!--                                    <div class="content">-->
-<!--                                        <h4>Genesis Club by KMT</h4>-->
-<!--                                        <span class="author">-->
-<!--                        <img src="{% static 'images/author.jpg' %}" alt=""-->
-<!--                             style="max-width: 50px; max-height: 50px; border-radius: 50%;">-->
-<!--                        <h6>Liberty Artist<br><a href="#">@libertyart</a></h6>-->
-<!--                      </span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="item">-->
-<!--                            <div class="thumb">-->
-<!--                                <img src="{% static 'images/featured-04.jpg' %}" alt="" style="border-radius: 20px;">-->
-<!--                                <div class="hover-effect">-->
-<!--                                    <div class="content">-->
-<!--                                        <h4>Crypto Aurora Guy</h4>-->
-<!--                                        <span class="author">-->
-<!--                        <img src="{% static 'images/author.jpg' %}" alt=""-->
-<!--                             style="max-width: 50px; max-height: 50px; border-radius: 50%;">-->
-<!--                        <h6>Liberty Artist<br><a href="#">@libertyart</a></h6>-->
-<!--                      </span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--CurrentlyMarket    -->
+    <div class="currently-market">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="section-heading">
+                        <div class="line-dec"></div>
+                        <h2><em>Events</em> By FMCS</h2>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="filters">
+                        <ul>
+                            <li data-filter="*" class="active">All Events</li>
+                            <li data-filter=".msc">Completed</li>
+                            <li data-filter=".dig">Active</li>
+                            <li data-filter=".blc">Starting Soon</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="row grid">
+                        {% for event in events_list %}
+                        {% for org in org_list %}
+                        <!--                    <div class="col-lg-6 currently-market-item all {% if event.status_name == "Completed" %}msc{% elif event.status_name == "Active" %}dig{% else %}blc{% endif %}">-->
+                            {% if event.status_name == "Completed" %}
+                                <div class="col-lg-6 currently-market-item all msc">
+                            {% elif event.status_name == "Active" %}
+                                <div class="col-lg-6 currently-market-item all dig">
+                            {% else %}
+                                <div class="col-lg-6 currently-market-item all blc">
+                            {% endif %}
+                        <div class="item">
+                            <div class="left-image">
+                                <img src="{% static 'images/market-01.jpg' %}" alt=""
+                                     style="border-radius: 20px; min-width: 195px;">
+                            </div>
+                            <div class="right-content">
+                                <h4>{{ event.event_name }}</h4>
+                                <span class="author">
+                    <img src="{% static 'images/author.jpg' %}" alt="" style="max-width: 50px; border-radius: 50%;">
+                    <h6>{{event.org_name}}<br><a href="#">@{{org.description}}</a></h6>
+                  </span>
+                                <div class="line-dec"></div>
+                                <span class="bid">
+                    Status<br><strong>{{event.status_name}}</strong><br>
+                  </span>
+                                <span class="ends">
+                    Participations<br><strong>Number</strong><br>
+                  </span>
+                                <div class="text-button">
+                                    <a href="{% url '404' %}">View Event</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--CurrentlyMarketEnd-->
 
-<!--<div class="discover-items">-->
-<!--    <div class="container">-->
-<!--        <div class="row">-->
-<!--            <div class="col-lg-5">-->
-<!--                <div class="section-heading">-->
-<!--                    <div class="line-dec"></div>-->
-<!--                    <h2>Discover Some Of Our <em>Items</em>.</h2>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-7">-->
-<!--                <form id="search-form" name="gs" method="submit" role="search" action="#">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-lg-4">-->
-<!--                            <fieldset>-->
-<!--                                <input type="text" name="keyword" class="searchText" placeholder="Type Something..."-->
-<!--                                       autocomplete="on" required>-->
-<!--                            </fieldset>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-3">-->
-<!--                            <fieldset>-->
-<!--                                <select name="Category" class="form-select" aria-label="Default select example"-->
-<!--                                        id="chooseCategory" onchange="this.form.click()">-->
-<!--                                    <option selected>All Categories</option>-->
-<!--                                    <option type="checkbox" name="option1" value="Music">Music</option>-->
-<!--                                    <option value="Digital">Digital</option>-->
-<!--                                    <option value="Blockchain">Blockchain</option>-->
-<!--                                    <option value="Virtual">Virtual</option>-->
-<!--                                </select>-->
-<!--                            </fieldset>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-3">-->
-<!--                            <fieldset>-->
-<!--                                <select name="Price" class="form-select" aria-label="Default select example"-->
-<!--                                        id="chooseCategory" onchange="this.form.click()">-->
-<!--                                    <option selected>Available</option>-->
-<!--                                    <option value="Ending-Soon">Ending Soon</option>-->
-<!--                                    <option value="Coming-Soon">Coming Soon</option>-->
-<!--                                    <option value="Closed">Closed</option>-->
-<!--                                </select>-->
-<!--                            </fieldset>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-2">-->
-<!--                            <fieldset>-->
-<!--                                <button class="main-button">Search</button>-->
-<!--                            </fieldset>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--            <div class="col-lg-6">-->
-<!--                <div class="item">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <span class="banner">Double Item</span>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-6 col-sm-6">-->
-<!--                <span class="author">-->
-<!--                  <img src="{% static 'images/author.jpg' %}" alt=""-->
-<!--                       style="max-width: 50px; max-height: 50px; border-radius: 50%;">-->
-<!--                </span>-->
-<!--                            <img src="{% static 'images/discover-01.jpg' %}" alt="" style="border-radius: 20px;">-->
-<!--                            <h4>Mutant Ape Bored</h4>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-6 col-sm-6">-->
-<!--                <span class="author">-->
-<!--                  <img src="{% static 'images/author.jpg' %}" alt=""-->
-<!--                       style="max-width: 50px; max-height: 50px; border-radius: 50%;">-->
-<!--                </span>-->
-<!--                            <img src="{% static 'images/discover-02.jpg' %}" alt="" style="border-radius: 20px;">-->
-<!--                            <h4>His Other Half</h4>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <div class="line-dec"></div>-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-lg-3 col-sm-6">-->
-<!--                                    <span>Current Bid: <br> <strong>8.16 ETH</strong></span>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3 col-sm-6">-->
-<!--                                    <span>Category: <br> <strong>Digital Art</strong></span>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3 col-sm-6">-->
-<!--                                    <span>Collection:: <br> <strong>2/2</strong></span>-->
-<!--                                </div>-->
-<!--                                <div class="col-lg-3 col-sm-6">-->
-<!--                                    <span>Ends In: <br> <strong>25th Nov</strong></span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <div class="main-button">-->
-<!--                                <a href="details.html">View Details</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-3">-->
-<!--                <div class="item">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-lg-12">-->
-<!--                <span class="author">-->
-<!--                  <img src="{% static 'images/author.jpg' %}" alt=""-->
-<!--                       style="max-width: 50px; max-height: 50px; border-radius: 50%;">-->
-<!--                </span>-->
-<!--                            <img src="{% static 'images/discover-03.jpg' %}" alt="" style="border-radius: 20px;">-->
-<!--                            <h4>Genesis Meta Boom</h4>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <div class="line-dec"></div>-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-6">-->
-<!--                                    <span>Current Bid: <br> <strong>5.15 ETH</strong></span>-->
-<!--                                </div>-->
-<!--                                <div class="col-6">-->
-<!--                                    <span>Ends In: <br> <strong>26th Nov</strong></span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <div class="main-button">-->
-<!--                                <a href="details.html">View Details</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-3">-->
-<!--                <div class="item">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-lg-12">-->
-<!--                <span class="author">-->
-<!--                  <img src="{% static 'images/author.jpg' %}" alt=""-->
-<!--                       style="max-width: 50px; max-height: 50px; border-radius: 50%;">-->
-<!--                </span>-->
-<!--                            <img src="{% static 'images/discover-04.jpg' %}" alt="" style="border-radius: 20px;">-->
-<!--                            <h4>Another Half Ape</h4>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <div class="line-dec"></div>-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-6">-->
-<!--                                    <span>Current Bid: <br> <strong>3.63 ETH</strong></span>-->
-<!--                                </div>-->
-<!--                                <div class="col-6">-->
-<!--                                    <span>Ends In: <br> <strong>24th Nov</strong></span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <div class="main-button">-->
-<!--                                <a href="details.html">View Details</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-3">-->
-<!--                <div class="item">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-lg-12">-->
-<!--                <span class="author">-->
-<!--                  <img src="{% static 'images/author.jpg' %}" alt=""-->
-<!--                       style="max-width: 50px; max-height: 50px; border-radius: 50%;">-->
-<!--                </span>-->
-<!--                            <img src="{% static 'images/discover-03.jpg' %}" alt="" style="border-radius: 20px;">-->
-<!--                            <h4>Pixel Sand Box</h4>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <div class="line-dec"></div>-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-6">-->
-<!--                                    <span>Current Bid: <br> <strong>4.68 ETH</strong></span>-->
-<!--                                </div>-->
-<!--                                <div class="col-6">-->
-<!--                                    <span>Ends In: <br> <strong>28th Nov</strong></span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <div class="main-button">-->
-<!--                                <a href="details.html">View Details</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-3">-->
-<!--                <div class="item">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-lg-12">-->
-<!--                <span class="author">-->
-<!--                  <img src="{% static 'images/author.jpg' %}" alt=""-->
-<!--                       style="max-width: 50px; max-height: 50px; border-radius: 50%;">-->
-<!--                </span>-->
-<!--                            <img src="{% static 'images/discover-04.jpg' %}" alt="" style="border-radius: 20px;">-->
-<!--                            <h4>Another Half Ape</h4>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <div class="line-dec"></div>-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-6">-->
-<!--                                    <span>Current Bid: <br> <strong>2.03 ETH</strong></span>-->
-<!--                                </div>-->
-<!--                                <div class="col-6">-->
-<!--                                    <span>Ends In: <br> <strong>25th Nov</strong></span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <div class="main-button">-->
-<!--                                <a href="details.html">View Details</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-3">-->
-<!--                <div class="item">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-lg-12">-->
-<!--                <span class="author">-->
-<!--                  <img src="{% static 'images/author.jpg' %}" alt=""-->
-<!--                       style="max-width: 50px; max-height: 50px; border-radius: 50%;">-->
-<!--                </span>-->
-<!--                            <img src="{% static 'images/discover-06.jpg' %}" alt="" style="border-radius: 20px;">-->
-<!--                            <h4>Invisible NFT Land</h4>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <div class="line-dec"></div>-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-6">-->
-<!--                                    <span>Current Bid: <br> <strong>2.03 ETH</strong></span>-->
-<!--                                </div>-->
-<!--                                <div class="col-6">-->
-<!--                                    <span>Ends In: <br> <strong>25th Nov</strong></span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <div class="main-button">-->
-<!--                                <a href="details.html">View Details</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-3">-->
-<!--                <div class="item">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-lg-12">-->
-<!--                <span class="author">-->
-<!--                  <img src="{% static 'images/author.jpg' %}" alt=""-->
-<!--                       style="max-width: 50px; max-height: 50px; border-radius: 50%;">-->
-<!--                </span>-->
-<!--                            <img src="{% static 'images/discover-05.jpg' %}" alt="" style="border-radius: 20px;">-->
-<!--                            <h4>Another Half Ape</h4>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <div class="line-dec"></div>-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-6">-->
-<!--                                    <span>Current Bid: <br> <strong>2.64 ETH</strong></span>-->
-<!--                                </div>-->
-<!--                                <div class="col-6">-->
-<!--                                    <span>Ends In: <br> <strong>25th Nov</strong></span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-12">-->
-<!--                            <div class="main-button">-->
-<!--                                <a href="details.html">View Details</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright © 2022 <a href="#">Liberty</a> NFT Marketplace Co., Ltd. All rights reserved.
+                    &nbsp;&nbsp;
+                    Designed by <a title="HTML CSS Templates" rel="sponsored" href="https://templatemo.com"
+                                   target="_blank">TemplateMo</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
 
 <!--<footer>-->
 <!--    <div class="container">-->

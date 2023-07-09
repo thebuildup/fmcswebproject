@@ -1094,7 +1094,7 @@ Currently Market Style
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  padding: 120px 0px;
+  padding: 400px 0px 120px 0px;
   position: relative;
 }
 
@@ -2066,6 +2066,7 @@ body {
   .create-nft .section-heading,
   .currently-market .section-heading {
     text-align: center;
+    margin-top: 1050px;
   }
   .currently-market-item {
     width: 100%;
