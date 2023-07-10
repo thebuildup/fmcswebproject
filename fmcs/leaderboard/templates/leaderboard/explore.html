@@ -92,8 +92,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="owl-features owl-carousel">
-                        {% for event in events_list %}
-                        {% for org in org_list %}
+                        {% for event in carousel_list %}
                         <div class="item">
                             <div class="thumb">
                                 <img src="{% static 'images/featured-04.jpg' %}" alt="" style="border-radius: 20px;">
@@ -103,14 +102,13 @@
                                         <span class="author">
                         <img src="{% static 'images/author.jpg' %}" alt=""
                              style="max-width: 50px; max-height: 50px; border-radius: 50%;">
-                        <h6>{{event.org_name}}<br><a href="#">@{{org.description}}</a></h6>
-                        <h6>{{event.status_name}}<br></h6>
+                        <h6>{{event.org_name.org_name}}<br><a href="#">@{{event.org_name.description}}</a></h6>
+                        <h6>{{event.status_name.status_name}}<br></h6>
                       </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {% endfor %}
                         {% endfor %}
 
                     </div>
@@ -142,8 +140,6 @@
                 <div class="col-lg-12">
                     <div class="row grid">
                         {% for event in events_list %}
-                        {% for org in org_list %}
-                        <!--                    <div class="col-lg-6 currently-market-item all {% if event.status_name == "Completed" %}msc{% elif event.status_name == "Active" %}dig{% else %}blc{% endif %}">-->
                             {% if event.status_name.status_name == "Completed" %}
                                 <div class="col-lg-6 currently-market-item all msc">
                             {% elif event.status_name.status_name == "Active" %}
@@ -153,7 +149,7 @@
                             {% endif %}
                         <div class="item">
                             <div class="left-image">
-                                <img src="{% static 'images/market-01.jpg' %}" alt=""
+                                <img src="{% static 'images/featured-04.jpg' %}" alt=""
                                      style="border-radius: 20px; min-width: 195px;">
                             </div>
                             <div class="right-content">
@@ -175,7 +171,6 @@
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
                     {% endfor %}
                 </div>
             </div>
