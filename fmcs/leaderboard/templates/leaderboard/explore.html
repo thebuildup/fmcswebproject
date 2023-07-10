@@ -144,9 +144,9 @@
                         {% for event in events_list %}
                         {% for org in org_list %}
                         <!--                    <div class="col-lg-6 currently-market-item all {% if event.status_name == "Completed" %}msc{% elif event.status_name == "Active" %}dig{% else %}blc{% endif %}">-->
-                            {% if event.status_name == "Completed" %}
+                            {% if event.status_name.status_name == "Completed" %}
                                 <div class="col-lg-6 currently-market-item all msc">
-                            {% elif event.status_name == "Active" %}
+                            {% elif event.status_name.status_name == "Active" %}
                                 <div class="col-lg-6 currently-market-item all dig">
                             {% else %}
                                 <div class="col-lg-6 currently-market-item all blc">
@@ -160,11 +160,11 @@
                                 <h4>{{ event.event_name }}</h4>
                                 <span class="author">
                     <img src="{% static 'images/author.jpg' %}" alt="" style="max-width: 50px; border-radius: 50%;">
-                    <h6>{{event.org_name}}<br><a href="#">@{{org.description}}</a></h6>
+                    <h6>{{event.org_name.org_name}}<br><a href="#">@{{event.org_name.description}}</a></h6>
                   </span>
                                 <div class="line-dec"></div>
                                 <span class="bid">
-                    Status<br><strong>{{event.status_name}}</strong><br>
+                    Status<br><strong>{{event.status_name.status_name}}</strong><br>
                   </span>
                                 <span class="ends">
                     Participations<br><strong>Number</strong><br>
