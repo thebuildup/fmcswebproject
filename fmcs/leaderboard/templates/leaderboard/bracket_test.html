@@ -1,20 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bracket Viewer</title>
-  {% load static %}
-<!--  <link rel="stylesheet" type="text/css" href="{% static 'css/stylebracket.css' %}">-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.css" />
+    <title>Bracket Viewer</title>
+    {% load static %}
+    <!--  <link rel="stylesheet" type="text/css" href="{% static 'css/stylebracket.css' %}">-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.css"/>
 </head>
 <body>
-  <div class="container">
+<div class="container">
     <h1>Bracket Viewer</h1>
     <div id="bracket"></div>
-  </div>
+</div>
+<div id="example" class="brackets-viewer"></div>
 
-  {% block extrahead %}
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.js"></script>
-  {% endblock extrahead %}
-  <script src="{% static 'js/script.js' %}"></script>
+<script type="module">
+        const data = await fetch('http://localhost:3000/db')
+            .catch(() => alert('Failed to fetch localhost. Please do `npm run db` or use json-server your own way.'))
+            .then(res => res.json());
+
+        // You can manually add locales. English will be used as a fallback if keys are missing.
+        // You can force browser language detection with: `window.localStorage['i18nextLng'] = 'ru'` and reloading the page.
+        window.bracketsViewer.addLocale('ru', {
+            "common": {
+                "round-name": "раунд {{roundNumber}}",
+            }
+        });
+
+        // This is optional. You must do it before render().
+        window.bracketsViewer.setParticipantImages(data.participant.map(participant => ({
+            participantId: participant.id,
+            imageUrl: 'https://github.githubassets.com/pinned-octocat.svg',
+        })));
+
+        await window.bracketsViewer.render({
+            stages: data.stage,
+            matches: data.match,
+            matchGames: data.match_game,
+            participants: data.participant,
+        }, {
+            customRoundName: (info, t) => {
+                // You have a reference to `t` in order to translate things.
+                // Returning `undefined` will fallback to the default round name in the current language.
+
+                if (info.fractionOfFinal === 1 / 2) {
+                    if (info.groupType === 'single-bracket') {
+                        // Single elimination
+                        return 'Semi Finals'
+                    } else {
+                        // Double elimination
+                        return `${t(`abbreviations.${info.groupType}`)} Semi Finals`
+                    }
+                }
+
+                if (info.finalType === 'grand-final') {
+                    if (info.roundCount > 1) {
+                        return `${t(`abbreviations.${info.finalType}`)} Final Round ${info.roundNumber}`
+                    }
+
+                    return `Grand Final`
+                }
+            },
+            onMatchClick: match => console.log('A match was clicked', match),
+            selector: '#example',
+            participantOriginPlacement: 'before',
+            separatedChildCountLabel: true,
+            showSlotsOrigin: true,
+            showLowerBracketSlotsOrigin: true,
+            highlightParticipantOnHover: true,
+        })
+
+        console.log('Render finished')
+
+
+</script>
+{% block extrahead %}
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.js"></script>
+{% endblock extrahead %}
+<script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

@@ -1,88 +1,20 @@
-// Initialize the bracket viewer
-var bracket = new BracketsViewer('#bracket', {
-  // Set the tournament structure
-  tournament: {
-    type: 'ingle-elimination',
-    nodes: [
-      {
-        name: 'Round 1',
-        children: [
-          {
-            name: 'Match 1',
-            teams: ['Team 1', 'Team 2']
-          },
-          {
-            name: 'Match 2',
-            teams: ['Team 3', 'Team 4']
-          },
-          {
-            name: 'Match 3',
-            teams: ['Team 5', 'Team 6']
-          }
-        ]
-      },
-      {
-        name: 'Round 2',
-        children: [
-          {
-            name: 'Match 1',
-            teams: ['Team 1', 'Team 3']
-          },
-          {
-            name: 'Match 2',
-            teams: ['Team 2', 'Team 4']
-          },
-          {
-            name: 'Match 3',
-            teams: ['Team 5', 'Team 6']
-          }
-        ]
-      },
-      {
-        name: 'Final',
-        children: [
-          {
-            name: 'Match 1',
-            teams: ['Team 1', 'Team 2']
-          },
-          {
-            name: 'Match 2',
-            teams: ['Team 3', 'Team 4']
-          },
-          {
-            name: 'Match 3',
-            teams: ['Team 5', 'Team 6']
-          }
-        ]
-      }
-    ]
-  },
+const { JsonDatabase } = require('brackets-json-db');
+const { BracketsManager } = require('brackets-manager');
 
-  // Set the team names and colors
-  teams: [
-    {
-      name: 'Team 1',
-      color: '#ff0000'
-    },
-    {
-      name: 'Team 2',
-      color: '#00ff00'
-    },
-    {
-      name: 'Team 3',
-      color: '#0000ff'
-    },
-    {
-      name: 'Team 4',
-      color: '#ffff00'
-    },
-    {
-      name: 'Team 5',
-      color: '#ff00ff'
-    },
-    {
-      name: 'Team 6',
-      color: '#00ffff'
-    }
-  ]
+const storage = new JsonDatabase();
+const manager = new BracketsManager(storage);
+
+// Create an elimination stage for tournament `3`.
+await manager.create.stage({
+  tournamentId: 3,
+  name: 'Elimination stage',
+  type: 'double_elimination',
+  seeding: ['Team 1', 'Team 2', 'Team 3', 'Team 4'],
+  settings: { grandFinal: 'double' },
+});
+
+await manager.update.match({
+  id: 0, // First match of winner bracket (round 1)
+  opponent1: { score: 16, result: 'win' },
+  opponent2: { score: 12 },
 });
