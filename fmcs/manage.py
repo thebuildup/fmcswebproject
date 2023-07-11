@@ -2,10 +2,20 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+import warnings
+import dotenv
 
 
 def main():
     """Run administrative tasks."""
+    with warnings.catch_warnings():
+        warnings.filterwarnings("error")
+
+        try:
+            dotenv.read_dotenv()
+        except UserWarning:
+            raise FileNotFoundError("Could not find .env!")
+
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "fmcs.settings")
     try:
         from django.core.management import execute_from_command_line
