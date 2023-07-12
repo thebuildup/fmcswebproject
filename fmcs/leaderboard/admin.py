@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 from .models import (
     Team,
     Event,
@@ -12,6 +11,7 @@ from .models import (
     PlayerRatingNode,
     PlayerStatsNode,
     RatingPeriod,
+    User
 )
 
 

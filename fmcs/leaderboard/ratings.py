@@ -2,7 +2,11 @@
 
 from django.conf import settings
 from . import models
-from .glicko2 import calculate_player_rating
+from . import glicko
+from . import glicko2
+
+# The rating algorithm to use
+RATING_ALGORITHM = settings.RATING_ALGORITHM
 
 
 def calculate_new_rating_period(start_datetime, end_datetime):
@@ -47,8 +51,10 @@ def calculate_new_rating_period(start_datetime, end_datetime):
         # Get the players rating parameters
         player_rating = player.rating
         player_rating_deviation = player.rating_deviation
-        player_rating_volatility = player.rating_volatility
         player_inactivity = player.inactivity
+
+        if RATING_ALGORITHM == "glicko2":
+            player_rating_volatility = player.rating_volatility
 
         # Build up the per-game rating parameters of opponents
         opponent_ratings = []
@@ -73,14 +79,26 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             opponent_rating_deviations = None
             scores = None
 
-        new_player_rating, new_player_rating_deviation, new_player_rating_volatility = calculate_player_rating(
-            r=player_rating,
-            RD=player_rating_deviation,
-            sigma=player_rating_volatility,
-            opponent_rs=opponent_ratings,
-            opponent_RDs=opponent_rating_deviations,
-            scores=scores,
-        )
+        if RATING_ALGORITHM == "glicko":
+            new_player_rating, new_player_rating_deviation, = glicko.calculate_player_rating(
+                r=player_rating,
+                RD=player_rating_deviation,
+                opponent_rs=opponent_ratings,
+                opponent_RDs=opponent_rating_deviations,
+                scores=scores,
+            )
+
+            new_player_rating_volatility = None
+        else:
+            # Glicko-2
+            new_player_rating, new_player_rating_deviation, new_player_rating_volatility = glicko2.calculate_player_rating(
+                r=player_rating,
+                RD=player_rating_deviation,
+                sigma=player_rating_volatility,
+                opponent_rs=opponent_ratings,
+                opponent_RDs=opponent_rating_deviations,
+                scores=scores,
+            )
 
         # Calculate new inactivity
         if opponent_ratings is None:
@@ -112,15 +130,31 @@ def calculate_new_rating_period(start_datetime, end_datetime):
     ]
     new_active_player_ratings.sort(key=lambda x: x[1], reverse=True)
 
-    # Form a tuple of active players where the order is their ranking
-    new_active_player_rankings = [
-        player for player, _ in new_active_player_ratings
-    ]
-
     # Process new rankings and ranking changes
-    num_active_players = len(new_active_player_rankings)
+    num_active_players = len(new_active_player_ratings)
 
-    for ranking, player in enumerate(new_active_player_rankings, 1):
+    # Keep track of the previous player's integer rating for ranking
+    # ties
+    last_integer_rating = None
+    last_ranking = None
+
+    for idx, player_tuple in enumerate(new_active_player_ratings, 1):
+        # Unpack the player tuple
+        player, rating = player_tuple
+
+        integer_rating = round(rating)
+
+        if (
+            last_integer_rating is not None
+            and last_integer_rating == integer_rating
+        ):
+            # Tie
+            ranking = last_ranking
+        else:
+            last_integer_rating = integer_rating
+            last_ranking = idx
+            ranking = idx
+
         # Ranking
         new_ratings[player]["player_ranking"] = ranking
 

@@ -99,18 +99,11 @@ class Player(models.Model):
         """Model metadata."""
 
         # Order by name in ascending order
-        ordering = ["name"]
+        ordering = ["name", "id"]
 
     def __str__(self):
-        """String representation of a player.
-
-        Use the username of the player's user if there's a user linked;
-        otherwise just use the player name.
-        """
-        if self.user:
-            return self.user.username
-
-        return self.name
+        """String representation of a player."""
+        return "%s #%04d" % (self.name, self.id)
 
     @property
     def ranking(self):
@@ -138,6 +131,9 @@ class Player(models.Model):
         node = self.get_latest_player_rating_node()
 
         if node is None:
+            if settings.RATING_ALGORITHM == "glicko":
+                return settings.GLICKO_BASE_RATING
+
             return settings.GLICKO2_BASE_RATING
 
         return node.rating
@@ -148,13 +144,26 @@ class Player(models.Model):
         node = self.get_latest_player_rating_node()
 
         if node is None:
+            if settings.RATING_ALGORITHM == "glicko":
+                return settings.GLICKO_BASE_RD
+
             return settings.GLICKO2_BASE_RD
 
         return node.rating_deviation
 
     @property
     def rating_volatility(self):
-        """Returns the players rating volatility."""
+        """Returns the players rating volatility.
+
+        This parameter is only relevant if the rating algorithm is
+        Glicko-2 and will always be None if the rating algorithm is
+        Glicko (cf. Glicko-2).
+        """
+        # Get out if rating algorithm is Glicko
+        if settings.RATING_ALGORITHM == "glicko":
+            return None
+
+        # Rating algorithm is Glicko-2
         node = self.get_latest_player_rating_node()
 
         if node is None:
@@ -231,6 +240,16 @@ class Player(models.Model):
             return 0
 
         return node.average_goals_per_game
+
+    @property
+    def average_goals_against_per_game(self):
+        """Returns the players average goals against per game."""
+        node = self.get_latest_player_stats_node()
+
+        if node is None:
+            return 0
+
+        return node.average_goals_against_per_game
 
     def get_all_player_stats_nodes(self):
         """Returns all of the player's stats nodes."""
@@ -477,6 +496,9 @@ class PlayerStatsNode(models.Model):
     average_goals_per_game = models.FloatField(
         help_text="The average number of goals scored per game by the player."
     )
+    average_goals_against_per_game = models.FloatField(
+        help_text="The average number of goals scored against the player per game."
+    )
 
     class Meta:
         """Model metadata."""
@@ -537,6 +559,9 @@ class MatchupStatsNode(models.Model):
     average_goals_per_game = models.FloatField(
         help_text="The average number of goals scored per game by player1."
     )
+    average_goals_against_per_game = models.FloatField(
+        help_text="The average number of goals scored per game by player2."
+    )
 
     class Meta:
         """Model metadata."""
@@ -586,7 +611,8 @@ class PlayerRatingNode(models.Model):
         help_text="The player's rating deviation for this rating period."
     )
     rating_volatility = models.FloatField(
-        help_text="The player's rating volatility for this rating period."
+        null=True,
+        help_text="The player's rating volatility for this rating period. This is only used if the rating algorithm is Glicko-2.",
     )
     inactivity = models.PositiveSmallIntegerField(
         help_text="How many rating periods the player has been inactive for."
@@ -602,7 +628,19 @@ class PlayerRatingNode(models.Model):
         ordering = ["-id"]
 
     def __str__(self):
-        """String representation of a player rating node."""
+        """String representation of a player rating node.
+
+        Only shows rating volatility if the rating algorithm is
+        Glicko-2.
+        """
+        if settings.RATING_ALGORITHM == "glicko":
+            return "%s RP=%s r=%d, RD=%d" % (
+                self.player,
+                self.rating_period.id,
+                self.rating,
+                self.rating_deviation,
+            )
+
         return "%s RP=%s r=%d, RD=%d, σ=%.2f" % (
             self.player,
             self.rating_period.id,
@@ -619,8 +657,8 @@ def process_game_hook(instance, created, **_):
         instance.process_game()
 
 
-@receiver(post_save, sender=User)
-def create_auth_token(instance, created, **_):
-    """Create an auth token for each new user."""
-    if created:
-        Token.objects.create(user=instance)
+# @receiver(post_save, sender=User)
+# def create_auth_token(instance, created, **_):
+#     """Create an auth token for each new user."""
+#     if created:
+#         Token.objects.create(user=instance)

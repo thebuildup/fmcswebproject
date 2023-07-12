@@ -74,26 +74,25 @@ WSGI_APPLICATION = "fmcs.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 # To use Neon with Django, you have to create a Project on Neon and specify the project connection settings in your settings.py in the same way as for standalone Postgres.
 
-# DATABASES = {
-#   'default': {
-#     'ENGINE': 'django.db.backends.postgresql',
-#     'NAME': 'neondb',
-#     'USER': 'ramanrudakou',
-#     'PASSWORD': 'OdVECa15yWFI',
-#     'HOST': 'ep-square-art-051666.eu-central-1.aws.neon.tech',
-#     'PORT': '5432',
-#   }
-# }
-
+DATABASES = {
+  'default': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': 'neondb',
+    'USER': 'ramanrudakou',
+    'PASSWORD': 'zoL2r3Vnpfat',
+    'HOST': 'ep-square-art-051666.eu-central-1.aws.neon.tech',
+    'PORT': '5432',
+  }
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -140,7 +139,15 @@ LOGIN_REDIRECT_URL = '/'
 
 LOGIN_URL = 'login'
 
-# Glicko-2 settings
+# Rating algorithm settings
+RATING_ALGORITHM = os.environ["RATING_ALGORITHM"].lower()
+
+if RATING_ALGORITHM not in {"glicko", "glicko2"}:
+    raise ValueError("RATING_ALGORITHM must be 'GLICKO' or 'GLICKO2'")
+
+GLICKO_BASE_RATING = float(os.environ["GLICKO_BASE_RATING"])
+GLICKO_BASE_RD = float(os.environ["GLICKO_BASE_RD"])
+GLICKO_RATING_PERIOD_DAYS = int(os.environ["GLICKO_RATING_PERIOD_DAYS"])
 
 GLICKO2_BASE_RATING = float(os.environ["GLICKO2_BASE_RATING"])
 GLICKO2_BASE_RD = float(os.environ["GLICKO2_BASE_RD"])

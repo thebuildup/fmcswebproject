@@ -9,6 +9,7 @@ from .ratings import calculate_new_rating_period
 
 
 def reprocess_all_stats(reset_id_counter=True):
+    print('Reprocess all stats')
     """Wipes all existing stats nodes and creates new stats nodes.
 
     Args:
@@ -23,10 +24,10 @@ def reprocess_all_stats(reset_id_counter=True):
     if reset_id_counter:
         with connection.cursor() as cursor:
             cursor.execute(
-                "ALTER SEQUENCE api_playerstatsnode_id_seq RESTART with 1"
+                "ALTER SEQUENCE leaderboard_playerstatsnode_id_seq RESTART with 1"
             )
             cursor.execute(
-                "ALTER SEQUENCE api_matchupstatsnode_id_seq RESTART with 1"
+                "ALTER SEQUENCE leaderboard_matchupstatsnode_id_seq RESTART with 1"
             )
 
     # Recreate nodes
@@ -35,6 +36,7 @@ def reprocess_all_stats(reset_id_counter=True):
 
 
 def process_new_ratings():
+    print('Process new ratings')
     """Calculates any new potential rating periods."""
     # Find first datetime where there exists unrated games. Recall that
     # rating periods and games are ordered from newest to oldest.
@@ -66,12 +68,13 @@ def process_new_ratings():
 
     # Calculate the new rating period and call this function again
     calculate_new_rating_period(start_datetime, end_datetime)
-
+    print('Calculate completed')
     # Go again
     process_new_ratings()
 
 
 def reprocess_all_ratings(reset_id_counter=True):
+    print('Reprocess all ratings')
     """Wipes existing rating periods and rating nodes and creates new ones.
 
     Args:
@@ -88,10 +91,10 @@ def reprocess_all_ratings(reset_id_counter=True):
     if reset_id_counter:
         with connection.cursor() as cursor:
             cursor.execute(
-                "ALTER SEQUENCE api_playerratingsnode_id_seq RESTART with 1"
+                "ALTER SEQUENCE leaderboard_playerratingnode_id_seq RESTART with 1"
             )
             cursor.execute(
-                "ALTER SEQUENCE api_ratingperiod_id_seq RESTART with 1"
+                "ALTER SEQUENCE leaderboard_ratingperiod_id_seq RESTART with 1"
             )
 
     # Recalculate ratings

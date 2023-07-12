@@ -5,6 +5,6 @@ setuptools==68.0.0
 sqlparse==0.4.4
 tzdata==2023.3
 wheel==0.40.0
-
+django-dotenv
 djangorestframework~=3.14.0
 django-filter~=23.2
