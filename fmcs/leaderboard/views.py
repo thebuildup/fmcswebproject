@@ -17,3 +17,7 @@ def event_view(request):
     }
 
     return render(request, 'leaderboard/explore.html', context=context)
+
+
+def ranking_view(request):
+    return render(request, 'leaderboard/ranking.html')
