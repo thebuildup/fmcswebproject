@@ -1,17 +1,14 @@
 from django.contrib import admin
+
 from .models import (
     Team,
-    Event,
     Result,
-    Organizator,
-    Status,
     Game,
     MatchupStatsNode,
     Player,
     PlayerRatingNode,
     PlayerStatsNode,
-    RatingPeriod,
-    User
+    RatingPeriod
 )
 
 
@@ -20,20 +17,8 @@ class TeamAdmin(admin.ModelAdmin):
     list_display = ['id', 'team_name', 'user', 'ranking']
 
 
-class EventAdmin(admin.ModelAdmin):
-    list_display = ['id', 'event_name', 'org_name', 'status_name']
-
-
 class ResultAdmin(admin.ModelAdmin):
     list_display = ['match_id', 'team1', 'team2', 'result', 'match_date', 'event_id']
-
-
-class OrganizatorAdmin(admin.ModelAdmin):
-    list_display = ['id', 'org_name', 'description']
-
-
-class StatusAdmin(admin.ModelAdmin):
-    list_display = ['id', 'status_name']
 
 
 class ReadOnlyModelAdminMixin:
@@ -71,6 +56,7 @@ class GameAdmin(admin.ModelAdmin):
         "loser",
         "winner_score",
         "loser_score",
+        "event",
         "rating_period",
     )
 
@@ -149,7 +135,5 @@ class MatchupStatsNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
 
 
 admin.site.register(Team, TeamAdmin)
-admin.site.register(Event, EventAdmin)
+
 admin.site.register(Result, ResultAdmin)
-admin.site.register(Organizator, OrganizatorAdmin)
-admin.site.register(Status, StatusAdmin)

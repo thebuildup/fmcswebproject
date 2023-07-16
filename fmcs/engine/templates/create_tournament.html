@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Tournament</title>
+</head>
+<body>
+<h1>Create a New Tournament</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="id_name">Tournament Name:</label>
+    <input type="text" id="id_name" name="name" required>
+    <br>
+    <label for="id_format">Tournament Format:</label>
+    <select id="id_format" name="format" required>
+        <option value="single_elimination">Single Elimination</option>
+        <option value="double_elimination">Double Elimination</option>
+        <option value="round_robin">Round Robin</option>
+        <option value="swiss">Swiss System</option>
+    </select>
+    <br>
+    <label for="id_start_date">Start Date:</label>
+    <input type="date" id="id_start_date" name="start_date" required placeholder="YYYY-MM-DD">
+    <br>
+    <label for="id_swiss_rounds">Swiss Rounds (if applicable):</label>
+    <input type="number" id="id_swiss_rounds" name="swiss_rounds" min="0" step="1">
+    <br>
+    <button type="submit">Create</button>
+</form>
+</body>
+</html>

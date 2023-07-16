@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tournament List</title>
+</head>
+<body>
+<h1>Tournament List</h1>
+<ul>
+    {% for tournament in tournaments %}
+    <li>
+        <a href="{% url 'tournament_detail' tournament.pk %}">{{ tournament.name }}</a>
+        {% if tournament.format == 'swiss' %}
+        (Swiss System, {{ tournament.swiss_rounds }} rounds)
+        {% else %}
+        ({{ tournament.get_format_display }})
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

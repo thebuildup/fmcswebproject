@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "main",
     "leaderboard",
     "users",
+    "engine",
 ]
 
 MIDDLEWARE = [
@@ -84,14 +85,14 @@ WSGI_APPLICATION = "fmcs.wsgi.application"
 # To use Neon with Django, you have to create a Project on Neon and specify the project connection settings in your settings.py in the same way as for standalone Postgres.
 
 DATABASES = {
-  'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'neondb',
-    'USER': 'ramanrudakou',
-    'PASSWORD': 'zoL2r3Vnpfat',
-    'HOST': 'ep-square-art-051666.eu-central-1.aws.neon.tech',
-    'PORT': '5432',
-  }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'neondb',
+        'USER': 'ramanrudakou',
+        'PASSWORD': 'zoL2r3Vnpfat',
+        'HOST': 'ep-square-art-051666.eu-central-1.aws.neon.tech',
+        'PORT': '5432',
+    }
 }
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -127,7 +128,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"), )
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

@@ -98,12 +98,12 @@
                                 <img src="{% static 'images/featured-04.jpg' %}" alt="" style="border-radius: 20px;">
                                 <div class="hover-effect">
                                     <div class="content">
-                                        <h4>{{ event.event_name }}</h4>
+                                        <h4>{{ event.name }}</h4>
                                         <span class="author">
                         <img src="{% static 'images/author.jpg' %}" alt=""
                              style="max-width: 50px; max-height: 50px; border-radius: 50%;">
-                        <h6>{{event.org_name.org_name}}<br><a href="#">@{{event.org_name.description}}</a></h6>
-                        <h6>{{event.status_name.status_name}}<br></h6>
+                        <h6>{{event.org.name}}<br><a href="#">@{{event.org.description}}</a></h6>
+                        <h6>{{event.get_status}}<br></h6>
                       </span>
                                     </div>
                                 </div>
@@ -131,18 +131,18 @@
                     <div class="filters">
                         <ul>
                             <li data-filter="*" class="active">All Events</li>
-                            <li data-filter=".msc">Completed</li>
-                            <li data-filter=".dig">Active</li>
-                            <li data-filter=".blc">Starting Soon</li>
+                            <li data-filter=".msc">Past</li>
+                            <li data-filter=".dig">Ongoing</li>
+                            <li data-filter=".blc">Upcoming</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-12">
                     <div class="row grid">
                         {% for event in events_list %}
-                            {% if event.status_name.status_name == "Completed" %}
+                            {% if event.get_status == "Finished" %}
                                 <div class="col-lg-6 currently-market-item all msc">
-                            {% elif event.status_name.status_name == "Active" %}
+                            {% elif event.get_status == "Ongoing" %}
                                 <div class="col-lg-6 currently-market-item all dig">
                             {% else %}
                                 <div class="col-lg-6 currently-market-item all blc">
@@ -153,20 +153,21 @@
                                      style="border-radius: 20px; min-width: 195px;">
                             </div>
                             <div class="right-content">
-                                <h4>{{ event.event_name }}</h4>
+                                <h4>{{ event.name }}</h4>
                                 <span class="author">
                     <img src="{% static 'images/author.jpg' %}" alt="" style="max-width: 50px; border-radius: 50%;">
-                    <h6>{{event.org_name.org_name}}<br><a href="#">@{{event.org_name.description}}</a></h6>
+                    <h6>{{event.org.name}}<br><a href="#">@{{event.org.description}}</a></h6>
                   </span>
                                 <div class="line-dec"></div>
                                 <span class="bid">
-                    Status<br><strong>{{event.status_name.status_name}}</strong><br>
+                    Status<br><strong>{{event.get_status}}</strong><br>
                   </span>
-                                <span class="ends">
-                    Participations<br><strong>Number</strong><br>
+<!--                                <span class="ends">-->
+                                <span class="bid">
+                    Format<br><strong>{{event.get_format_display}}</strong><br>
                   </span>
                                 <div class="text-button">
-                                    <a href="{% url '404' %}">View Event</a>
+                                    <a href="{% url 'tournament_detail' tournament_id=event.id %}">View Event</a>
                                 </div>
                             </div>
                         </div>

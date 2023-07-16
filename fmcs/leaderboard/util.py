@@ -1,9 +1,11 @@
 """Helper functions."""
 
 from datetime import timedelta
+
 from django.conf import settings
 from django.db import connection
 from django.utils import timezone
+
 from .models import Game, MatchupStatsNode, PlayerStatsNode, RatingPeriod
 from .ratings import calculate_new_rating_period
 
@@ -44,7 +46,7 @@ def process_new_ratings():
 
     if latest_rating_period:
         start_datetime = (
-            latest_rating_period.end_datetime + timedelta.resolution
+                latest_rating_period.end_datetime + timedelta.resolution
         )
     else:
         # No rating periods. Use the date of the earliest game if one

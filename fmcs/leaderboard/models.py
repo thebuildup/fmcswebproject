@@ -1,13 +1,13 @@
-from django.contrib.auth.models import User
-from django.db import models
-from django.dispatch import receiver
-from django.db.models.signals import post_save
-from rest_framework.authtoken.models import Token
-from django.core.exceptions import ValidationError
-from django.db.models import Q
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.db.models import Q
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils import timezone
+
 from . import stats
-from django.contrib.auth.models import AbstractUser
 
 
 # Create your models here.
@@ -343,13 +343,19 @@ class Game(models.Model):
         default=0, help_text="The loser's score."
     )
     datetime_played = models.DateTimeField(
-        auto_now_add=True,
+        # auto_now_add=True,
+        default=timezone.now,
         help_text="The date and time when the game was played.",
     )
     submitted_by = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
         help_text="The user which submitted the game.",
+    )
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.PROTECT,
+        help_text="The event with this game"
     )
     rating_period = models.ForeignKey(
         RatingPeriod,
@@ -655,7 +661,6 @@ def process_game_hook(instance, created, **_):
     """Process a game immediately after game creation."""
     if created:
         instance.process_game()
-
 
 # @receiver(post_save, sender=User)
 # def create_auth_token(instance, created, **_):
