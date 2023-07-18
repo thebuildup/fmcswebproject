@@ -1,7 +1,6 @@
-from django.http import JsonResponse
 from django.shortcuts import render
-from .models import Player, PlayerRatingNode
-from django.core.paginator import Paginator
+
+from .models import Player
 
 
 # Create your views here.
@@ -14,6 +13,7 @@ def ranking_view(request):
 
     context = {
         'top_players': top_players,
+        'players': players
     }
 
     return render(request, 'leaderboard/team_ranking.html', context)
@@ -24,7 +24,7 @@ def search_players(request):
     if keyword:
         players = Player.objects.filter(name__icontains=keyword)
     else:
-        players = Player.objects.all().order_by('playerratingnode__id')
+        players = Player.objects.all().order_by('playerratingnode__ranking')
 
     context = {
         'all_players': players,

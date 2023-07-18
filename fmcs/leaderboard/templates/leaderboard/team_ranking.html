@@ -6,7 +6,8 @@
     <meta name="author" content="templatemo">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap"
+          rel="stylesheet">
 
     <title>FMCS Ranking</title>
 
@@ -21,31 +22,31 @@
     <link rel="stylesheet" href="{% static 'css/owl.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
-<!--
+    <!--
 
-TemplateMo 577 Liberty Market
+    TemplateMo 577 Liberty Market
 
-https://templatemo.com/tm-577-liberty-market
+    https://templatemo.com/tm-577-liberty-market
 
--->
-  </head>
+    -->
+</head>
 <body>
 
-  <!-- ***** Preloader Start ***** -->
-  <div id="js-preloader" class="js-preloader loaded">
+<!-- ***** Preloader Start ***** -->
+<div id="js-preloader" class="js-preloader loaded">
     <div class="preloader-inner">
-      <span class="dot"></span>
-      <div class="dots">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+        <span class="dot"></span>
+        <div class="dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </div>
-  </div>
-  <!-- ***** Preloader End ***** -->
+</div>
+<!-- ***** Preloader End ***** -->
 
-  <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -59,7 +60,9 @@ https://templatemo.com/tm-577-liberty-market
                     <ul class="nav">
                         <li><a href="{% url 'home' %}">Home</a></li>
                         <li><a href="{% url 'events' %}">Events</a></li>
-                        <li><a href="{% url '404' %}">Teams</a></li>
+                        <!--                        <li><a href="{% url '404' %}">Teams</a></li>-->
+                        <li><a href="{% url '404' %}">FMCS Fantasy</a></li>
+                        <li><a href="{% url '404' %}">Ladder</a></li>
                         <li><a href="{% url 'ranking' %}" class="active">Leaderboard</a></li>
                         {% if user.is_authenticated %}
                         <li><a href="{% url 'user_profile' user_id=user.id %}">{{ user.get_username }}</a></li>
@@ -77,103 +80,107 @@ https://templatemo.com/tm-577-liberty-market
         </div>
     </div>
 </header>
-  <!-- ***** Header Area End ***** -->
+<!-- ***** Header Area End ***** -->
 
-  <!-- ***** TOP Players carousel Start ***** -->
-  <div class="categories-collections">
+<!-- ***** TOP Players carousel Start ***** -->
+<div class="categories-collections">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="collections">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="section-heading">
-                  <div class="line-dec"></div>
-                  <h2>FMCS <em>Top</em> Players</h2>
-                </div>
-              </div>
-              <div class="col-lg-12">
-                <div class="owl-collection owl-carousel">
-                  {% for player in top_players %}
-                  <div class="item">
-                    <img src="{% static 'images/logo_fmcs.png' %}" alt="">
-                    <div class="down-content">
-                      <h4>{{ player.name }}</h4>
-                      <span class="collection">Rating:<br><strong>{{ player.rating }}</strong></span>
-                      <span class="category">Ranking:<br><strong>{{ player.ranking }}</strong></span>
-                      <div class="main-button">
-                        <a href="{% url '404' %}">View Profile</a>
-                      </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="collections">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="section-heading">
+                                <div class="line-dec"></div>
+                                <h2>FMCS <em>Top</em> Players</h2>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="owl-collection owl-carousel">
+                                {% for player in top_players %}
+                                <div class="item">
+                                    <img src="{% static 'images/logo_fmcs.png' %}" alt="">
+                                    <div class="down-content">
+                                        <h4>{{ player.name }}</h4>
+                                        <span class="collection">Rating:<br><strong>{{ player.rating|floatformat:"0" }}</strong></span>
+                                        <span class="category">Ranking:<br><strong>{{ player.ranking }}</strong></span>
+                                        <div class="main-button">
+                                            <a href="{% url '404' %}">View Profile</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  {% endfor %}
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-	<!-- ***** TOP Players carousel End ***** -->
+</div>
+<!-- ***** TOP Players carousel End ***** -->
 
 
-  <div class="discover-items">
+<div class="discover-items">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-5">
-          <div class="section-heading">
-            <div class="line-dec"></div>
-            <h2>Leaderboard <em>FMCS</em>.</h2>
-          </div>
-        </div>
-        <div class="col-lg-7">
-        <div id="leaderboard-container">
-            <form id="search-form" name="gs" method="get" role="search">
-    			<div class="row">
-        			<div class="col-lg-4">
-            	<fieldset>
-                	<input type="text" name="keyword" id="searchInput" class="searchText" placeholder="Type Something..." autocomplete="on">
-            	</fieldset>
-        			</div>
-        			<div class="col-lg-3">
-            	<fieldset>
-                	<select name="category" class="form-select" aria-label="Default select example" id="chooseCategory" onchange="this.form.submit()">
-                    	<option value="">All Regions</option>
-                    	<option value="Music">UK</option>
-                    	<option value="Digital">CIS</option>
-                    	<option value="Blockchain">Europe</option>
-                    	<option value="Virtual">Asia</option>
-                    	<option value="Virtual">America</option>
-                	</select>
-            	</fieldset>
-        			</div>
-        			<div class="col-lg-3">
-            	<fieldset>
-                	<select name="ranking_period" class="form-select" aria-label="Default select example" id="chooseCategory" onchange="this.form.submit()">
-                    	<option value="">Ranking Period</option>
-                    	<option value="Ending-Soon">Ending Soon</option>
-                    	<option value="Coming-Soon">Coming Soon</option>
-                    	<option value="Closed">Closed</option>
-                	</select>
-            	</fieldset>
-        	</div>
-        			<div class="col-lg-2">
-            	<fieldset>
-                	<button type="submit" class="main-button">Search</button>
-            	</fieldset>
-        	</div>
-    	</div>
-			</form>
-		</div>
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="section-heading">
+                    <div class="line-dec"></div>
+                    <h2>Leaderboard <em>FMCS</em>.</h2>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div id="leaderboard-container">
+                    <form id="search-form" name="gs" method="get" role="search">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <fieldset>
+                                    <input type="text" name="keyword" id="searchInput" class="searchText"
+                                           placeholder="Type Something..." autocomplete="on">
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-3">
+                                <fieldset>
+                                    <select name="category" class="form-select" aria-label="Default select example"
+                                            id="chooseCategory" onchange="this.form.submit()">
+                                        <option value="">All Regions</option>
+                                        <option value="UK">UK</option>
+                                        <option value="CIS">CIS</option>
+                                        <option value="Europe">Europe</option>
+                                        <option value="Asia">Asia</option>
+                                        <option value="America">America</option>
+                                    </select>
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-3">
+                                <fieldset>
+                                    <select name="ranking_period" class="form-select"
+                                            aria-label="Default select example" id="chooseCategory"
+                                            onchange="this.form.submit()">
+                                        <option value="">Ranking Period</option>
+                                        <option value="Ending-Soon">Ending Soon</option>
+                                        <option value="Coming-Soon">Coming Soon</option>
+                                        <option value="Closed">Closed</option>
+                                    </select>
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-2">
+                                <fieldset>
+                                    <button type="submit" class="main-button">Search</button>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
+            </div>
+            <div id="search-results">
+                {% include 'leaderboard/search_results.html' %}
+            </div>
         </div>
-        <div id="search-results">
-            {% include 'leaderboard/search_results.html' %}
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
 <!-- ***** Footer Start ***** -->
 <footer>
@@ -191,14 +198,14 @@ https://templatemo.com/tm-577-liberty-market
 <!-- ***** Footer End ***** -->
 
 
-  <!-- Scripts -->
+<!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- Bootstrap core JavaScript -->
+<!-- Bootstrap core JavaScript -->
 <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
 
 <script src="{% static 'js/isotope.min.js' %}"></script>
-<script src="{% static 'js/owl-carousel.js' %}"></script>
+<!--<script src="{% static 'js/owl-carousel.js' %}"></script>-->
 
 <script src="{% static 'js/tabs.js' %}"></script>
 <script src="{% static 'js/popup.js' %}"></script>

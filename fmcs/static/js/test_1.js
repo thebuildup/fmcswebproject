@@ -41,7 +41,7 @@ $(document).ready(function() {
 
         var placeData = {
             teams: data.map(function(participant) {
-//                return [participant.name, null];
+//                return [participant.name, participant.name];
                 return [participant.name, null];
             }),
             results: []

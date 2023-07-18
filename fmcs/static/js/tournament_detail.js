@@ -75,7 +75,7 @@ $(document).ready(function() {
         });
     }
 
-	function formatParticipantsData(data) {
+	    function formatParticipantsData(data) {
         // Преобразовать данные участников в необходимый формат без кавычек
         return data.map(function(participant) {
             return { name: participant.name };

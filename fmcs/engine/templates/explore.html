@@ -57,7 +57,7 @@
                         <li><a href="{% url 'home' %}">Home</a></li>
                         <li><a href="{% url 'events' %}" class="active">Events</a></li>
                         <li><a href="{% url '404' %}">Teams</a></li>
-                        <li><a href="{% url '404' %}">Leaderboard</a></li>
+                        <li><a href="{% url 'ranking' %}">Leaderboard</a></li>
                         {% if user.is_authenticated %}
                         <li><a>{{ user.get_username }}</a></li>
                         <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
