@@ -7,7 +7,7 @@ from .models import Player
 
 
 def ranking_view(request):
-    players = Player.objects.all().order_by('playerratingnode__id')
+    players = Player.objects.all().order_by('playerratingnode__ranking')
 
     top_players = players[:3]
 
