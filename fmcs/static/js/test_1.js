@@ -74,7 +74,7 @@ $(document).ready(function() {
 
     // Функция для сохранения данных в POST запросе (если нужно)
     function saveFn(data, placeData) {
-        var json = jQuery.toJSON(data);
+        var json = jQuery.JSON.stringify(data);
         $('#saveOutput').text('POST ' + placeData + ' ' + json);
         /* You probably want to do something like this
         jQuery.ajax("rest/"+userData, {contentType: 'application/json',
