@@ -819,12 +819,11 @@ Categories & Collections Style
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  padding: 120px 0px 150px 0px;
+  padding: 20px 0px 40px 0px;
   position: relative;
 }
 
 .categories-collections:after {
-  background-image: url(/static/images/category-collection-dec.png);
   width: 300px;
   height: 282px;
   position: absolute;
@@ -1422,7 +1421,7 @@ Explore Style
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  padding: 40px 0px 120px 0px;
+  padding: 30px 0px 120px 0px;
   position: relative;
 }
 
