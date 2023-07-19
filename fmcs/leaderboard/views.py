@@ -31,3 +31,7 @@ def search_players(request):
     }
 
     return render(request, 'leaderboard/search_results.html', context)
+
+
+def team_profile(request):
+    return render(request, 'teams/team_profile.html')

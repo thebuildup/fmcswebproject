@@ -2124,3 +2124,293 @@ body {
 @media (max-width: 1200px) {
   
 }
+
+/*
+---------------------------------------------
+Profile Style
+---------------------------------------------
+*/
+
+.main-profile {
+  border-radius: 23px;
+  padding: 30px;
+  background-color: #1f2122;
+}
+
+.main-profile .main-info span {
+  font-size: 14px;
+  color: #fff;
+  background-color: #7453fc;
+  padding: 8px 20px;
+  display: inline-block;
+  border-radius: 25px;
+  font-weight: 400;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  margin-bottom: 15px;
+}
+
+.main-profile .main-info h4 {
+  margin-bottom: 20px;
+}
+
+.main-profile .main-info .main-border-button {
+  margin-top: 25px;
+}
+
+.main-profile ul {
+  border-radius: 23px;
+  padding: 30px;
+  background-color: #27292a;
+}
+
+.main-profile ul li {
+  width: 100%;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #666;
+}
+
+.main-profile ul li span {
+  float: right;
+  font-weight: 500;
+  color: #7453fc;
+}
+
+.main-profile ul li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.clips {
+  margin-top: 30px;
+  border-top: 2px solid #27292a;
+}
+
+.clips .heading-section {
+  margin-top: 30px;
+}
+
+.clips .item  {
+  border-radius: 23px;
+  padding: 30px 15px;
+  background-color: #27292a;
+  margin-bottom: 30px;
+}
+
+.clips .item .thumb {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.clips .item .thumb a {
+  position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-23px, -23px);
+    width: 46px;
+    height: 46px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+    line-height: 46px;
+    color: #ec6090;
+}
+
+.clips .item h4 {
+  font-size: 15px;
+  display: inline-block;
+}
+
+.clips .item span i {
+  color: #ec6090;
+}
+
+.clips .item span {
+  float: right;
+  color: #fff;
+  font-size: 14px;
+}
+
+.clips .main-button {
+  margin-top: 10px;
+  text-align: center;
+}
+
+---------------------------------------------
+Global Styles
+---------------------------------------------
+*/
+html,
+body {
+  background: #1f2122;
+  font-family: 'Poppins', sans-serif;
+}
+
+body .page-content {
+  margin-top: 110px;
+  padding: 60px;
+  border-radius: 23px;
+}
+
+p {
+  font-size: 15px;
+  color: #666;
+  line-height: 30px;
+  margin-bottom: 0px;
+}
+
+::selection {
+  background: #e75e8d;
+  color: #fff;
+}
+
+::-moz-selection {
+  background: #e75e8d;
+  color: #fff;
+}
+
+.templatemo-item {
+	max-width: 80px;
+	border-radius: 23px;
+}
+
+.main-button a {
+  font-size: 14px;
+  color: #fff;
+  background-color: #e75e8d;
+  padding: 12px 30px;
+  display: inline-block;
+  border-radius: 25px;
+  font-weight: 400;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-button a:hover {
+  background-color: #fff;
+  color: #e75e8d;
+}
+
+.main-border-button a {
+  font-size: 14px;
+  color: #7453fc;
+  background-color: transparent;
+  border: 1px solid #7453fc;
+  padding: 12px 30px;
+  display: inline-block;
+  border-radius: 25px;
+  font-weight: 400;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-border-button a:hover {
+  border-color: #fff;
+  background-color: #fff;
+  color: #e75e8d;
+}
+
+.border-no-active a {
+  border-color: #666;
+  color: #666;
+}
+
+.border-no-active a:hover{
+  border-color: #666;
+  color: #666;
+  background-color: transparent;
+}
+
+section {
+  margin-top: 120px;
+}
+
+.heading-section h4 {
+  color: #7453fc;
+  font-size: 34px;
+  text-decoration: none;
+  margin-bottom: 30px;
+}
+
+.heading-section h4 em {
+  color: #fff;
+  font-style: normal;
+  text-decoration: underline;
+}
+
+/*
+---------------------------------------------
+Gaming Library Style
+---------------------------------------------
+*/
+
+.gaming-library {
+  margin-top: 60px;
+  padding: 30px;
+  background-color: #1f2122;
+  border-radius: 23px;
+}
+
+.gaming-library .item {
+  border-bottom: 1px solid #27292a;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+.gaming-library .last-item {
+  margin-bottom: 30px;
+}
+
+.profile-library .last-item {
+  border-bottom: none;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.gaming-library .item ul li {
+  margin-top: 15px;
+}
+
+.gaming-library .item ul li img {
+  margin-top: -30px;
+}
+
+.gaming-library .item ul li {
+  display: inline-block;
+  width: 17%;
+}
+
+.gaming-library .item ul li:first-child {
+  width: 110px;
+}
+
+.gaming-library .item ul li:last-child {
+  width: 15%;
+  text-align: right;
+}
+
+.gaming-library .item ul li h4 {
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.gaming-library .item ul li span {
+  color: #666;
+  font-size: 14px;
+}
+
+.gaming-library .main-button {
+  text-align: center;
+  margin-bottom: -53px;
+}

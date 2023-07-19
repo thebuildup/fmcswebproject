@@ -19,7 +19,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Запрос на отображение всех участников при открытии страницы
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/events/search/', true);
+    xhr.open('GET', '/ranking/search/', true);
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {

@@ -21,6 +21,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("main.urls")),
     path("users/", include("users.urls")),
-    path("events/", include("leaderboard.urls")),
+    path("ranking/", include("leaderboard.urls")),
     path("tournaments/", include("engine.urls")),
 ]
