@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "leaderboard",
     "users",
     "engine",
+    "glicko",
 ]
 
 MIDDLEWARE = [

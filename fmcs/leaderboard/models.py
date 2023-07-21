@@ -89,6 +89,7 @@ class Player(models.Model):
     )
     user = models.OneToOneField(
         User,
+        related_name='leaderboard_player',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
