@@ -88,7 +88,8 @@ WSGI_APPLICATION = "fmcs.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'neondb',
+        # 'NAME': 'neondb',
+        'NAME': 'fmcstest',
         'USER': 'ramanrudakou',
         'PASSWORD': 'zoL2r3Vnpfat',
         'HOST': 'ep-square-art-051666.eu-central-1.aws.neon.tech',

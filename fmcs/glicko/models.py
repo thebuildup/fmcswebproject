@@ -309,7 +309,7 @@ class Match(models.Model):
         blank=True,
         help_text="The number of goals scored by the second player.",
     )
-
+    # Убрать полностью, переписать, чтобы в расчёт рейтинг попадал из PlayerRankingNode
     player1_initial_rating = models.FloatField(
         default=1500.0,
         help_text="The initial rating of player1 before the match.",
