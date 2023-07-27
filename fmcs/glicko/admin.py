@@ -53,6 +53,5 @@ class MatchAdmin(admin.ModelAdmin):
 
 @admin.register(MatchupStatsNode)
 class MatchupStatsNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
-    list_display = ('player1', 'player2', 'games_played', 'player1_wins', 'player2_wins', 'draws', 'losses',
-                    'average_goals_per_game_player1', 'average_goals_per_game_player2', 'win_percentage_player1',
-                    'win_percentage_player2', 'draw_percentage', 'loss_percentage_player1', 'loss_percentage_player2')
+    list_display = ('player1', 'player2', 'game', 'games', 'wins', 'draws', 'losses',
+                    'average_goals_per_game', 'average_goals_against_per_game', 'win_rate')
