@@ -436,42 +436,53 @@ class Game(models.Model):
         if self.winner == self.loser:
             raise ValidationError("Winner and loser must be distinct!")
 
-    def process_game(self):
-        """Update player and matchup stats based on game results."""
-        # Create stats nodes
-        if self.winner_player_stats_node is None:
-            stats.create_player_stats_node(
-                player=self.winner,
-                game=self,
-                previous_node=self.winner.get_latest_player_stats_node(),
-            )
+    @property
+    def winner_player_stats_node(self):
+        """Return the player stats node for the winner."""
+        node_queryset = self.playerstatsnode_set.filter(
+            player=self.winner, game=self
+        )
 
-        if self.loser_player_stats_node is None:
-            stats.create_player_stats_node(
-                player=self.loser,
-                game=self,
-                previous_node=self.loser.get_latest_player_stats_node(),
-            )
+        if node_queryset:
+            return node_queryset.first().id
 
-        if self.winner_matchup_stats_node is None:
-            stats.create_matchup_stats_node(
-                player1=self.winner,
-                player2=self.loser,
-                game=self,
-                previous_node=self.winner.get_latest_matchup_stats_node(
-                    self.loser
-                ),
-            )
+        return None
 
-        if self.loser_matchup_stats_node is None:
-            stats.create_matchup_stats_node(
-                player1=self.loser,
-                player2=self.winner,
-                game=self,
-                previous_node=self.loser.get_latest_matchup_stats_node(
-                    self.winner
-                ),
-            )
+    @property
+    def loser_player_stats_node(self):
+        """Return the player stats node for the loser."""
+        node_queryset = self.playerstatsnode_set.filter(
+            player=self.loser, game=self
+        )
+
+        if node_queryset:
+            return node_queryset.first().id
+
+        return None
+
+    @property
+    def winner_matchup_stats_node(self):
+        """Return the matchup stats node for the winner."""
+        node_queryset = self.matchupstatsnode_set.filter(
+            player1=self.winner, player2=self.loser, game=self
+        )
+
+        if node_queryset:
+            return node_queryset.first().id
+
+        return None
+
+    @property
+    def loser_matchup_stats_node(self):
+        """Return the matchup stats node for the loser."""
+        node_queryset = self.matchupstatsnode_set.filter(
+            player1=self.loser, player2=self.winner, game=self
+        )
+
+        if node_queryset:
+            return node_queryset.first().id
+
+        return None
 
 
 class PlayerStatsNode(models.Model):

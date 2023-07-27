@@ -66,9 +66,9 @@ def calculate_new_common_stats(old_games, old_wins, old_draws, old_losses,
     )
 
     new_win_rate = new_wins / new_games
-    new_draw_rate = new_draws / new_games
-    new_lose_rate = new_losses / new_games
-
+    # new_draw_rate = new_draws / new_games
+    # new_lose_rate = new_losses / new_games
+    print("new stats")
     new_stats['games'] = new_games
     new_stats['wins'] = new_wins
     new_stats['draws'] = new_draws
@@ -146,41 +146,6 @@ def create_matchup_stats_node(player1, player2, game, previous_node=None):
             model corresponding to the matchup's last stats node
             (between player 1 and 2—in that order—as provided).
     """
-    matchup_stats_node = models.MatchupStatsNode()
-
-    matchup_stats_node.player1 = player1
-    matchup_stats_node.player2 = player2
-    matchup_stats_node.game = game
-
-    # Если previous_node не предоставлен, установим начальные значения
-    # if previous_node is None:
-    #     matchup_stats_node.games = 1
-    #     if game.is_winner(player1):
-    #         matchup_stats_node.player1_wins = 1
-    #         matchup_stats_node.player2_wins = 0
-    #     else:
-    #         matchup_stats_node.player1_wins = 0
-    #         matchup_stats_node.player2_wins = 1
-    #     matchup_stats_node.draws = 1 if game.is_draw(player1) else 0
-    #     matchup_stats_node.player1_goals = game.get_player_goals(player1)
-    #     matchup_stats_node.player2_goals = game.get_player_goals(player2)
-    #
-    # # В противном случае, установим значения на основе предыдущего узла
-    # else:
-    #     matchup_stats_node.games = previous_node.games + 1
-    #     if game.is_winner(player1):
-    #         matchup_stats_node.player1_wins = previous_node.player1_wins + 1
-    #         matchup_stats_node.player2_wins = previous_node.player2_wins
-    #     else:
-    #         matchup_stats_node.player1_wins = previous_node.player1_wins
-    #         matchup_stats_node.player2_wins = previous_node.player2_wins + 1
-    #     matchup_stats_node.draws = previous_node.draws + int(game.is_draw(player1))
-    #     matchup_stats_node.player1_goals = calculate_new_average(
-    #         previous_node.player1_goals, previous_node.games, game.get_player_goals(player1)
-    #     )
-    #     matchup_stats_node.player2_goals = calculate_new_average(
-    #         previous_node.player2_goals, previous_node.games, game.get_player_goals(player2)
-    #     )
 
     # Grab previous stats (if they exist)
     if previous_node is not None:

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import post_save
@@ -351,16 +352,6 @@ class Match(models.Model):
         blank=True,
         help_text="The number of goals scored by the second player in fifth match.",
     )
-    # Убрать полностью, переписать, чтобы в расчёт рейтинг попадал из PlayerRankingNode
-    # player1_initial_rating = models.FloatField(
-    #     default=1500.0,
-    #     help_text="The initial rating of player1 before the match.",
-    # )
-    #
-    # player2_initial_rating = models.FloatField(
-    #     default=1500.0,
-    #     help_text="The initial rating of player2 before the match.",
-    # )
 
     date_played = models.DateTimeField(
         # auto_now_add=True,
@@ -381,43 +372,102 @@ class Match(models.Model):
         help_text="The rating period this game is apart of",
     )
 
+    class Meta:
+        """Model metadata."""
+
+        # Order by most recently played
+        ordering = ["-date_played"]
+
+    def __str__(self):
+        """String representation of a game."""
+        return str(self.id)
+
+    @property
+    def player1_player_stats_node(self):
+        """Return the player stats node for the winner."""
+        node_queryset = self.playerstatsnode_set.filter(
+            player=self.player1, game=self
+        )
+
+        if node_queryset:
+            return node_queryset.first().id
+
+        return None
+
+    @property
+    def player2_player_stats_node(self):
+        """Return the player stats node for the loser."""
+        node_queryset = self.playerstatsnode_set.filter(
+            player=self.player2, game=self
+        )
+
+        if node_queryset:
+            return node_queryset.first().id
+
+        return None
+
+    @property
+    def player1_matchup_stats_node(self):
+        """Return the matchup stats node for the winner."""
+        node_queryset = self.matchupstatsnode_set.filter(
+            player1=self.player1, player2=self.player2, game=self
+        )
+
+        if node_queryset:
+            return node_queryset.first().id
+
+        return None
+
+    @property
+    def player2_matchup_stats_node(self):
+        """Return the matchup stats node for the loser."""
+        node_queryset = self.matchupstatsnode_set.filter(
+            player1=self.player1, player2=self.player2, game=self
+        )
+
+        if node_queryset:
+            return node_queryset.first().id
+
+        return None
+
+    def clean(self):
+        if self.player1 == self.player2:
+            raise ValidationError("Player 1 and Player 2 must be distinct!")
+
     def process_game(self):
+
         """Process the match and update PlayerStatsNode and MatchupStatsNode."""
-        player1_stats_node = PlayerStatsNode.objects.get_or_create(
-            player=self.player1, game_id=self.id, defaults={
-                'games': 0, 'wins': 0, 'draws': 0, 'losses': 0,
-                'average_goals_per_game': 0, 'average_goals_against_per_game': 0,
-                # 'rating': self.get_player_initial_rating(self.player1),
-                # 'rating_deviation': settings.GLICKO_BASE_RD,
-            }
-        )[0]
+        num_matches = self.num_matches
 
-        player2_stats_node = PlayerStatsNode.objects.get_or_create(
-            player=self.player2, game_id=self.id, defaults={
-                'games': 0, 'wins': 0, 'draws': 0, 'losses': 0,
-                'average_goals_per_game': 0, 'average_goals_against_per_game': 0,
-                # 'rating': self.get_player_initial_rating(self.player2),
-                # 'rating_deviation': settings.GLICKO_BASE_RD,
-            }
-        )[0]
+        if num_matches == 0:
+            return self.player1_goals, self.player2_goals
+        elif num_matches == 1:
+            return self.player1_goals_m2, self.player2_goals_m2
+        elif num_matches == 2:
+            return self.player1_goals_m3, self.player2_goals_m3
+        elif num_matches == 3:
+            return self.player1_goals_m4, self.player2_goals_m4
+        elif num_matches == 4:
+            return self.player1_goals_m5, self.player2_goals_m5
+        else:
+            raise ValueError("Invalid match_index: must be between 0 and 4")
+        print("process game")
+        player1_stats_node = self.player1_player_stats_node
+        player2_stats_node = self.player2_player_stats_node
 
-        for i in range(self.num_matches):
+        if not player1_stats_node:
+            player1_stats_node = PlayerStatsNode.objects.create(player=self.player1, game=self)
+
+        if not player2_stats_node:
+            player2_stats_node = PlayerStatsNode.objects.create(player=self.player2, game=self)
+
+        for i in range(num_matches):
+            player1_goals, player2_goals = self.get_player_goals(i)
+
             # Обработать результаты матчей и обновить узлы статистики
-            if i == 0:
-                self.process_single_game(player1_stats_node, player2_stats_node, self.player1_goals, self.player2_goals)
-            elif i == 1:
-                self.process_single_game(player1_stats_node, player2_stats_node, self.player1_goals_m2,
-                                         self.player2_goals_m2)
-            elif i == 2:
-                self.process_single_game(player1_stats_node, player2_stats_node, self.player1_goals_m3,
-                                         self.player2_goals_m3)
-            elif i == 3:
-                self.process_single_game(player1_stats_node, player2_stats_node, self.player1_goals_m4,
-                                         self.player2_goals_m4)
-            elif i == 4:
-                self.process_single_game(player1_stats_node, player2_stats_node, self.player1_goals_m5,
-                                         self.player2_goals_m5)
+            self.process_single_game(player1_stats_node, player2_stats_node, player1_goals, player2_goals)
 
+            # Создать или обновить узел статистики для комбинации player1 и player2
             stats.create_matchup_stats_node(player1_stats_node.player, player2_stats_node.player, game=self)
 
     def is_winner(self, player):
