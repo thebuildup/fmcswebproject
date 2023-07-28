@@ -27,6 +27,7 @@ def calculate_new_common_stats(old_games, old_wins, old_draws, old_losses,
                                old_average_goals_per_game, old_average_goals_against_per_game,
                                player_is_winner, player_score, opponent_score):
     print("calculate_new_common_stats")
+    print(player_is_winner)
     """Calculate new common stats for a player.
 
     This can be done in the context of all games or a particular
@@ -169,10 +170,12 @@ def create_matchup_stats_node(player1, player2, game, previous_node=None):
         average_goals_per_game = 0
         average_goals_against_per_game = 0
 
-    if game.is_winner == player1:
+    if game.is_winner(player1):
+        winner = player1
         player_score = game.player1_goals
         opponent_score = game.player2_goals
-    elif game.is_winner == player2:
+    elif game.is_winner(player2):
+        winner = player2
         player_score = game.player2_goals
         opponent_score = game.player1_goals
     else:
@@ -191,7 +194,7 @@ def create_matchup_stats_node(player1, player2, game, previous_node=None):
             old_losses=losses,
             old_average_goals_per_game=average_goals_per_game,
             old_average_goals_against_per_game=average_goals_against_per_game,
-            player_is_winner=game.is_winner == player1,
+            player_is_winner=game.is_winner(player1),
             player_score=player_score,
             opponent_score=opponent_score,
         ),

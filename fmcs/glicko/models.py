@@ -500,7 +500,6 @@ class Match(models.Model):
             )
 
     def is_winner(self, player):
-        print("is_winner")
         """Проверяет, является ли данный игрок победителем матча на основе забитых голов.
 
         Аргументы:
@@ -509,39 +508,35 @@ class Match(models.Model):
         Возвращает:
             True, если данный игрок является победителем, иначе False.
         """
-        if player == self.player1 and self.player1_goals > self.player2_goals:
-            return True
-        elif player == self.player2 and self.player2_goals > self.player1_goals:
+        if (player == self.player1 and self.player1_goals > self.player2_goals) or \
+                (player == self.player2 and self.player2_goals > self.player1_goals):
             return True
         else:
             return False
 
     def is_loser(self, player):
-        print("is_winner")
-        """Проверяет, является ли данный игрок победителем матча на основе забитых голов.
+        """Проверяет, является ли данный игрок проигравшим матча на основе забитых голов.
 
         Аргументы:
             player: Экземпляр модели Player для проверки.
 
         Возвращает:
-            True, если данный игрок является победителем, иначе False.
+            True, если данный игрок является проигравшим, иначе False.
         """
-        if player == self.player1 and self.player1_goals < self.player2_goals:
-            return True
-        elif player == self.player2 and self.player2_goals < self.player1_goals:
+        if (player == self.player1 and self.player1_goals < self.player2_goals) or \
+                (player == self.player2 and self.player2_goals < self.player1_goals):
             return True
         else:
             return False
 
     def is_draw(self, player):
-        print("is_draw")
-        """Проверяет, является ли данный игрок победителем матча на основе забитых голов.
+        """Проверяет, является ли данный игрок участником ничьей в матче на основе забитых голов.
 
         Аргументы:
             player: Экземпляр модели Player для проверки.
 
         Возвращает:
-            True, если данный игрок является победителем, иначе False.
+            True, если данный игрок участвовал в ничьей, иначе False.
         """
         if (player == self.player1 or player == self.player2) and self.player1_goals == self.player2_goals:
             return True
