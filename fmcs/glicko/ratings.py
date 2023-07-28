@@ -25,7 +25,8 @@ def calculate_new_rating_period(start_datetime, end_datetime):
     for player_id in players_with_games:
         player_stats = PlayerStatsNode.objects.filter(player_id=player_id,
                                                       player__matches_as_player1__rating_period=new_rating_period)
-        player_matches = player_stats.values_list('player__matches_as_player1', 'player1_goals', 'player2_goals')
+        player_matches = player_stats.values_list('player__matches_as_player1', 'average_goals_per_game',
+                                                  'player2_goals')
         opponent_ratings = []
         opponent_RDs = []
         scores = []

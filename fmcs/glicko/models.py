@@ -58,6 +58,7 @@ class Player(models.Model):
 
     @property
     def ranking(self):
+        print("ranking")
         """Returns the players ranking."""
         node = self.get_latest_player_rating_node()
 
@@ -68,6 +69,7 @@ class Player(models.Model):
 
     @property
     def ranking_delta(self):
+        print("ranking_delta")
         """Returns the players ranking change."""
         node = self.get_latest_player_rating_node()
 
@@ -78,6 +80,7 @@ class Player(models.Model):
 
     @property
     def rating(self):
+        print("rating")
         """Returns the players rating."""
         node = self.get_latest_player_rating_node()
 
@@ -91,6 +94,7 @@ class Player(models.Model):
 
     @property
     def rating_deviation(self):
+        print("rating_deviation")
         """Returns the players rating deviation."""
         node = self.get_latest_player_rating_node()
 
@@ -104,6 +108,7 @@ class Player(models.Model):
 
     @property
     def rating_volatility(self):
+        print("rating_volatility")
         """Returns the players rating volatility.
 
         This parameter is only relevant if the rating algorithm is
@@ -124,6 +129,7 @@ class Player(models.Model):
 
     @property
     def inactivity(self):
+        print("inactivity")
         """Returns the players rating period inactivity."""
         node = self.get_latest_player_rating_node()
 
@@ -134,6 +140,7 @@ class Player(models.Model):
 
     @property
     def is_active(self):
+        print("is_active")
         """Returns whether the player is active."""
         node = self.get_latest_player_rating_node()
 
@@ -144,6 +151,7 @@ class Player(models.Model):
 
     @property
     def games(self):
+        print("games")
         """Returns the players game count."""
         node = self.get_latest_player_stats_node()
 
@@ -154,6 +162,7 @@ class Player(models.Model):
 
     @property
     def wins(self):
+        print("wins")
         """Returns the players win count."""
         node = self.get_latest_player_stats_node()
 
@@ -164,6 +173,7 @@ class Player(models.Model):
 
     @property
     def draws(self):
+        print("draws")
         """Returns the players win count."""
         node = self.get_latest_player_stats_node()
 
@@ -174,6 +184,7 @@ class Player(models.Model):
 
     @property
     def losses(self):
+        print("losses")
         """Returns the players losses count."""
         node = self.get_latest_player_stats_node()
 
@@ -184,6 +195,7 @@ class Player(models.Model):
 
     @property
     def win_rate(self):
+        print("win_rate")
         """Returns the players win rate."""
         node = self.get_latest_player_stats_node()
 
@@ -194,6 +206,7 @@ class Player(models.Model):
 
     @property
     def average_goals_per_game(self):
+        print("average_goals_per_game")
         """Returns the players average goals per game."""
         node = self.get_latest_player_stats_node()
 
@@ -204,6 +217,7 @@ class Player(models.Model):
 
     @property
     def average_goals_against_per_game(self):
+        print("average_goals_against_per_game")
         """Returns the players average goals against per game."""
         node = self.get_latest_player_stats_node()
 
@@ -213,10 +227,12 @@ class Player(models.Model):
         return node.average_goals_against_per_game
 
     def get_all_player_stats_nodes(self):
+        print("get_all_player_stats_nodes")
         """Returns all of the player's stats nodes."""
         return PlayerStatsNode.objects.filter(player=self)
 
     def get_latest_player_stats_node(self):
+        print("get_latest_player_stats_node")
         """Returns the player's latest stats node.
 
         Returns None if no stats nodes exist for the player.
@@ -229,6 +245,7 @@ class Player(models.Model):
         return None
 
     def get_all_matchup_stats_nodes(self, opponent):
+        print("get_all_matchup_stats_nodes")
         """Returns all of the player's matchup stats nodes against an opponent.
 
         Args:
@@ -239,6 +256,8 @@ class Player(models.Model):
         return MatchupStatsNode.objects.filter(player1=self, player2=opponent)
 
     def get_latest_matchup_stats_node(self, opponent):
+        print("get_latest_matchup_stats_node")
+        print(opponent)
         """Returns the player's latest matchup stats node against an opponent.
 
         Args:
@@ -254,10 +273,12 @@ class Player(models.Model):
         return None
 
     def get_all_player_rating_nodes(self):
+        print("get_all_player_rating_nodes")
         """Returns all of the player's rating nodes."""
         return PlayerRatingNode.objects.filter(player=self)
 
     def get_latest_player_rating_node(self):
+        print("get_latest_player_rating_node")
         """Returns the player's latest rating node.
 
         Returns None if no rating nodes exist for the player.
@@ -270,6 +291,7 @@ class Player(models.Model):
         return None
 
     def get_first_game_played(self):
+        print("get_first_game_played")
         """Returns the first game played by the player.
 
         Returns None if the player has not played games.
@@ -384,6 +406,7 @@ class Match(models.Model):
 
     @property
     def player1_player_stats_node(self):
+        print("player1_player_stats_node")
         """Return the player stats node for the winner."""
         node_queryset = self.playerstatsnode_set.filter(
             player=self.player1, game=self
@@ -396,6 +419,7 @@ class Match(models.Model):
 
     @property
     def player2_player_stats_node(self):
+        print("player2_player_stats_node")
         """Return the player stats node for the loser."""
         node_queryset = self.playerstatsnode_set.filter(
             player=self.player2, game=self
@@ -408,6 +432,7 @@ class Match(models.Model):
 
     @property
     def player1_matchup_stats_node(self):
+        print("player1_matchup_stats_node")
         """Return the matchup stats node for the winner."""
         node_queryset = self.matchupstatsnode_set.filter(
             player1=self.player1, player2=self.player2, game=self
@@ -420,9 +445,10 @@ class Match(models.Model):
 
     @property
     def player2_matchup_stats_node(self):
+        print("player2_matchup_stats_node")
         """Return the matchup stats node for the loser."""
         node_queryset = self.matchupstatsnode_set.filter(
-            player1=self.player1, player2=self.player2, game=self
+            player2=self.player1, player1=self.player2, game=self
         )
 
         if node_queryset:
@@ -435,42 +461,46 @@ class Match(models.Model):
             raise ValidationError("Player 1 and Player 2 must be distinct!")
 
     def process_game(self):
-
+        print("process_game")
         """Process the match and update PlayerStatsNode and MatchupStatsNode."""
         num_matches = self.num_matches
 
-        if num_matches == 0:
-            return self.player1_goals, self.player2_goals
-        elif num_matches == 1:
-            return self.player1_goals_m2, self.player2_goals_m2
-        elif num_matches == 2:
-            return self.player1_goals_m3, self.player2_goals_m3
-        elif num_matches == 3:
-            return self.player1_goals_m4, self.player2_goals_m4
-        elif num_matches == 4:
-            return self.player1_goals_m5, self.player2_goals_m5
-        else:
-            raise ValueError("Invalid match_index: must be between 0 and 4")
-        print("process game")
-        player1_stats_node = self.player1_player_stats_node
-        player2_stats_node = self.player2_player_stats_node
+        if self.player1_player_stats_node is None:
+            stats.create_player_stats_node(
+                player=self.player1,
+                game=self,
+                previous_node=self.player1.get_latest_player_stats_node(),
+            )
 
-        if not player1_stats_node:
-            player1_stats_node = PlayerStatsNode.objects.create(player=self.player1, game=self)
+        if self.player2_player_stats_node is None:
+            stats.create_player_stats_node(
+                player=self.player2,
+                game=self,
+                previous_node=self.player2.get_latest_player_stats_node(),
+            )
 
-        if not player2_stats_node:
-            player2_stats_node = PlayerStatsNode.objects.create(player=self.player2, game=self)
+        if self.player1_matchup_stats_node is None:
+            stats.create_matchup_stats_node(
+                player1=self.player1,
+                player2=self.player2,
+                game=self,
+                previous_node=self.player1.get_latest_matchup_stats_node(
+                    self.player2
+                ),
+            )
 
-        for i in range(num_matches):
-            player1_goals, player2_goals = self.get_player_goals(i)
-
-            # Обработать результаты матчей и обновить узлы статистики
-            self.process_single_game(player1_stats_node, player2_stats_node, player1_goals, player2_goals)
-
-            # Создать или обновить узел статистики для комбинации player1 и player2
-            stats.create_matchup_stats_node(player1_stats_node.player, player2_stats_node.player, game=self)
+        if self.player2_matchup_stats_node is None:
+            stats.create_matchup_stats_node(
+                player1=self.player2,
+                player2=self.player1,
+                game=self,
+                previous_node=self.player2.get_latest_matchup_stats_node(
+                    self.player1
+                ),
+            )
 
     def is_winner(self, player):
+        print("is_winner")
         """Проверяет, является ли данный игрок победителем матча на основе забитых голов.
 
         Аргументы:
@@ -486,7 +516,25 @@ class Match(models.Model):
         else:
             return False
 
+    def is_loser(self, player):
+        print("is_winner")
+        """Проверяет, является ли данный игрок победителем матча на основе забитых голов.
+
+        Аргументы:
+            player: Экземпляр модели Player для проверки.
+
+        Возвращает:
+            True, если данный игрок является победителем, иначе False.
+        """
+        if player == self.player1 and self.player1_goals < self.player2_goals:
+            return True
+        elif player == self.player2 and self.player2_goals < self.player1_goals:
+            return True
+        else:
+            return False
+
     def is_draw(self, player):
+        print("is_draw")
         """Проверяет, является ли данный игрок победителем матча на основе забитых голов.
 
         Аргументы:
@@ -501,6 +549,7 @@ class Match(models.Model):
             return False
 
     def get_player_goals(self, player):
+        print("get_player_goals")
         """Возвращает количество забитых голов указанного игрока в матче.
 
         Аргументы:
@@ -516,7 +565,25 @@ class Match(models.Model):
         else:
             raise ValueError("Player is not a participant in this match.")
 
+    def get_opponent_goals(self, player):
+        print("get_player_goals")
+        """Возвращает количество забитых голов указанного игрока в матче.
+
+        Аргументы:
+            player: Экземпляр модели Player для получения забитых голов.
+
+        Возвращает:
+            Количество забитых голов указанного игрока в текущем матче.
+        """
+        if player == self.player1:
+            return self.player2_goals
+        elif player == self.player2:
+            return self.player1_goals
+        else:
+            raise ValueError("Player is not a participant in this match.")
+
     def get_player_initial_rating(self, player):
+        print("get_player_initial_rating")
         """Get the initial rating of the player from PlayerRankingNode."""
         try:
             player_ranking_node = PlayerRatingNode.objects.get(player=player)
@@ -525,6 +592,7 @@ class Match(models.Model):
             return settings.GLICKO_BASE_RATING  # Если узел не найден, используйте значение по умолчанию
 
     def process_single_game(self, player1_stats_node, player2_stats_node, player1_goals, player2_goals):
+        print("process_single_game")
         """Process a single game result and update PlayerStatsNode."""
         if player1_goals is not None and player2_goals is not None:
             # Обновить статистику игроков
@@ -616,7 +684,7 @@ class PlayerStatsNode(models.Model):
     @property
     def datetime(self):
         """Returns the date of the node's game."""
-        return self.game.datetime_played
+        return self.game.date_played
 
 
 class PlayerRatingNode(models.Model):
@@ -847,11 +915,12 @@ class MatchupStatsNode(models.Model):
     @property
     def datetime(self):
         """Returns the date of the node's game."""
-        return self.game.datetime_played
+        return self.game.date_played
 
 
 @receiver(post_save, sender=Match)
 def process_game_hook(instance, created, **_):
+    print("process_game_hook")
     """Process a game immediately after game creation."""
     if created:
         instance.process_game()

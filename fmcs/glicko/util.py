@@ -10,7 +10,7 @@ from .models import Match, MatchupStatsNode, PlayerStatsNode, RatingPeriod
 from .ratings import calculate_new_rating_period
 
 
-def reprocess_all_stats(reset_id_counter=True):
+def glicko_reprocess_all_stats(reset_id_counter=True):
     print('Reprocess all stats')
     """Wipes all existing stats nodes and creates new stats nodes.
 
@@ -26,18 +26,18 @@ def reprocess_all_stats(reset_id_counter=True):
     if reset_id_counter:
         with connection.cursor() as cursor:
             cursor.execute(
-                "ALTER SEQUENCE leaderboard_playerstatsnode_id_seq RESTART with 1"
+                "ALTER SEQUENCE glicko_playerstatsnode_id_seq RESTART with 1"
             )
             cursor.execute(
-                "ALTER SEQUENCE leaderboard_matchupstatsnode_id_seq RESTART with 1"
+                "ALTER SEQUENCE glicko_matchupstatsnode_id_seq RESTART with 1"
             )
 
     # Recreate nodes
-    for game in Match.objects.order_by("datetime_played"):
+    for game in Match.objects.order_by("date_played"):
         game.process_game()
 
 
-def process_new_ratings():
+def glicko_process_new_ratings():
     print('Process new ratings')
     """Calculates any new potential rating periods."""
     # Find first datetime where there exists unrated games. Recall that
@@ -56,7 +56,7 @@ def process_new_ratings():
         if not earliest_game:
             return
 
-        start_datetime = earliest_game.datetime_played
+        start_datetime = earliest_game.date_played
 
     # Find out whether there's been enough time elapsed to make a new
     # rating period
@@ -72,10 +72,10 @@ def process_new_ratings():
     calculate_new_rating_period(start_datetime, end_datetime)
     print('Calculate completed')
     # Go again
-    process_new_ratings()
+    glicko_process_new_ratings()
 
 
-def reprocess_all_ratings(reset_id_counter=True):
+def glicko_reprocess_all_ratings(reset_id_counter=True):
     print('Reprocess all ratings')
     """Wipes existing rating periods and rating nodes and creates new ones.
 
@@ -93,11 +93,11 @@ def reprocess_all_ratings(reset_id_counter=True):
     if reset_id_counter:
         with connection.cursor() as cursor:
             cursor.execute(
-                "ALTER SEQUENCE leaderboard_playerratingnode_id_seq RESTART with 1"
+                "ALTER SEQUENCE glicko_playerratingnode_id_seq RESTART with 1"
             )
             cursor.execute(
-                "ALTER SEQUENCE leaderboard_ratingperiod_id_seq RESTART with 1"
+                "ALTER SEQUENCE glicko_ratingperiod_id_seq RESTART with 1"
             )
 
     # Recalculate ratings
-    process_new_ratings()
+    glicko_process_new_ratings()

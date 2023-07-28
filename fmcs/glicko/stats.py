@@ -9,6 +9,7 @@ from . import models
 
 
 def calculate_new_average(avg, N, new_val):
+    print("calculate_new_average")
     """Calculate new average given a new value and an existing average.
 
     Args:
@@ -25,6 +26,7 @@ def calculate_new_average(avg, N, new_val):
 def calculate_new_common_stats(old_games, old_wins, old_draws, old_losses,
                                old_average_goals_per_game, old_average_goals_against_per_game,
                                player_is_winner, player_score, opponent_score):
+    print("calculate_new_common_stats")
     """Calculate new common stats for a player.
 
     This can be done in the context of all games or a particular
@@ -52,7 +54,6 @@ def calculate_new_common_stats(old_games, old_wins, old_draws, old_losses,
         rate.
     """
     new_stats = {}
-
     new_games = old_games + 1
     new_wins = old_wins + int(player_is_winner)
     new_draws = old_draws + int(not player_is_winner and player_score == opponent_score)
@@ -83,6 +84,7 @@ def calculate_new_common_stats(old_games, old_wins, old_draws, old_losses,
 
 
 def create_player_stats_node(player, game, previous_node=None):
+    print("create_player_stats_node")
     """Create a stats node for a player.
 
     Args:
@@ -102,7 +104,7 @@ def create_player_stats_node(player, game, previous_node=None):
     if previous_node is None:
         player_stats_node.games = 1
         player_stats_node.wins = 1 if game.is_winner(player) else 0
-        player_stats_node.draws = 1 if game.is_draw() else 0
+        player_stats_node.draws = 1 if game.is_draw(player) else 0
         player_stats_node.losses = 1 if game.is_loser(player) else 0
         player_stats_node.average_goals_per_game = game.get_player_goals(player)
         player_stats_node.average_goals_against_per_game = game.get_opponent_goals(player)
@@ -113,7 +115,7 @@ def create_player_stats_node(player, game, previous_node=None):
     else:
         player_stats_node.games = previous_node.games + 1
         player_stats_node.wins = previous_node.wins + int(game.is_winner(player))
-        player_stats_node.draws = previous_node.draws + int(game.is_draw())
+        player_stats_node.draws = previous_node.draws + int(game.is_draw(player))
         player_stats_node.losses = previous_node.losses + int(game.is_loser(player))
         player_stats_node.average_goals_per_game = calculate_new_average(
             previous_node.average_goals_per_game, previous_node.games, game.get_player_goals(player)
@@ -133,6 +135,8 @@ def create_player_stats_node(player, game, previous_node=None):
 
 
 def create_matchup_stats_node(player1, player2, game, previous_node=None):
+    print("create_matchup_stats_node")
+
     """Create a stats node for a player.
 
     Args:
