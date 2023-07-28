@@ -56,7 +56,7 @@ class GameAdmin(admin.ModelAdmin):
         "loser",
         "winner_score",
         "loser_score",
-        "event",
+        # "event",
         "rating_period",
     )
 

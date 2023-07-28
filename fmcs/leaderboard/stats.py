@@ -4,6 +4,7 @@ from . import models
 
 
 def calculate_new_average(avg, N, new_val):
+    print("calculate_new_average")
     """Calculate new average given a new value and an existing average.
 
     Args:
@@ -18,15 +19,16 @@ def calculate_new_average(avg, N, new_val):
 
 
 def calculate_new_common_stats(
-    old_games,
-    old_wins,
-    old_losses,
-    old_average_goals_per_game,
-    old_average_goals_against_per_game,
-    player_is_winner,
-    player_score,
-    opponent_score,
+        old_games,
+        old_wins,
+        old_losses,
+        old_average_goals_per_game,
+        old_average_goals_against_per_game,
+        player_is_winner,
+        player_score,
+        opponent_score,
 ):
+    print("calculate_new_common_stats")
     """Calculate new common stats for a player.
 
     This can be done in the context of all games or a particular
@@ -84,6 +86,7 @@ def calculate_new_common_stats(
 
 
 def create_player_stats_node(player, game, previous_node=None):
+    print("create_player_stats_node")
     """Create a stats node for a player.
 
     Args:
@@ -135,6 +138,7 @@ def create_player_stats_node(player, game, previous_node=None):
 
 
 def create_matchup_stats_node(player1, player2, game, previous_node=None):
+    print("create_matchup_stats_node")
     """Create a stats node for a player.
 
     Args:

@@ -108,6 +108,7 @@ class Player(models.Model):
 
     @property
     def ranking(self):
+        print("ranking")
         """Returns the players ranking."""
         node = self.get_latest_player_rating_node()
 
@@ -118,6 +119,7 @@ class Player(models.Model):
 
     @property
     def ranking_delta(self):
+        print("rating_delta")
         """Returns the players ranking change."""
         node = self.get_latest_player_rating_node()
 
@@ -128,6 +130,7 @@ class Player(models.Model):
 
     @property
     def rating(self):
+        print("rating")
         """Returns the players rating."""
         node = self.get_latest_player_rating_node()
 
@@ -141,6 +144,7 @@ class Player(models.Model):
 
     @property
     def rating_deviation(self):
+        print("rating_deviation")
         """Returns the players rating deviation."""
         node = self.get_latest_player_rating_node()
 
@@ -154,6 +158,7 @@ class Player(models.Model):
 
     @property
     def rating_volatility(self):
+        print("rating_volatility")
         """Returns the players rating volatility.
 
         This parameter is only relevant if the rating algorithm is
@@ -174,6 +179,7 @@ class Player(models.Model):
 
     @property
     def inactivity(self):
+        print("inactivity")
         """Returns the players rating period inactivity."""
         node = self.get_latest_player_rating_node()
 
@@ -184,6 +190,7 @@ class Player(models.Model):
 
     @property
     def is_active(self):
+        print("is_active")
         """Returns whether the player is active."""
         node = self.get_latest_player_rating_node()
 
@@ -194,6 +201,7 @@ class Player(models.Model):
 
     @property
     def games(self):
+        print("games")
         """Returns the players game count."""
         node = self.get_latest_player_stats_node()
 
@@ -204,6 +212,7 @@ class Player(models.Model):
 
     @property
     def wins(self):
+        print("wins")
         """Returns the players win count."""
         node = self.get_latest_player_stats_node()
 
@@ -214,6 +223,7 @@ class Player(models.Model):
 
     @property
     def losses(self):
+        print("losses")
         """Returns the players losses count."""
         node = self.get_latest_player_stats_node()
 
@@ -224,6 +234,7 @@ class Player(models.Model):
 
     @property
     def win_rate(self):
+        print("win_rate")
         """Returns the players win rate."""
         node = self.get_latest_player_stats_node()
 
@@ -234,6 +245,7 @@ class Player(models.Model):
 
     @property
     def average_goals_per_game(self):
+        print("average_goals_per_game")
         """Returns the players average goals per game."""
         node = self.get_latest_player_stats_node()
 
@@ -244,6 +256,7 @@ class Player(models.Model):
 
     @property
     def average_goals_against_per_game(self):
+        print("average_goals_against_per_game")
         """Returns the players average goals against per game."""
         node = self.get_latest_player_stats_node()
 
@@ -253,10 +266,12 @@ class Player(models.Model):
         return node.average_goals_against_per_game
 
     def get_all_player_stats_nodes(self):
+        print("get_all_player_stats_nodes")
         """Returns all of the player's stats nodes."""
         return PlayerStatsNode.objects.filter(player=self)
 
     def get_latest_player_stats_node(self):
+        print("get_latest_player_stats_node")
         """Returns the player's latest stats node.
 
         Returns None if no stats nodes exist for the player.
@@ -269,6 +284,7 @@ class Player(models.Model):
         return None
 
     def get_all_matchup_stats_nodes(self, opponent):
+        print("get_all_matchup_stats_nodes")
         """Returns all of the player's matchup stats nodes against an opponent.
 
         Args:
@@ -279,6 +295,7 @@ class Player(models.Model):
         return MatchupStatsNode.objects.filter(player1=self, player2=opponent)
 
     def get_latest_matchup_stats_node(self, opponent):
+        print("get_latest_matchup_stats_node")
         """Returns the player's latest matchup stats node against an opponent.
 
         Args:
@@ -294,10 +311,12 @@ class Player(models.Model):
         return None
 
     def get_all_player_rating_nodes(self):
+        print("get_all_player_rating_nodes")
         """Returns all of the player's rating nodes."""
         return PlayerRatingNode.objects.filter(player=self)
 
     def get_latest_player_rating_node(self):
+        print("get_latest_player_rating_node")
         """Returns the player's latest rating node.
 
         Returns None if no rating nodes exist for the player.
@@ -310,6 +329,7 @@ class Player(models.Model):
         return None
 
     def get_first_game_played(self):
+        print("get_first_game_played")
         """Returns the first game played by the player.
 
         Returns None if the player has not played games.
@@ -353,11 +373,11 @@ class Game(models.Model):
         on_delete=models.PROTECT,
         help_text="The user which submitted the game.",
     )
-    event = models.ForeignKey(
-        Event,
-        on_delete=models.PROTECT,
-        help_text="The event with this game"
-    )
+    # event = models.ForeignKey(
+    #     Event,
+    #     on_delete=models.PROTECT,
+    #     help_text="The event with this game"
+    # )
     rating_period = models.ForeignKey(
         RatingPeriod,
         blank=True,
@@ -378,6 +398,7 @@ class Game(models.Model):
 
     @property
     def winner_player_stats_node(self):
+        print("winner_player_stats_node")
         """Return the player stats node for the winner."""
         node_queryset = self.playerstatsnode_set.filter(
             player=self.winner, game=self
@@ -390,6 +411,7 @@ class Game(models.Model):
 
     @property
     def loser_player_stats_node(self):
+        print("loser_player_stats_node")
         """Return the player stats node for the loser."""
         node_queryset = self.playerstatsnode_set.filter(
             player=self.loser, game=self
@@ -402,6 +424,7 @@ class Game(models.Model):
 
     @property
     def winner_matchup_stats_node(self):
+        print("winner_matchup_stats_node")
         """Return the matchup stats node for the winner."""
         node_queryset = self.matchupstatsnode_set.filter(
             player1=self.winner, player2=self.loser, game=self
@@ -414,6 +437,7 @@ class Game(models.Model):
 
     @property
     def loser_matchup_stats_node(self):
+        print("loser_matchup_stats_node")
         """Return the matchup stats node for the loser."""
         node_queryset = self.matchupstatsnode_set.filter(
             player1=self.loser, player2=self.winner, game=self
@@ -436,53 +460,43 @@ class Game(models.Model):
         if self.winner == self.loser:
             raise ValidationError("Winner and loser must be distinct!")
 
-    @property
-    def winner_player_stats_node(self):
-        """Return the player stats node for the winner."""
-        node_queryset = self.playerstatsnode_set.filter(
-            player=self.winner, game=self
-        )
+    def process_game(self):
+        print("process_game")
+        """Update player and matchup stats based on game results."""
+        # Create stats nodes
+        if self.winner_player_stats_node is None:
+            stats.create_player_stats_node(
+                player=self.winner,
+                game=self,
+                previous_node=self.winner.get_latest_player_stats_node(),
+            )
 
-        if node_queryset:
-            return node_queryset.first().id
+        if self.loser_player_stats_node is None:
+            stats.create_player_stats_node(
+                player=self.loser,
+                game=self,
+                previous_node=self.loser.get_latest_player_stats_node(),
+            )
 
-        return None
+        if self.winner_matchup_stats_node is None:
+            stats.create_matchup_stats_node(
+                player1=self.winner,
+                player2=self.loser,
+                game=self,
+                previous_node=self.winner.get_latest_matchup_stats_node(
+                    self.loser
+                ),
+            )
 
-    @property
-    def loser_player_stats_node(self):
-        """Return the player stats node for the loser."""
-        node_queryset = self.playerstatsnode_set.filter(
-            player=self.loser, game=self
-        )
-
-        if node_queryset:
-            return node_queryset.first().id
-
-        return None
-
-    @property
-    def winner_matchup_stats_node(self):
-        """Return the matchup stats node for the winner."""
-        node_queryset = self.matchupstatsnode_set.filter(
-            player1=self.winner, player2=self.loser, game=self
-        )
-
-        if node_queryset:
-            return node_queryset.first().id
-
-        return None
-
-    @property
-    def loser_matchup_stats_node(self):
-        """Return the matchup stats node for the loser."""
-        node_queryset = self.matchupstatsnode_set.filter(
-            player1=self.loser, player2=self.winner, game=self
-        )
-
-        if node_queryset:
-            return node_queryset.first().id
-
-        return None
+        if self.loser_matchup_stats_node is None:
+            stats.create_matchup_stats_node(
+                player1=self.loser,
+                player2=self.winner,
+                game=self,
+                previous_node=self.loser.get_latest_matchup_stats_node(
+                    self.winner
+                ),
+            )
 
 
 class PlayerStatsNode(models.Model):
@@ -670,6 +684,7 @@ class PlayerRatingNode(models.Model):
 
 @receiver(post_save, sender=Game)
 def process_game_hook(instance, created, **_):
+    print("process_game_hook")
     """Process a game immediately after game creation."""
     if created:
         instance.process_game()
