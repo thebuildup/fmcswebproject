@@ -290,18 +290,28 @@ class Player(models.Model):
 
         return None
 
-    def get_first_game_played(self):
-        print("get_first_game_played")
-        """Returns the first game played by the player.
+    # def get_first_game_played(self):
+    #     print("get_first_game_played")
+    #     """Returns the first game played by the player.
+    #
+    #     Returns None if the player has not played games.
+    #     """
+    #     games_played = Match.objects.filter(Q(winner=self) | Q(loser=self))
+    #
+    #     if not games_played:
+    #         return None
+    #
+    #     return games_played.last()
 
-        Returns None if the player has not played games.
-        """
-        games_played = Match.objects.filter(Q(winner=self) | Q(loser=self))
+    def get_first_game_played(self):
+        games_played = Match.objects.filter(
+            Q(player1=self) | Q(player2=self)
+        ).order_by('date_played')
 
         if not games_played:
             return None
 
-        return games_played.last()
+        return games_played.first()
 
 
 class Match(models.Model):
@@ -577,14 +587,14 @@ class Match(models.Model):
         else:
             raise ValueError("Player is not a participant in this match.")
 
-    def get_player_initial_rating(self, player):
-        print("get_player_initial_rating")
-        """Get the initial rating of the player from PlayerRankingNode."""
-        try:
-            player_ranking_node = PlayerRatingNode.objects.get(player=player)
-            return player_ranking_node.rating
-        except PlayerRatingNode.DoesNotExist:
-            return settings.GLICKO_BASE_RATING  # Если узел не найден, используйте значение по умолчанию
+    # def get_player_initial_rating(self, player):
+    #     print("get_player_initial_rating")
+    #     """Get the initial rating of the player from PlayerRankingNode."""
+    #     try:
+    #         player_ranking_node = PlayerRatingNode.objects.get(player=player)
+    #         return player_ranking_node.rating
+    #     except PlayerRatingNode.DoesNotExist:
+    #         return settings.GLICKO_BASE_RATING  # Если узел не найден, используйте значение по умолчанию
 
     def process_single_game(self, player1_stats_node, player2_stats_node, player1_goals, player2_goals):
         print("process_single_game")
