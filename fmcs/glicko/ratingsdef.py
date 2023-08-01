@@ -37,6 +37,7 @@ def calculate_new_rating_period(start_datetime, end_datetime):
     for player in players:
         # Don't calculate anything if the player's first game is prior
         # to this rating period
+        # first_game_played = player.get_first_game_played()
         games_played_by_player = games.filter(Q(player1=player) | Q(player2=player))
         if games_played_by_player:
             print(f"{player} has played the following games:")
@@ -77,32 +78,14 @@ def calculate_new_rating_period(start_datetime, end_datetime):
                 opponent_ratings.append(game.player1.rating)
                 opponent_rating_deviations.append(game.player1.rating_deviation)
 
-        # Ensure that the lists have the same length
-        num_matches = len(scores)
-        max_length = max(len(scores), len(opponent_ratings), len(opponent_rating_deviations))
-        if num_matches < max_length:
-            scores.extend([0.5] * (max_length - num_matches))
-            opponent_ratings.extend([player_rating] * (max_length - num_matches))
-            opponent_rating_deviations.extend([player_rating_deviation] * (max_length - num_matches))
-
         # Glicko-2
-        num_matches = len(scores)
-        max_length = max(len(scores), len(opponent_ratings), len(opponent_rating_deviations))
-        if num_matches < max_length:
-            scores.extend([0.5] * (max_length - num_matches))
-            opponent_ratings.extend([player_rating] * (max_length - num_matches))
-            opponent_rating_deviations.extend([player_rating_deviation] * (max_length - num_matches))
-
-        total_rating_change = sum(scores[i] * (opponent_ratings[i] - player_rating) for i in range(num_matches))
-        total_rating_deviation_change = sum(
-            scores[i] * (opponent_rating_deviations[i] ** 2) for i in range(num_matches))
-        avg_rating_change = total_rating_change / num_matches
-        avg_rating_deviation_change = total_rating_deviation_change / num_matches
-
-        new_player_rating, new_player_rating_deviation, new_player_rating_volatility = (
-            player_rating + avg_rating_change,
-            player_rating_deviation + avg_rating_deviation_change,
-            player_rating_volatility,
+        new_player_rating, new_player_rating_deviation, new_player_rating_volatility = glicko2.calculate_player_rating(
+            r=player_rating,
+            RD=player_rating_deviation,
+            sigma=player_rating_volatility,
+            opponent_rs=opponent_ratings,
+            opponent_RDs=opponent_rating_deviations,
+            scores=scores,
         )
 
         # Calculate new inactivity
