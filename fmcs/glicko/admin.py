@@ -47,7 +47,10 @@ class MatchAdmin(admin.ModelAdmin):
     list_per_page = 200
 
     list_display = (
-        'id', 'player1', 'player2', 'player1_goals', 'player2_goals', 'date_played', 'confirmed',
+        'id', 'player1', 'player2', 'num_matches', 'player1_goals_m1', 'player2_goals_m1', 'player1_goals_m2',
+        'player2_goals_m2',
+        'player1_goals_m3', 'player2_goals_m3', 'player1_goals_m4', 'player2_goals_m4', 'player1_goals_m5',
+        'player2_goals_m5', 'date_played', 'confirmed',
         'rating_period')
 
 

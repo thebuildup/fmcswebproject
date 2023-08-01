@@ -8,7 +8,8 @@
 from . import models
 
 
-def calculate_new_average(avg, N, new_val):
+# def calculate_new_average(avg, N, new_val):
+def calculate_new_average(avg, N, new_vals):
     print("calculate_new_average")
     """Calculate new average given a new value and an existing average.
 
@@ -20,7 +21,10 @@ def calculate_new_average(avg, N, new_val):
     Returns:
         The new average value.
     """
-    return (avg * N + new_val) / (N + 1)
+    if isinstance(new_vals, list):
+        return (avg * N + sum(new_vals)) / (N + len(new_vals))
+    else:
+        return (avg * N + new_vals) / (N + 1)
 
 
 def calculate_new_common_stats(old_games, old_wins, old_draws, old_losses,
@@ -84,35 +88,76 @@ def calculate_new_common_stats(old_games, old_wins, old_draws, old_losses,
     return new_stats
 
 
+# def create_player_stats_node(player, game, previous_node=None):
+#     print("create_player_stats_node")
+#     """Create a stats node for a player.
+#
+#     Args:
+#         player: An instance of the Player model corresponding to the
+#             player.
+#         game: An instance of the Match model corresponding to the game to
+#             adjust stats from.
+#         previous_node: An optional instance of the PlayerStatsNode model
+#             corresponding to the player's last stats node.
+#     """
+#     player_stats_node = models.PlayerStatsNode()
+#
+#     player_stats_node.player = player
+#     player_stats_node.game = game
+#
+#     # Set initial values if previous_node is not provided
+#     if previous_node is None:
+#         player_stats_node.games = 1
+#         player_stats_node.wins = 1 if game.is_winner(player) else 0
+#         player_stats_node.draws = 1 if game.is_draw(player) else 0
+#         player_stats_node.losses = 1 if game.is_loser(player) else 0
+#         player_stats_node.average_goals_per_game = game.get_player_goals(player)
+#         player_stats_node.average_goals_against_per_game = game.get_opponent_goals(player)
+#         # player_stats_node.rating = player.initial_rating
+#         # player_stats_node.rating_deviation = player.initial_rd
+#
+#     # Set values based on previous_node if provided
+#     else:
+#         player_stats_node.games = previous_node.games + 1
+#         player_stats_node.wins = previous_node.wins + int(game.is_winner(player))
+#         player_stats_node.draws = previous_node.draws + int(game.is_draw(player))
+#         player_stats_node.losses = previous_node.losses + int(game.is_loser(player))
+#         player_stats_node.average_goals_per_game = calculate_new_average(
+#             previous_node.average_goals_per_game, previous_node.games, game.get_player_goals(player)
+#         )
+#         player_stats_node.average_goals_against_per_game = calculate_new_average(
+#             previous_node.average_goals_against_per_game, previous_node.games, game.get_opponent_goals(player)
+#         )
+#         # player_stats_node.rating = previous_node.rating
+#         # player_stats_node.rating_deviation = previous_node.rating_deviation
+#
+#     # Calculate and set the win rate, draw rate, and lose rate
+#     player_stats_node.win_rate = player_stats_node.wins / player_stats_node.games
+#     # player_stats_node.draw_rate = player_stats_node.draws / player_stats_node.games
+#     # player_stats_node.lose_rate = player_stats_node.losses / player_stats_node.games
+#
+#     player_stats_node.save()
+
 def create_player_stats_node(player, game, previous_node=None):
     print("create_player_stats_node")
     """Create a stats node for a player.
 
     Args:
-        player: An instance of the Player model corresponding to the
-            player.
-        game: An instance of the Match model corresponding to the game to
-            adjust stats from.
-        previous_node: An optional instance of the PlayerStatsNode model
-            corresponding to the player's last stats node.
+        player: An instance of the Player model corresponding to the player.
+        game: An instance of the Match model corresponding to the game to adjust stats from.
+        previous_node: An optional instance of the PlayerStatsNode model corresponding to the player's last stats node.
     """
     player_stats_node = models.PlayerStatsNode()
-
     player_stats_node.player = player
     player_stats_node.game = game
 
-    # Set initial values if previous_node is not provided
     if previous_node is None:
-        player_stats_node.games = 1
-        player_stats_node.wins = 1 if game.is_winner(player) else 0
-        player_stats_node.draws = 1 if game.is_draw(player) else 0
-        player_stats_node.losses = 1 if game.is_loser(player) else 0
-        player_stats_node.average_goals_per_game = game.get_player_goals(player)
-        player_stats_node.average_goals_against_per_game = game.get_opponent_goals(player)
-        # player_stats_node.rating = player.initial_rating
-        # player_stats_node.rating_deviation = player.initial_rd
-
-    # Set values based on previous_node if provided
+        player_stats_node.games = 0
+        player_stats_node.wins = 0
+        player_stats_node.draws = 0
+        player_stats_node.losses = 0
+        player_stats_node.average_goals_per_game = 0.0
+        player_stats_node.average_goals_against_per_game = 0.0
     else:
         player_stats_node.games = previous_node.games + 1
         player_stats_node.wins = previous_node.wins + int(game.is_winner(player))
@@ -124,13 +169,44 @@ def create_player_stats_node(player, game, previous_node=None):
         player_stats_node.average_goals_against_per_game = calculate_new_average(
             previous_node.average_goals_against_per_game, previous_node.games, game.get_opponent_goals(player)
         )
-        # player_stats_node.rating = previous_node.rating
-        # player_stats_node.rating_deviation = previous_node.rating_deviation
+
+    # Accumulate stats from each match of the player
+    wins = player_stats_node.wins
+    draws = player_stats_node.draws
+    losses = player_stats_node.losses
+    total_goals_scored = player_stats_node.average_goals_per_game * player_stats_node.games
+    total_goals_conceded = player_stats_node.average_goals_against_per_game * player_stats_node.games
+
+    for i in range(game.num_matches):
+        player1_goals = getattr(game, f'player1_goals_m{i + 1}', None)
+        player2_goals = getattr(game, f'player2_goals_m{i + 1}', None)
+
+        if player1_goals is not None and player2_goals is not None:
+            player_stats_node.games += 1
+
+            if player1_goals > player2_goals:
+                wins += 1
+            elif player1_goals < player2_goals:
+                losses += 1
+            else:
+                draws += 1
+
+            total_goals_scored += player1_goals
+            total_goals_conceded += player2_goals
+
+    # Update stats based on the accumulated values
+    player_stats_node.wins = wins
+    player_stats_node.draws = draws
+    player_stats_node.losses = losses
+
+    if player_stats_node.games > 0:
+        player_stats_node.average_goals_per_game = total_goals_scored / player_stats_node.games
+        player_stats_node.average_goals_against_per_game = total_goals_conceded / player_stats_node.games
 
     # Calculate and set the win rate, draw rate, and lose rate
-    player_stats_node.win_rate = player_stats_node.wins / player_stats_node.games
-    # player_stats_node.draw_rate = player_stats_node.draws / player_stats_node.games
-    # player_stats_node.lose_rate = player_stats_node.losses / player_stats_node.games
+    player_stats_node.win_rate = wins / player_stats_node.games if player_stats_node.games > 0 else 0.0
+    # player_stats_node.draw_rate = draws / player_stats_node.games if player_stats_node.games > 0 else 0.0
+    # player_stats_node.lose_rate = losses / player_stats_node.games if player_stats_node.games > 0 else 0.0
 
     player_stats_node.save()
 
@@ -170,32 +246,53 @@ def create_matchup_stats_node(player1, player2, game, previous_node=None):
         average_goals_per_game = 0
         average_goals_against_per_game = 0
 
-    if game.is_winner(player1):
-        winner = player1
-        player_score = game.player1_goals
-        opponent_score = game.player2_goals
-    elif game.is_winner(player2):
-        winner = player2
-        player_score = game.player2_goals
-        opponent_score = game.player1_goals
-    else:
-        player_score = game.player1_goals
-        opponent_score = game.player2_goals
+    # player_score = []
+    # opponent_score = []
 
+    for i in range(1, game.num_matches + 1):
+        player1_goals = getattr(game, f'player1_goals_m{i}', None)
+        player2_goals = getattr(game, f'player2_goals_m{i}', None)
+
+        if player1_goals is not None and player2_goals is not None:
+            games += 1
+
+            if player1_goals > player2_goals:
+                wins += 1
+            elif player1_goals < player2_goals:
+                losses += 1
+            else:
+                draws += 1
+
+            average_goals_per_game = calculate_new_average(average_goals_per_game, games, player1_goals)
+            average_goals_against_per_game = calculate_new_average(average_goals_against_per_game, games, player2_goals)
+
+    win_rate = wins / games if games > 0 else 0.0
     # Create the node
+    # models.MatchupStatsNode.objects.create(
+    #     player1=player1,
+    #     player2=player2,
+    #     game=game,
+    #     **calculate_new_common_stats(
+    #         old_games=games,
+    #         old_wins=wins,
+    #         old_draws=draws,
+    #         old_losses=losses,
+    #         old_average_goals_per_game=average_goals_per_game,
+    #         old_average_goals_against_per_game=average_goals_against_per_game,
+    #         player_is_winner=game.is_winner(player1),
+    #         player_score=player_score,
+    #         opponent_score=opponent_score,
+    #     ),
+    # )
     models.MatchupStatsNode.objects.create(
         player1=player1,
         player2=player2,
         game=game,
-        **calculate_new_common_stats(
-            old_games=games,
-            old_wins=wins,
-            old_draws=draws,
-            old_losses=losses,
-            old_average_goals_per_game=average_goals_per_game,
-            old_average_goals_against_per_game=average_goals_against_per_game,
-            player_is_winner=game.is_winner(player1),
-            player_score=player_score,
-            opponent_score=opponent_score,
-        ),
+        games=games,
+        wins=wins,
+        draws=draws,
+        losses=losses,
+        average_goals_per_game=average_goals_per_game,
+        average_goals_against_per_game=average_goals_against_per_game,
+        win_rate=win_rate,
     )

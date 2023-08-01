@@ -334,12 +334,12 @@ class Match(models.Model):
         help_text="The number of matches played between the players (1 to 5)."
     )
 
-    player1_goals = models.PositiveSmallIntegerField(
+    player1_goals_m1 = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
         help_text="The number of goals scored by the first player in first match.",
     )
-    player2_goals = models.PositiveSmallIntegerField(
+    player2_goals_m1 = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
         help_text="The number of goals scored by the second player in first match.",
@@ -518,8 +518,8 @@ class Match(models.Model):
         Возвращает:
             True, если данный игрок является победителем, иначе False.
         """
-        if (player == self.player1 and self.player1_goals > self.player2_goals) or \
-                (player == self.player2 and self.player2_goals > self.player1_goals):
+        if (player == self.player1 and self.player1_goals_m1 > self.player2_goals_m1) or \
+                (player == self.player2 and self.player2_goals_m1 > self.player1_goals_m1):
             return True
         else:
             return False
@@ -533,8 +533,8 @@ class Match(models.Model):
         Возвращает:
             True, если данный игрок является проигравшим, иначе False.
         """
-        if (player == self.player1 and self.player1_goals < self.player2_goals) or \
-                (player == self.player2 and self.player2_goals < self.player1_goals):
+        if (player == self.player1 and self.player1_goals_m1 < self.player2_goals_m1) or \
+                (player == self.player2 and self.player2_goals_m1 < self.player1_goals_m1):
             return True
         else:
             return False
@@ -548,7 +548,7 @@ class Match(models.Model):
         Возвращает:
             True, если данный игрок участвовал в ничьей, иначе False.
         """
-        if (player == self.player1 or player == self.player2) and self.player1_goals == self.player2_goals:
+        if (player == self.player1 or player == self.player2) and self.player1_goals_m1 == self.player2_goals_m1:
             return True
         else:
             return False
@@ -564,9 +564,9 @@ class Match(models.Model):
             Количество забитых голов указанного игрока в текущем матче.
         """
         if player == self.player1:
-            return self.player1_goals
+            return self.player1_goals_m1
         elif player == self.player2:
-            return self.player2_goals
+            return self.player2_goals_m1
         else:
             raise ValueError("Player is not a participant in this match.")
 
@@ -581,9 +581,9 @@ class Match(models.Model):
             Количество забитых голов указанного игрока в текущем матче.
         """
         if player == self.player1:
-            return self.player2_goals
+            return self.player2_goals_m1
         elif player == self.player2:
-            return self.player1_goals
+            return self.player1_goals_m1
         else:
             raise ValueError("Player is not a participant in this match.")
 
@@ -596,18 +596,18 @@ class Match(models.Model):
     #     except PlayerRatingNode.DoesNotExist:
     #         return settings.GLICKO_BASE_RATING  # Если узел не найден, используйте значение по умолчанию
 
-    def process_single_game(self, player1_stats_node, player2_stats_node, player1_goals, player2_goals):
+    def process_single_game(self, player1_stats_node, player2_stats_node, player1_goals_m1, player2_goals_m1):
         print("process_single_game")
         """Process a single game result and update PlayerStatsNode."""
-        if player1_goals is not None and player2_goals is not None:
+        if player1_goals_m1 is not None and player2_goals_m1 is not None:
             # Обновить статистику игроков
             player1_stats_node.games += 1
             player2_stats_node.games += 1
 
-            if player1_goals > player2_goals:
+            if player1_goals_m1 > player2_goals_m1:
                 player1_stats_node.wins += 1
                 player2_stats_node.losses += 1
-            elif player1_goals < player2_goals:
+            elif player1_goals_m1 < player2_goals_m1:
                 player1_stats_node.losses += 1
                 player2_stats_node.wins += 1
             else:
@@ -616,19 +616,66 @@ class Match(models.Model):
 
             # Используем функцию для пересчета средних значений
             player1_stats_node.average_goals_per_game = stats.calculate_new_average(
-                player1_stats_node.average_goals_per_game, player1_stats_node.games - 1, player1_goals
+                player1_stats_node.average_goals_per_game, player1_stats_node.games - 1, player1_goals_m1
             )
             player2_stats_node.average_goals_per_game = stats.calculate_new_average(
-                player2_stats_node.average_goals_per_game, player2_stats_node.games - 1, player2_goals
+                player2_stats_node.average_goals_per_game, player2_stats_node.games - 1, player2_goals_m1
             )
 
             player1_stats_node.average_goals_against_per_game = stats.calculate_new_average(
-                player1_stats_node.average_goals_against_per_game, player1_stats_node.games - 1, player2_goals
+                player1_stats_node.average_goals_against_per_game, player1_stats_node.games - 1, player2_goals_m1
             )
             player2_stats_node.average_goals_against_per_game = stats.calculate_new_average(
-                player2_stats_node.average_goals_against_per_game, player2_stats_node.games - 1, player1_goals
+                player2_stats_node.average_goals_against_per_game, player2_stats_node.games - 1, player1_goals_m1
             )
 
+        player1_stats_node.save()
+        player2_stats_node.save()
+
+    def process_multiple_games(self, player1_stats_node, player2_stats_node, player1_goals_list, player2_goals_list):
+        print("process_multiple_games")
+        """Process multiple game results and update PlayerStatsNode for each match."""
+
+        if len(player1_goals_list) != len(player2_goals_list):
+            raise ValueError("The number of goals for both players must be the same.")
+
+        num_matches = len(player1_goals_list)
+
+        for match_num in range(num_matches):
+            player1_goals = player1_goals_list[match_num]
+            player2_goals = player2_goals_list[match_num]
+
+            if player1_goals is not None and player2_goals is not None:
+                # Обновить статистику игроков для текущего матча
+                player1_stats_node.games += 1
+                player2_stats_node.games += 1
+
+                if player1_goals > player2_goals:
+                    player1_stats_node.wins += 1
+                    player2_stats_node.losses += 1
+                elif player1_goals < player2_goals:
+                    player1_stats_node.losses += 1
+                    player2_stats_node.wins += 1
+                else:
+                    player1_stats_node.draws += 1
+                    player2_stats_node.draws += 1
+
+                # Используем функцию для пересчета средних значений
+                player1_stats_node.average_goals_per_game = stats.calculate_new_average(
+                    player1_stats_node.average_goals_per_game, player1_stats_node.games - 1, player1_goals
+                )
+                player2_stats_node.average_goals_per_game = stats.calculate_new_average(
+                    player2_stats_node.average_goals_per_game, player2_stats_node.games - 1, player2_goals
+                )
+
+                player1_stats_node.average_goals_against_per_game = stats.calculate_new_average(
+                    player1_stats_node.average_goals_against_per_game, player1_stats_node.games - 1, player2_goals
+                )
+                player2_stats_node.average_goals_against_per_game = stats.calculate_new_average(
+                    player2_stats_node.average_goals_against_per_game, player2_stats_node.games - 1, player1_goals
+                )
+
+        # Save the updated statistics for both players after processing all matches
         player1_stats_node.save()
         player2_stats_node.save()
 
