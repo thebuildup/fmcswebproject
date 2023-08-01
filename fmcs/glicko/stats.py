@@ -243,11 +243,14 @@ def create_matchup_stats_node(player1, player2, game, previous_node=None):
         wins = 0
         draws = 0
         losses = 0
-        average_goals_per_game = 0
-        average_goals_against_per_game = 0
+        average_goals_per_game = 0.0
+        average_goals_against_per_game = 0.0
 
     # player_score = []
     # opponent_score = []
+
+    total_goals_scored = average_goals_per_game * games
+    total_goals_conceded = average_goals_against_per_game * games
 
     for i in range(1, game.num_matches + 1):
         player1_goals = getattr(game, f'player1_goals_m{i}', None)
@@ -263,27 +266,15 @@ def create_matchup_stats_node(player1, player2, game, previous_node=None):
             else:
                 draws += 1
 
-            average_goals_per_game = calculate_new_average(average_goals_per_game, games, player1_goals)
-            average_goals_against_per_game = calculate_new_average(average_goals_against_per_game, games, player2_goals)
+            total_goals_scored += player1_goals
+            total_goals_conceded += player2_goals
 
     win_rate = wins / games if games > 0 else 0.0
-    # Create the node
-    # models.MatchupStatsNode.objects.create(
-    #     player1=player1,
-    #     player2=player2,
-    #     game=game,
-    #     **calculate_new_common_stats(
-    #         old_games=games,
-    #         old_wins=wins,
-    #         old_draws=draws,
-    #         old_losses=losses,
-    #         old_average_goals_per_game=average_goals_per_game,
-    #         old_average_goals_against_per_game=average_goals_against_per_game,
-    #         player_is_winner=game.is_winner(player1),
-    #         player_score=player_score,
-    #         opponent_score=opponent_score,
-    #     ),
-    # )
+
+    if games > 0:
+        average_goals_per_game = total_goals_scored / games
+        average_goals_against_per_game = total_goals_conceded / games
+    
     models.MatchupStatsNode.objects.create(
         player1=player1,
         player2=player2,
