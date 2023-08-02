@@ -159,16 +159,12 @@ def create_player_stats_node(player, game, previous_node=None):
         player_stats_node.average_goals_per_game = 0.0
         player_stats_node.average_goals_against_per_game = 0.0
     else:
-        player_stats_node.games = previous_node.games + 1
-        player_stats_node.wins = previous_node.wins + int(game.is_winner(player))
-        player_stats_node.draws = previous_node.draws + int(game.is_draw(player))
-        player_stats_node.losses = previous_node.losses + int(game.is_loser(player))
-        player_stats_node.average_goals_per_game = calculate_new_average(
-            previous_node.average_goals_per_game, previous_node.games, game.get_player_goals(player)
-        )
-        player_stats_node.average_goals_against_per_game = calculate_new_average(
-            previous_node.average_goals_against_per_game, previous_node.games, game.get_opponent_goals(player)
-        )
+        player_stats_node.games = previous_node.games
+        player_stats_node.wins = previous_node.wins
+        player_stats_node.draws = previous_node.draws
+        player_stats_node.losses = previous_node.losses
+        player_stats_node.average_goals_per_game = previous_node.average_goals_per_game
+        player_stats_node.average_goals_against_per_game = previous_node.average_goals_against_per_game
 
     # Accumulate stats from each match of the player
     wins = player_stats_node.wins
@@ -274,7 +270,7 @@ def create_matchup_stats_node(player1, player2, game, previous_node=None):
     if games > 0:
         average_goals_per_game = total_goals_scored / games
         average_goals_against_per_game = total_goals_conceded / games
-    
+
     models.MatchupStatsNode.objects.create(
         player1=player1,
         player2=player2,
