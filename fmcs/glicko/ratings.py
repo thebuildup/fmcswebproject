@@ -1,13 +1,50 @@
+from django.utils import timezone
 from django.db.models import Q
 from . import models
 from . import glicko2
 from django.conf import settings
 
 
+def calculate_average_rating(rating, rating_deviation, rating_volatility,
+                             opponent_ratings, opponent_rating_deviations, scores, num_matches):
+    """Calculate the average rating based on multiple matches.
+    Args:
+        rating: The player's current rating.
+        rating_deviation: The player's current rating deviation.
+        rating_volatility: The player's current rating volatility.
+        opponent_ratings: A list of opponent ratings for each match.
+        opponent_rating_deviations: A list of opponent rating deviations for each match.
+        scores: A list of scores for each match.
+        num_matches: The number of matches to consider for calculating the average rating.
+    Returns:
+        A three-tuple containing the player's new average rating, rating deviation, and rating volatility.
+    """
+    total_rating = rating
+    total_rating_deviation = rating_deviation
+    print(total_rating)
+    for i in range(num_matches):
+        # Glicko-2
+        new_player_rating, new_player_rating_deviation, new_player_rating_volatility = glicko2.calculate_player_rating(
+            r=total_rating,
+            RD=total_rating_deviation,
+            sigma=rating_volatility,
+            opponent_rs=[opponent_ratings[i]],
+            opponent_RDs=[opponent_rating_deviations[i]],
+            scores=[scores[i]],
+        )
+
+        total_rating = new_player_rating
+        total_rating_deviation = new_player_rating_deviation
+
+    average_rating = total_rating
+    average_rating_deviation = total_rating_deviation
+
+    return average_rating, average_rating_deviation, rating_volatility
+
+
 def calculate_new_rating_period(start_datetime, end_datetime):
     print("calc new rating period")
     """Calculate a new ratings and a corresponding new rating period.
-
     Args:
         start_datetime: The datetime for the start of the rating period.
         end_datetime: The datetime for the end of the rating period.
@@ -44,6 +81,8 @@ def calculate_new_rating_period(start_datetime, end_datetime):
                 print(f"  - {game}")
         else:
             print(f"{player} has no games in the rating period")
+            continue
+
         first_game_played = player.get_first_game_played()
         print(player)
         if (
@@ -61,8 +100,9 @@ def calculate_new_rating_period(start_datetime, end_datetime):
         opponent_ratings = []
         opponent_rating_deviations = []
         scores = []
+        num_matches = games_played_by_player.count()
 
-        for game in games:
+        for game in games_played_by_player:
             if game.is_winner(player):
                 scores.append(1.0)
             elif game.is_loser(player):
@@ -77,32 +117,10 @@ def calculate_new_rating_period(start_datetime, end_datetime):
                 opponent_ratings.append(game.player1.rating)
                 opponent_rating_deviations.append(game.player1.rating_deviation)
 
-        # Ensure that the lists have the same length
-        num_matches = len(scores)
-        max_length = max(len(scores), len(opponent_ratings), len(opponent_rating_deviations))
-        if num_matches < max_length:
-            scores.extend([0.5] * (max_length - num_matches))
-            opponent_ratings.extend([player_rating] * (max_length - num_matches))
-            opponent_rating_deviations.extend([player_rating_deviation] * (max_length - num_matches))
-
-        # Glicko-2
-        num_matches = len(scores)
-        max_length = max(len(scores), len(opponent_ratings), len(opponent_rating_deviations))
-        if num_matches < max_length:
-            scores.extend([0.5] * (max_length - num_matches))
-            opponent_ratings.extend([player_rating] * (max_length - num_matches))
-            opponent_rating_deviations.extend([player_rating_deviation] * (max_length - num_matches))
-
-        total_rating_change = sum(scores[i] * (opponent_ratings[i] - player_rating) for i in range(num_matches))
-        total_rating_deviation_change = sum(
-            scores[i] * (opponent_rating_deviations[i] ** 2) for i in range(num_matches))
-        avg_rating_change = total_rating_change / num_matches
-        avg_rating_deviation_change = total_rating_deviation_change / num_matches
-
-        new_player_rating, new_player_rating_deviation, new_player_rating_volatility = (
-            player_rating + avg_rating_change,
-            player_rating_deviation + avg_rating_deviation_change,
-            player_rating_volatility,
+        # Calculate average rating based on multiple matches
+        new_player_rating, new_player_rating_deviation, new_player_rating_volatility = calculate_average_rating(
+            player_rating, player_rating_deviation, player_rating_volatility,
+            opponent_ratings, opponent_rating_deviations, scores, num_matches
         )
 
         # Calculate new inactivity
@@ -176,3 +194,5 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             inactivity=ratings_dict["player_inactivity"],
             is_active=ratings_dict["player_is_active"],
         )
+
+    return

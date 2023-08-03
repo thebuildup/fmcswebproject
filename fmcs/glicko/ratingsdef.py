@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db.models import Q
 from . import models
 from . import glicko2
@@ -7,7 +8,6 @@ from django.conf import settings
 def calculate_new_rating_period(start_datetime, end_datetime):
     print("calc new rating period")
     """Calculate a new ratings and a corresponding new rating period.
-
     Args:
         start_datetime: The datetime for the start of the rating period.
         end_datetime: The datetime for the end of the rating period.
@@ -37,7 +37,6 @@ def calculate_new_rating_period(start_datetime, end_datetime):
     for player in players:
         # Don't calculate anything if the player's first game is prior
         # to this rating period
-        # first_game_played = player.get_first_game_played()
         games_played_by_player = games.filter(Q(player1=player) | Q(player2=player))
         if games_played_by_player:
             print(f"{player} has played the following games:")
@@ -45,6 +44,8 @@ def calculate_new_rating_period(start_datetime, end_datetime):
                 print(f"  - {game}")
         else:
             print(f"{player} has no games in the rating period")
+            continue
+
         first_game_played = player.get_first_game_played()
         print(player)
         if (
@@ -63,7 +64,7 @@ def calculate_new_rating_period(start_datetime, end_datetime):
         opponent_rating_deviations = []
         scores = []
 
-        for game in games:
+        for game in games_played_by_player:
             if game.is_winner(player):
                 scores.append(1.0)
             elif game.is_loser(player):
@@ -159,3 +160,5 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             inactivity=ratings_dict["player_inactivity"],
             is_active=ratings_dict["player_is_active"],
         )
+
+    return
