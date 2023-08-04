@@ -12,8 +12,8 @@ def calculate_new_rating_period(start_datetime, end_datetime):
         start_datetime: The datetime for the start of the rating period.
         end_datetime: The datetime for the end of the rating period.
     """
-    # Create the rating period
-    rating_period = models.RatingPeriod.objects.create(
+    # Create the rating period or get the existing one
+    rating_period, _ = models.RatingPeriod.objects.get_or_create(
         start_datetime=start_datetime, end_datetime=end_datetime
     )
 
@@ -35,29 +35,33 @@ def calculate_new_rating_period(start_datetime, end_datetime):
     players = models.Player.objects.all()
 
     for player in players:
-        # Don't calculate anything if the player's first game is prior
-        # to this rating period
+        # Get all games played by the player in this rating period
         games_played_by_player = games.filter(Q(player1=player) | Q(player2=player))
-        if games_played_by_player:
-            print(f"{player} has played the following games:")
-            for game in games_played_by_player:
-                print(f"  - {game}")
-        else:
-            print(f"{player} has no games in the rating period")
+
+        # If the player didn't play in this rating period, update inactivity
+        if not games_played_by_player:
+            try:
+                player_rating_node = models.PlayerRatingNode.objects.get(player=player)
+                player_rating_node.inactivity += 1
+                player_rating_node.save()
+            except models.PlayerRatingNode.DoesNotExist:
+                models.PlayerRatingNode.objects.create(
+                    player=player,
+                    rating_period=rating_period,
+                    rating=player.rating,
+                    rating_deviation=player.rating_deviation,
+                    rating_volatility=player.rating_volatility,
+                    inactivity=1,
+                    is_active=True,
+                )
             continue
 
-        first_game_played = player.get_first_game_played()
-        print(player)
-        if (
-                first_game_played is None
-                or first_game_played.date_played > end_datetime
-        ):
-            continue
+        # Player played in this rating period
+        player_inactivity = 0
 
         # Get the players rating parameters
         player_rating = player.rating
         player_rating_deviation = player.rating_deviation
-        player_inactivity = player.inactivity
         player_rating_volatility = player.rating_volatility
 
         opponent_ratings = []
@@ -89,11 +93,8 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             scores=scores,
         )
 
-        # Calculate new inactivity
-        new_player_inactivity = player_inactivity + 1 if not opponent_ratings else 0
-
         # Determine if the player is labeled as active
-        new_player_is_active = new_player_inactivity < settings.NUMBER_OF_RATING_PERIODS_MISSED_TO_BE_INACTIVE
+        new_player_is_active = player_inactivity < settings.NUMBER_OF_RATING_PERIODS_MISSED_TO_BE_INACTIVE
 
         new_ratings[player] = {
             "player_ranking": None,
@@ -101,7 +102,7 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             "player_rating": new_player_rating,
             "player_rating_deviation": new_player_rating_deviation,
             "player_rating_volatility": new_player_rating_volatility,
-            "player_inactivity": new_player_inactivity,
+            "player_inactivity": player_inactivity,
             "player_is_active": new_player_is_active,
         }
 

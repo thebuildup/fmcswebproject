@@ -5,43 +5,6 @@ from . import glicko2
 from django.conf import settings
 
 
-def calculate_average_rating(rating, rating_deviation, rating_volatility,
-                             opponent_ratings, opponent_rating_deviations, scores, num_matches):
-    """Calculate the average rating based on multiple matches.
-    Args:
-        rating: The player's current rating.
-        rating_deviation: The player's current rating deviation.
-        rating_volatility: The player's current rating volatility.
-        opponent_ratings: A list of opponent ratings for each match.
-        opponent_rating_deviations: A list of opponent rating deviations for each match.
-        scores: A list of scores for each match.
-        num_matches: The number of matches to consider for calculating the average rating.
-    Returns:
-        A three-tuple containing the player's new average rating, rating deviation, and rating volatility.
-    """
-    total_rating = rating
-    total_rating_deviation = rating_deviation
-    print(total_rating)
-    for i in range(num_matches):
-        # Glicko-2
-        new_player_rating, new_player_rating_deviation, new_player_rating_volatility = glicko2.calculate_player_rating(
-            r=total_rating,
-            RD=total_rating_deviation,
-            sigma=rating_volatility,
-            opponent_rs=[opponent_ratings[i]],
-            opponent_RDs=[opponent_rating_deviations[i]],
-            scores=[scores[i]],
-        )
-
-        total_rating = new_player_rating
-        total_rating_deviation = new_player_rating_deviation
-
-    average_rating = total_rating
-    average_rating_deviation = total_rating_deviation
-
-    return average_rating, average_rating_deviation, rating_volatility
-
-
 def calculate_new_rating_period(start_datetime, end_datetime):
     print("calc new rating period")
     """Calculate a new ratings and a corresponding new rating period.
@@ -49,8 +12,8 @@ def calculate_new_rating_period(start_datetime, end_datetime):
         start_datetime: The datetime for the start of the rating period.
         end_datetime: The datetime for the end of the rating period.
     """
-    # Create the rating period
-    rating_period = models.RatingPeriod.objects.create(
+    # Create the rating period or get the existing one
+    rating_period, _ = models.RatingPeriod.objects.get_or_create(
         start_datetime=start_datetime, end_datetime=end_datetime
     )
 
@@ -69,28 +32,20 @@ def calculate_new_rating_period(start_datetime, end_datetime):
     # contains players as keys, and dictionaries containing their new
     # rating parameters as the dictionary values.
     new_ratings = {}
-    players = models.Player.objects.all()
+    # players = models.Player.objects.all()
 
-    for player in players:
-        # Don't calculate anything if the player's first game is prior
-        # to this rating period
-        games_played_by_player = games.filter(Q(player1=player) | Q(player2=player))
-        if games_played_by_player:
-            print(f"{player} has played the following games:")
-            for game in games_played_by_player:
-                print(f"  - {game}")
-        else:
-            print(f"{player} has no games in the rating period")
-            continue
-
+    for player in models.Player.objects.all():
+        # Get all games played by the player in this rating period
+        # games_played_by_player = games.filter(Q(player1=player) | Q(player2=player))
         first_game_played = player.get_first_game_played()
-        print(player)
+        # If the player didn't play in this rating period, update inactivity
         if (
                 first_game_played is None
                 or first_game_played.date_played > end_datetime
         ):
             continue
 
+        # Player played in this rating period
         # Get the players rating parameters
         player_rating = player.rating
         player_rating_deviation = player.rating_deviation
@@ -100,9 +55,8 @@ def calculate_new_rating_period(start_datetime, end_datetime):
         opponent_ratings = []
         opponent_rating_deviations = []
         scores = []
-        num_matches = games_played_by_player.count()
 
-        for game in games_played_by_player:
+        for game in games.filter(Q(player1=player) | Q(player2=player)):
             if game.is_winner(player):
                 scores.append(1.0)
             elif game.is_loser(player):
@@ -117,17 +71,38 @@ def calculate_new_rating_period(start_datetime, end_datetime):
                 opponent_ratings.append(game.player1.rating)
                 opponent_rating_deviations.append(game.player1.rating_deviation)
 
-        # Calculate average rating based on multiple matches
-        new_player_rating, new_player_rating_deviation, new_player_rating_volatility = calculate_average_rating(
-            player_rating, player_rating_deviation, player_rating_volatility,
-            opponent_ratings, opponent_rating_deviations, scores, num_matches
+            print('Цикл game filter')
+            print(opponent_ratings)
+
+        if not opponent_ratings:
+            opponent_ratings = None
+            opponent_rating_deviations = None
+            scores = None
+
+        print('Перед запуском расчётов')
+        print(opponent_ratings)
+        # Glicko-2
+        new_player_rating, new_player_rating_deviation, new_player_rating_volatility = glicko2.calculate_player_rating(
+            r=player_rating,
+            RD=player_rating_deviation,
+            sigma=player_rating_volatility,
+            opponent_rs=opponent_ratings,
+            opponent_RDs=opponent_rating_deviations,
+            scores=scores,
         )
-
+        print('Перед проверкой')
+        print(opponent_ratings)
         # Calculate new inactivity
-        new_player_inactivity = player_inactivity + 1 if not opponent_ratings else 0
+        if opponent_ratings is None:
+            new_player_inactivity = player_inactivity + 1
+        else:
+            new_player_inactivity = 0
 
-        # Determine if the player is labeled as active
-        new_player_is_active = new_player_inactivity < settings.NUMBER_OF_RATING_PERIODS_MISSED_TO_BE_INACTIVE
+        # Determine if the player is labelled as active
+        new_player_is_active = bool(
+            new_player_inactivity
+            < settings.NUMBER_OF_RATING_PERIODS_MISSED_TO_BE_INACTIVE
+        )
 
         new_ratings[player] = {
             "player_ranking": None,
@@ -154,7 +129,9 @@ def calculate_new_rating_period(start_datetime, end_datetime):
     last_integer_rating = None
     last_ranking = None
 
-    for idx, (player, rating) in enumerate(new_active_player_ratings, 1):
+    for idx, player_tuple in enumerate(new_active_player_ratings, 1):
+        # Unpack the player tuple
+        player, rating = player_tuple
         integer_rating = round(rating)
 
         if (
@@ -195,4 +172,4 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             is_active=ratings_dict["player_is_active"],
         )
 
-    return
+    # return

@@ -36,7 +36,7 @@ class PlayerStatsNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
 @admin.register(PlayerRatingNode)
 class PlayerRatingNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
     list_display = (
-        'player', 'rating_period', 'ranking', 'ranking_delta', 'rating', 'rating_deviation', 'rating_volatility',
+        'id', 'player', 'rating_period', 'ranking', 'ranking_delta', 'rating', 'rating_deviation', 'rating_volatility',
         'inactivity', 'is_active')
 
 
