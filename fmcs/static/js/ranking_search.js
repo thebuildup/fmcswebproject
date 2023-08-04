@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Отправляем AJAX-запрос на сервер с параметром keyword
         var xhr = new XMLHttpRequest();
-        var url = '/events/search/?keyword=' + encodeURIComponent(keyword);
+        var url = '/ranking/search/?keyword=' + encodeURIComponent(keyword);
         xhr.open('GET', url, true);
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhr.onreadystatechange = function () {

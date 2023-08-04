@@ -21,6 +21,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("main.urls")),
     path("users/", include("users.urls")),
-    path("ranking/", include("leaderboard.urls")),
+    path("ranking/", include("glicko.urls")),
+    # path("leaderboard/", include("leaderboard.urls")),
     path("tournaments/", include("engine.urls")),
 ]
