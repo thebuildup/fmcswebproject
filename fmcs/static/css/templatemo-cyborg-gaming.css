@@ -258,6 +258,32 @@ Pre-loader Style
   pointer-events: none;
 }
 
+.js-preloader-result {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.99);
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  z-index: 9999;
+  -webkit-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+}
+
+.js-preloader-result.loaded {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 @-webkit-keyframes dot {
   50% {
       -webkit-transform: translateX(96px);
