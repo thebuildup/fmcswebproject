@@ -21,6 +21,7 @@ def calculate_new_rating_period(start_datetime, end_datetime):
     games = models.Match.objects.filter(
         date_played__gte=start_datetime, date_played__lte=end_datetime
     )
+    # num_matches = models.Match.num_matches
 
     # Mark all of the above games as belonging in this rating period
     for game in games:
@@ -32,6 +33,8 @@ def calculate_new_rating_period(start_datetime, end_datetime):
     # contains players as keys, and dictionaries containing their new
     # rating parameters as the dictionary values.
     new_ratings = {}
+    new_player_ratings = []
+    num_matches = models.Match.objects.first().num_matches
     # players = models.Player.objects.all()
 
     for player in models.Player.objects.all():
@@ -56,40 +59,48 @@ def calculate_new_rating_period(start_datetime, end_datetime):
         opponent_rating_deviations = []
         scores = []
 
-        for game in games.filter(Q(player1=player) | Q(player2=player)):
-            if game.is_winner(player):
-                scores.append(1.0)
-            elif game.is_loser(player):
-                scores.append(0.0)
-            else:
-                scores.append(0.5)
+        for i in range(1, num_matches + 1):
+            for game in games.filter(Q(player1=player) | Q(player2=player)):
+                if game.is_winner(player, i):
+                    scores.append(1.0)
+                elif game.is_loser(player, i):
+                    scores.append(0.0)
+                else:
+                    scores.append(0.5)
 
-            if game.player1 == player:
-                opponent_ratings.append(game.player2.rating)
-                opponent_rating_deviations.append(game.player2.rating_deviation)
-            elif game.player2 == player:
-                opponent_ratings.append(game.player1.rating)
-                opponent_rating_deviations.append(game.player1.rating_deviation)
+                if game.player1 == player:
+                    opponent_ratings.append(game.player2.rating)
+                    opponent_rating_deviations.append(game.player2.rating_deviation)
+                elif game.player2 == player:
+                    opponent_ratings.append(game.player1.rating)
+                    opponent_rating_deviations.append(game.player1.rating_deviation)
 
-            print('Цикл game filter')
+                print('Цикл game filter')
+                print(opponent_ratings)
+
+            if not opponent_ratings:
+                opponent_ratings = None
+                opponent_rating_deviations = None
+                scores = None
+
+            print('Перед запуском расчётов')
             print(opponent_ratings)
+            # Glicko-2
+            new_player_rating, new_player_rating_deviation, new_player_rating_volatility = glicko2.calculate_player_rating(
+                r=player_rating,
+                RD=player_rating_deviation,
+                sigma=player_rating_volatility,
+                opponent_rs=opponent_ratings,
+                opponent_RDs=opponent_rating_deviations,
+                scores=scores,
+            )
+            new_player_ratings.append(new_player_rating)
 
-        if not opponent_ratings:
-            opponent_ratings = None
-            opponent_rating_deviations = None
-            scores = None
-
-        print('Перед запуском расчётов')
-        print(opponent_ratings)
-        # Glicko-2
-        new_player_rating, new_player_rating_deviation, new_player_rating_volatility = glicko2.calculate_player_rating(
-            r=player_rating,
-            RD=player_rating_deviation,
-            sigma=player_rating_volatility,
-            opponent_rs=opponent_ratings,
-            opponent_RDs=opponent_rating_deviations,
-            scores=scores,
-        )
+        if new_player_ratings:
+            average_new_player_rating = sum(new_player_ratings) / len(new_player_ratings)
+        else:
+            # Handle the case when no matches were played by any player in the rating period
+            average_new_player_rating = 0.0
         print('Перед проверкой')
         print(opponent_ratings)
         # Calculate new inactivity
