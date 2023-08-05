@@ -509,7 +509,7 @@ class Match(models.Model):
                 ),
             )
 
-    def is_winner(self, player):
+    def is_winner(self, player, i):
         """Проверяет, является ли данный игрок победителем матча на основе забитых голов.
 
         Аргументы:
@@ -518,13 +518,19 @@ class Match(models.Model):
         Возвращает:
             True, если данный игрок является победителем, иначе False.
         """
-        if (player == self.player1 and self.player1_goals_m1 > self.player2_goals_m1) or \
-                (player == self.player2 and self.player2_goals_m1 > self.player1_goals_m1):
+        player1_goals_m = getattr(self, f"player1_goals_m{i}")
+        player2_goals_m = getattr(self, f"player2_goals_m{i}")
+
+        if player == self.player1 and player1_goals_m is not None and (
+                player2_goals_m is None or player1_goals_m > player2_goals_m):
+            return True
+        elif player == self.player2 and player2_goals_m is not None and (
+                player1_goals_m is None or player2_goals_m > player1_goals_m):
             return True
         else:
             return False
 
-    def is_loser(self, player):
+    def is_loser(self, player, i):
         """Проверяет, является ли данный игрок проигравшим матча на основе забитых голов.
 
         Аргументы:
@@ -533,13 +539,18 @@ class Match(models.Model):
         Возвращает:
             True, если данный игрок является проигравшим, иначе False.
         """
-        if (player == self.player1 and self.player1_goals_m1 < self.player2_goals_m1) or \
-                (player == self.player2 and self.player2_goals_m1 < self.player1_goals_m1):
+        player1_goals_m = getattr(self, f"player1_goals_m{i}")
+        player2_goals_m = getattr(self, f"player2_goals_m{i}")
+        if player == self.player1 and player1_goals_m is not None and (
+                player2_goals_m is None or player1_goals_m < player2_goals_m):
+            return True
+        elif player == self.player2 and player2_goals_m is not None and (
+                player1_goals_m is None or player2_goals_m < player1_goals_m):
             return True
         else:
             return False
 
-    def is_draw(self, player):
+    def is_draw(self, player, i):
         """Проверяет, является ли данный игрок участником ничьей в матче на основе забитых голов.
 
         Аргументы:
@@ -548,7 +559,8 @@ class Match(models.Model):
         Возвращает:
             True, если данный игрок участвовал в ничьей, иначе False.
         """
-        if (player == self.player1 or player == self.player2) and self.player1_goals_m1 == self.player2_goals_m1:
+        if (player == self.player1 or player == self.player2) and getattr(self, f"player1_goals_m{i}") == getattr(self,
+                                                                                                                  f"player2_goals_m{i}"):
             return True
         else:
             return False
@@ -586,15 +598,6 @@ class Match(models.Model):
             return self.player1_goals_m1
         else:
             raise ValueError("Player is not a participant in this match.")
-
-    # def get_player_initial_rating(self, player):
-    #     print("get_player_initial_rating")
-    #     """Get the initial rating of the player from PlayerRankingNode."""
-    #     try:
-    #         player_ranking_node = PlayerRatingNode.objects.get(player=player)
-    #         return player_ranking_node.rating
-    #     except PlayerRatingNode.DoesNotExist:
-    #         return settings.GLICKO_BASE_RATING  # Если узел не найден, используйте значение по умолчанию
 
     def process_single_game(self, player1_stats_node, player2_stats_node, player1_goals_m1, player2_goals_m1):
         print("process_single_game")
@@ -775,6 +778,13 @@ class PlayerRatingNode(models.Model):
     is_active = models.BooleanField(
         help_text="Whether the player was considered active during this rating period."
     )
+
+    @classmethod
+    def get_last_rating_period(cls):
+        last_rating_node = cls.objects.order_by('-rating_period__end_datetime').first()
+        if last_rating_node:
+            return last_rating_node.rating_period
+        return None
 
     class Meta:
         """Model metadata."""
