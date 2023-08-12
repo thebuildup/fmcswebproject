@@ -24,4 +24,5 @@ urlpatterns = [
     path("ranking/", include("glicko.urls")),
     # path("leaderboard/", include("leaderboard.urls")),
     path("tournaments/", include("engine.urls")),
+    path("team/", include("team.urls")),
 ]
