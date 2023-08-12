@@ -1,6 +1,8 @@
 from django.contrib import admin
-
+from django.shortcuts import render
+from import_export.admin import ImportExportModelAdmin
 from .models import Player, PlayerStatsNode, PlayerRatingNode, RatingPeriod, Match, MatchupStatsNode
+from .util import import_csv_to_match
 
 
 class ReadOnlyModelAdminMixin:
@@ -23,7 +25,8 @@ class RatingPeriodAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
 
 
 @admin.register(Player)
-class PlayerAdmin(admin.ModelAdmin):
+# class PlayerAdmin(admin.ModelAdmin):
+class PlayerAdmin(ImportExportModelAdmin):
     list_display = ('name', 'user', 'ranking', 'rating', 'is_active')
 
 
@@ -41,7 +44,8 @@ class PlayerRatingNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
 
 
 @admin.register(Match)
-class MatchAdmin(admin.ModelAdmin):
+# class MatchAdmin(admin.ModelAdmin):
+class MatchAdmin(ImportExportModelAdmin):
     readonly_fields = ("rating_period",)
     list_max_show_all = 10000
     list_per_page = 200
@@ -52,6 +56,16 @@ class MatchAdmin(admin.ModelAdmin):
         'player1_goals_m3', 'player2_goals_m3', 'player1_goals_m4', 'player2_goals_m4', 'player1_goals_m5',
         'player2_goals_m5', 'date_played', 'confirmed',
         'rating_period')
+    actions = ['import_csv']
+
+    def import_csv(self, request, queryset):
+        if request.method == "POST" and "csv_file" in request.FILES:
+            csv_file = request.FILES['csv_file']
+            import_csv_to_match(csv_file)
+            self.message_user(request, "CSV file has been imported successfully.")
+        else:
+            context = {"queryset": queryset}
+            return render(request, "admin/import_csv.html", context)
 
 
 @admin.register(MatchupStatsNode)
