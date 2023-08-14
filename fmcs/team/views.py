@@ -9,11 +9,10 @@ def team_profile(request, player_id):
     player = Player.objects.get(pk=player_id)
 
     # Create a player link in the format: playername-id
-    player_link = f"{slugify(player.name)}-{player_id}"
+    # player_link = f"{slugify(player.name)}-{player.id}"
 
     context = {
         'player': player,
-        'player_link': player_link,
     }
 
     return render(request, 'teams/team_profile.html', context)

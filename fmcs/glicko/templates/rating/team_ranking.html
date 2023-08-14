@@ -105,8 +105,7 @@
                                         <span class="collection">Rating:<br><strong>{{ player.rating|floatformat:"0" }}</strong></span>
                                         <span class="category">Ranking:<br><strong>{{ player.ranking }}</strong></span>
                                         <div class="main-button">
-                                            <a href="{% url 'team_profile' player_link=player_link %}">View Profile</a>
-                                            <!--                                            <a href="{% url 'team_profile' player_id=player.id %}">View Profile</a>-->
+                                            <a href="{% url 'team_profile' player_id=player.id %}">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
