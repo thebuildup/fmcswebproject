@@ -8,3 +8,4 @@ wheel==0.40.0
 django-dotenv
 djangorestframework~=3.14.0
 django-filter~=23.2
+django-import-export
