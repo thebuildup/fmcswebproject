@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap"
           rel="stylesheet">
 
-    <title>FMCS Team</title>
+    <title>FMCS | {{ player.name }}</title>
 
     <!-- Bootstrap core CSS -->
     {% load static %}
@@ -96,14 +96,15 @@
                                                             <img src="{% static 'images/logo_fmcs.png' %}" alt=""
                                                                  style="max-width: 180px; max-height: 180px;">
                                                             <hr>
-                                                            <h2>TEAM NAME</h2>
+                                                            <!--                                                            <h2>TEAM NAME</h2>-->
+                                                            <h2>{{ player.name }}</h2>
                                                         </div>
                                                     </div>
                                                     <div class="card-contents card-back">
                                                         <div class="card-depth">
-                                                            <h2>RATING</h2>
+                                                            <h2>RATING: {{ player.rating|floatformat:"0" }}</h2>
                                                             <hr>
-                                                            <h2>RANKING</h2>
+                                                            <h2>RANKING: {{ player.ranking }}</h2>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -112,8 +113,8 @@
                                     </div>
                                     <div class="col-lg-4 align-self-center">
                                         <div class="main-info header-text">
-                                            <span>@Username</span>
-                                            <h4>Team Name</h4>
+                                            <span>@{{ player.user }}</span>
+                                            <h4>{{ player.name }}</h4>
                                             <p>FLAG</p>
                                             <div class="main-border-button">
                                                 <a href="#">Fantasy Squad</a>
