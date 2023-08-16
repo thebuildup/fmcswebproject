@@ -7139,6 +7139,71 @@ textarea.form-control-lg {
   align-self: center !important;
 }
 
+.align-self-center-profile {
+  text-align: center;
+  width: 23%;
+}
+
+.align-self-center-matches {
+  align-self: center !important;
+  width: 490px;
+}
+
+.align-self-center-matches li{
+    margin-top: 4px;
+    text-align: center;
+    width: 100%;
+}
+
+
+.match-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.match-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.team-details {
+  display: flex;
+  align-items: center;
+  max-width: 50%;
+  color: #fff;
+}
+
+.team1-details {
+  color: #fff;
+  justify-content: flex-start;
+  flex: 1;
+}
+
+.team2-details {
+  color: #fff;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.team-logo {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+}
+
+.team-name {
+  padding-right: 1px;
+  color: #fff
+}
+
+.goals {
+  text-align: center;
+  flex: 1;
+}
+
 .align-self-baseline {
   align-self: baseline !important;
 }

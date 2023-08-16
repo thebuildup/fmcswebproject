@@ -1,5 +1,6 @@
+from django.db.models import Q
 from django.shortcuts import render
-from glicko.models import Player, PlayerRatingNode, RatingPeriod
+from glicko.models import Player, PlayerRatingNode, RatingPeriod, Match
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 import json
@@ -22,6 +23,9 @@ def team_profile(request, player_id):
     categories = [rp.end_datetime.strftime("%b") for rp in rating_periods]
     reversed_categories = list(reversed(categories))
 
+    # Получение последних 5 матчей, где игрок может быть player1 или player2
+    last_matches = Match.objects.filter(Q(player1=player) | Q(player2=player)).order_by('-date_played')[:5]
+
     win_rate = player.win_rate * 100
 
     context = {
@@ -34,6 +38,7 @@ def team_profile(request, player_id):
             },
         ]),
         'categories': json.dumps(reversed_categories),
+        'last_matches': last_matches,
     }
 
     return render(request, 'teams/team_profile.html', context)
