@@ -38,8 +38,8 @@ function renderChart(series, categories) {
           enabled: false,
         },
         width: "100%",
-        height: 180,
-        offsetY: 8,
+        height: 200,
+        offsetY: 12,
       },
       dataLabels: {
         enabled: false,
@@ -115,7 +115,6 @@ function renderChart(series, categories) {
         strokeColors: colorPrimary,
       },
       yaxis: {
-//        show: false,
         show: true,
       },
       xaxis: {

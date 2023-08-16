@@ -22,8 +22,11 @@ def team_profile(request, player_id):
     categories = [rp.end_datetime.strftime("%b") for rp in rating_periods]
     reversed_categories = list(reversed(categories))
 
+    win_rate = player.win_rate * 100
+
     context = {
         'player': player,
+        'win_rate': win_rate,
         'series': json.dumps([
             {
                 'name': 'Rating',

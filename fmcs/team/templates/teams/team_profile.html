@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" href="{% static 'css/cardflip.css' %}">
     <link rel="stylesheet" href="{% static 'css/circlechart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/chart.css' %}">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
 </head>
 <body>
@@ -139,11 +140,35 @@
                                                         <h4><em></em>Team Performance</h4>
                                                     </div>
                                                 </div>
-                                                <div class="card">
-                                                    <h2>Team Rating</h2>
-                                                    <div id="area-chart" data-series="{{ series }}"
-                                                         data-categories="{{ categories }}">
-                                                        <div class="grid"></div>
+                                                <div class="col-lg-6">
+                                                    <div class="rating-card">
+                                                        <h2>Team Rating</h2>
+                                                        <div id="area-chart" data-series="{{ series }}"
+                                                             data-categories="{{ categories }}">
+                                                            <div class="grid"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="rating-card">
+                                                        <h2>Team Stat</h2>
+                                                        <div class="circle-container">
+                                                            <div class="circle-box">
+                                                                <div class="chart"
+                                                                     data-percent="{{ win_rate|floatformat:'0' }}"
+                                                                     data-scale-color="#ffb400">
+                                                                    {{ win_rate|floatformat:'0' }} %
+                                                                    <h3>WIN RATE</h3>
+                                                                </div>
+                                                                <h2>
+                                                                    <span style="color: lime;">{{ player.wins }}</span>
+                                                                    <span style="color: white;">/</span>
+                                                                    <span style="color: white;">{{ player.draws }}</span>
+                                                                    <span style="color: white;">/</span>
+                                                                    <span style="color: red;">{{ player.losses }}</span>
+                                                                </h2>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
