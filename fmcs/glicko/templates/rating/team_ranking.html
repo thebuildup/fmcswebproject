@@ -52,7 +52,7 @@
             <div class="col-12">
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
-                    <a href="index.html" class="logo">
+                    <a href="{% url 'home' %}" class="logo">
                         <img src="{% static 'images/logo_fmcs.png' %}" alt="">
                     </a>
                     <!-- ***** Logo End ***** -->
@@ -87,7 +87,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="collections">
+                <!--                <div class="collections">-->
+                <div class="page-content">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="section-heading">

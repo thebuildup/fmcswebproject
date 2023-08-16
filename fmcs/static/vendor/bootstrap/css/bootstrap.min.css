@@ -7140,13 +7140,18 @@ textarea.form-control-lg {
 }
 
 .align-self-center-profile {
+  margin: 0 auto;
+  margin-top: 4px;
+  margin-bottom: 4px;
   text-align: center;
-  width: 23%;
+  width: 270px;
+  max-width: 100%;
 }
 
 .align-self-center-matches {
   align-self: center !important;
   width: 490px;
+  max-width: 100%;
 }
 
 .align-self-center-matches li{
