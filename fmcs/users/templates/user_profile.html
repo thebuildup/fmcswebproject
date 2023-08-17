@@ -1,0 +1,94 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}Profile | {{username.get_username}}{% endblock %}
+
+{% block content %}
+
+<div class="author-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="author">
+                    <img src="{% static 'images/single-author.jpg' %}" alt=""
+                         style="border-radius: 50%; max-width: 170px;">
+                    <h4>{{username.first_name}} {{username.last_name}}<br> <a href="#">@{{username.get_username}}</a>
+                    </h4>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="right-info">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="info-item">
+                                <i class="fa fa-heart"></i>
+                                <h6>Number <em>Teams</em></h6>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="info-item">
+                                <i class="fa fa-hand"></i>
+                                <h6>@profile <em>Twitter</em></h6>
+                            </div>
+                        </div>
+                        <!--                        <div class="col-4">-->
+                        <!--                            <div class="info-item">-->
+                        <!--                                <i class="fa fa-dollar"></i>-->
+                        <!--                                <h6>1238 <em>Likes</em></h6>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <h5>Last login: {{ username.last_login }}</h5>
+                        </div>
+                        <div class="col-7">
+                            {% if user.is_authenticated and user == request.user %}
+                            <div class="main-button">
+                                <a href="#">Edit Profile</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="section-heading">
+                    <div class="line-dec"></div>
+                    <h2>{{username.get_username}} <em>Teams</em>.</h2>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="item">
+                    <div class="row">
+                        <div class="col-lg-12">
+                <span class="author">
+                  <img src="{% static 'images/author.jpg' %}" alt="" style="max-width: 50px; border-radius: 50%;">
+                </span>
+                            <img src="{% static 'images/logo_fmcs.png' %}" alt="" style="border-radius: 20px;">
+                            <h4>{{player.name}}</h4>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="line-dec"></div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <span>Rating: <br> <strong>{{ player.rating|floatformat:"0" }}</strong></span>
+                                </div>
+                                <div class="col-6">
+                                    <span>Rating Name: <br> <strong>FMCS</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="main-button">
+                                <a href="{% url 'team_profile' player.id %}">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

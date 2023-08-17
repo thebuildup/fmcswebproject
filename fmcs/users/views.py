@@ -1,11 +1,12 @@
 from django.contrib import messages
 from django.http import HttpResponseForbidden, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login
+from glicko.models import Player
 
 
 # Create your views here.
@@ -38,5 +39,7 @@ def login_view(request):
     return render(request, 'login.html', context)
 
 
-def profile(request):
-    return render(request, 'profile.html')
+def profile(request, username):
+    username = get_object_or_404(User, username=username)
+    player = Player.objects.get(user=username.id)
+    return render(request, 'user_profile.html', {'username': username, 'player': player})
