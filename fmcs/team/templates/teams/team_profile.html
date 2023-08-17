@@ -45,7 +45,12 @@
                                     </div>
                                     <div class="col-lg-4 align-self-center-profile">
                                         <div class="main-info header-text">
+                                            {% if player.user %}
+                                            <span><a href="{% url 'user_profile' username=player.user %}">
+                                                    @{{ player.user }}</a></span>
+                                            {% else %}
                                             <span>@{{ player.user }}</span>
+                                            {% endif %}
                                             <h4>{{ player.name }}</h4>
                                             <!--                                            <p>FLAG</p>-->
                                             <i class="flag flag-indonesia"></i>
