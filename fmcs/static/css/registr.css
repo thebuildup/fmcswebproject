@@ -160,7 +160,7 @@ display: none;
   -webkit-transition: all 200ms linear;
    transition: all 200ms linear;
 }
-.btn{
+.reg-btn{
   border-radius: 4px;
   height: 44px;
   font-size: 13px;
@@ -177,7 +177,7 @@ display: none;
   background-color: #7453fc;
   color: #fff;
 }
-.btn:hover{
+.reg-btn:hover{
   background-color: #000000;
   color: #8e6af7;
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
