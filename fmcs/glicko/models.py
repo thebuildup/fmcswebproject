@@ -393,7 +393,8 @@ class Match(models.Model):
     confirmed = models.ForeignKey(
         User,
         default=False,
-        on_delete=models.PROTECT,
+        null=True,
+        on_delete=models.SET_NULL,
         help_text="The user which submitted the game.",
     )
     rating_period = models.ForeignKey(

@@ -7,6 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login
 from glicko.models import Player
+from .models import Profile
 
 
 # Create your views here.
@@ -42,4 +43,17 @@ def login_view(request):
 def profile(request, username):
     username = get_object_or_404(User, username=username)
     player = Player.objects.get(user=username.id)
-    return render(request, 'user_profile.html', {'username': username, 'player': player})
+    profile = Profile.objects.get(user=username.id)
+
+    twitter_link = profile.twitter  # Получаем полную ссылку на Twitter профиль
+    telegram_link = profile.telegram  # Получаем полную ссылку на Twitter профиль
+    twitter_username = twitter_link.split("/")[-1]  # Разделяем по "/" и берем последний элемент
+    telegram_username = telegram_link.split("/")[-1]  # Разделяем по "/" и берем последний элемент
+
+    return render(request, 'user_profile.html', {
+        'username': username,
+        'player': player,
+        'profile': profile,
+        'twitter_username': twitter_username,
+        'telegram_username': telegram_username,
+    })

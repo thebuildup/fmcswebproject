@@ -370,7 +370,8 @@ class Game(models.Model):
     )
     submitted_by = models.ForeignKey(
         User,
-        on_delete=models.PROTECT,
+        null=True,
+        on_delete=models.SET_NULL,
         help_text="The user which submitted the game.",
     )
     # event = models.ForeignKey(

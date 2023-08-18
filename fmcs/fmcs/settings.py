@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "engine",
     "glicko",
     "team",
+    "django_countries",
 ]
 
 MIDDLEWARE = [

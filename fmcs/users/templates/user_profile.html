@@ -18,24 +18,25 @@
             <div class="col-lg-6">
                 <div class="right-info">
                     <div class="row">
-                        <div class="col-5">
+                        <div class="col-4">
                             <div class="info-item">
-                                <i class="fa fa-heart"></i>
-                                <h6>Number <em>Teams</em></h6>
+                                <i class="fa fa-discord"></i>
+                                <h6><a> {{profile.discord}}</a></h6>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="info-item">
-                                <i class="fa fa-hand"></i>
-                                <h6>@profile <em>Twitter</em></h6>
+                                <i class="fa fa-twitter"></i>
+                                <!--                                <h6>@profile <em>Twitter</em></h6>-->
+                                <h6><a href="{{profile.twitter}}"> {{twitter_username}} </a></h6>
                             </div>
                         </div>
-                        <!--                        <div class="col-4">-->
-                        <!--                            <div class="info-item">-->
-                        <!--                                <i class="fa fa-dollar"></i>-->
-                        <!--                                <h6>1238 <em>Likes</em></h6>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
+                        <div class="col-4">
+                            <div class="info-item">
+                                <i class="fa fa-telegram"></i>
+                                <h6><a href="{{profile.telegram}}"> {{telegram_username}} </a></h6>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-5">
@@ -92,3 +93,6 @@
 
 {% endblock %}
 
+{% block owl %}
+<script src="{% static 'js/owl-carousel.js' %}"></script>
+{% endblock %}
