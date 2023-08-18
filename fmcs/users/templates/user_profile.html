@@ -1,6 +1,9 @@
 {% extends "base_generic.html" %}
 {% load static %}
 {% block title %}Profile | {{username.get_username}}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'flags/sprite-hq.css' %}">
+{% endblock %}
 
 {% block content %}
 
@@ -11,14 +14,16 @@
                 <div class="author">
                     <img src="{% static 'images/single-author.jpg' %}" alt=""
                          style="border-radius: 50%; max-width: 170px;">
-                    <h4>{{username.first_name}} {{username.last_name}}<br> <a href="#">@{{username.get_username}}</a>
+                    <h4> {{username.first_name}} {{username.last_name}}<br>
+                        <a href="#">@{{username.get_username}}</a>
                     </h4>
+
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="right-info">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-5">
                             <div class="info-item">
                                 <i class="fa fa-discord"></i>
                                 {% if discord %}
@@ -28,9 +33,9 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-5">
                             <div class="info-item">
-                                <i class="fa fa-twitter"></i>
+                                <i class="fa-brands fa-x-twitter"></i>
                                 <!--                                <h6>@profile <em>Twitter</em></h6>-->
                                 {% if twitter_username %}
                                 <h6><a href="{{profile.twitter}}"> {{twitter_username}} </a></h6>
@@ -39,11 +44,21 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-5">
                             <div class="info-item">
                                 <i class="fa fa-telegram"></i>
-                                {% if twitter_username %}
+                                {% if telegram_username %}
                                 <h6><a href="{{profile.telegram}}"> {{telegram_username}} </a></h6>
+                                {% else %}
+                                <h6> NO INFO </h6>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="info-item">
+                                <i class="fa-solid fa-location-pin"></i>
+                                {% if country %}
+                                <h6><a>{{country.alpha3}} | {{country.name}}</a></h6>
                                 {% else %}
                                 <h6> NO INFO </h6>
                                 {% endif %}

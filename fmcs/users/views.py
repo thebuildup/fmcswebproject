@@ -69,6 +69,11 @@ def profile(request, username):
         telegram_link = None
         telegram_username = None
 
+    try:
+        country = profile.country
+    except:
+        country = None
+
     return render(request, 'user_profile.html', {
         'username': username,
         'player': player,
@@ -76,4 +81,5 @@ def profile(request, username):
         'discord': discord,
         'twitter_username': twitter_username,
         'telegram_username': telegram_username,
+        'country': country,
     })

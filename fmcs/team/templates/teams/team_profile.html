@@ -37,6 +37,8 @@
                                                             <h2>RATING: {{ player.rating|floatformat:"0" }}</h2>
                                                             <hr>
                                                             <h2>RANKING: {{ player.ranking }}</h2>
+                                                            <hr>
+                                                            <h2>{{player.country.name}}</h2>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -53,7 +55,6 @@
                                             {% endif %}
                                             <h4>{{ player.name }}</h4>
                                             <!--                                            <p>FLAG</p>-->
-                                            <i class="flag flag-indonesia"></i>
                                             <!--                                            <p>{{series}}</p>-->
                                             <div class="main-border-button">
                                                 <a href="#">Fantasy Squad</a>

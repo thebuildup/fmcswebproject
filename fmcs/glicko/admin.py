@@ -27,7 +27,7 @@ class RatingPeriodAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
 @admin.register(Player)
 # class PlayerAdmin(admin.ModelAdmin):
 class PlayerAdmin(ImportExportModelAdmin):
-    list_display = ('name', 'user', 'ranking', 'rating', 'is_active')
+    list_display = ('name', 'user', 'country', 'ranking', 'rating', 'is_active')
 
 
 @admin.register(PlayerStatsNode)

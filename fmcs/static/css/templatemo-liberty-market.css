@@ -1870,7 +1870,7 @@ Author Page Style
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  padding: 220px 0px 120px 0px;
+  padding: 160px 0px 220px 0px;
   position: relative;
 }
 
@@ -1894,7 +1894,6 @@ Author Page Style
   border: 1px solid #404245;
   padding: 20px 30px;
   border-radius: 20px;
-  margin-left: 100px;
 }
 
 .author-page .right-info .info-item {

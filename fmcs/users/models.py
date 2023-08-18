@@ -8,10 +8,10 @@ from django_countries.fields import CountryField
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    country = CountryField()
-    twitter = models.CharField(max_length=100)
-    discord = models.CharField(max_length=100)
-    telegram = models.CharField(max_length=100)
+    country = CountryField(countries_flag_url="//flagcdn.com/32x24/{code}.png", default=None, blank=True, null=True)
+    twitter = models.CharField(max_length=100, default=None, blank=True, null=True)
+    discord = models.CharField(max_length=100, default=None, blank=True, null=True)
+    telegram = models.CharField(max_length=100, default=None, blank=True, null=True)
 
 
 @receiver(post_save, sender=User)

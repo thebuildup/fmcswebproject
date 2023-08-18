@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from django_countries.fields import CountryField
 
 from . import stats
 
@@ -44,6 +45,12 @@ class Player(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         help_text="The user associated with the player.",
+    )
+    country = CountryField(
+        countries_flag_url="//flagcdn.com/32x24/{code}.png",
+        default=None,
+        blank=True,
+        null=True
     )
 
     class Meta:
@@ -289,19 +296,6 @@ class Player(models.Model):
             return nodes.first()
 
         return None
-
-    # def get_first_game_played(self):
-    #     print("get_first_game_played")
-    #     """Returns the first game played by the player.
-    #
-    #     Returns None if the player has not played games.
-    #     """
-    #     games_played = Match.objects.filter(Q(winner=self) | Q(loser=self))
-    #
-    #     if not games_played:
-    #         return None
-    #
-    #     return games_played.last()
 
     def get_first_game_played(self):
         games_played = Match.objects.filter(
