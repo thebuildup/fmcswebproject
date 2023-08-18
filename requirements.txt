@@ -9,3 +9,4 @@ django-dotenv
 django-filter~=23.2
 django-import-export
 django-countries
+pyuca
