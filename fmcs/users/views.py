@@ -42,18 +42,38 @@ def login_view(request):
 
 def profile(request, username):
     username = get_object_or_404(User, username=username)
-    player = Player.objects.get(user=username.id)
+
+    try:
+        player = Player.objects.get(user=username.id)
+    except Player.DoesNotExist:
+        player = None
+
     profile = Profile.objects.get(user=username.id)
 
-    twitter_link = profile.twitter  # Получаем полную ссылку на Twitter профиль
-    telegram_link = profile.telegram  # Получаем полную ссылку на Twitter профиль
-    twitter_username = twitter_link.split("/")[-1]  # Разделяем по "/" и берем последний элемент
-    telegram_username = telegram_link.split("/")[-1]  # Разделяем по "/" и берем последний элемент
+    try:
+        discord = profile.discord
+    except:
+        discord = None
+
+    try:
+        twitter_link = profile.twitter  # Получаем полную ссылку на Twitter профиль
+        twitter_username = twitter_link.split("/")[-1]  # Разделяем по "/" и берем последний элемент
+    except:
+        twitter_link = None
+        twitter_username = None
+
+    try:
+        telegram_link = profile.telegram  # Получаем полную ссылку на Twitter профиль
+        telegram_username = telegram_link.split("/")[-1]  # Разделяем по "/" и берем последний элемент
+    except:
+        telegram_link = None
+        telegram_username = None
 
     return render(request, 'user_profile.html', {
         'username': username,
         'player': player,
         'profile': profile,
+        'discord': discord,
         'twitter_username': twitter_username,
         'telegram_username': telegram_username,
     })
