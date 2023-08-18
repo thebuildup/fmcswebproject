@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+from django.utils.translation import gettext_lazy as gtl
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -165,3 +166,30 @@ GLICKO2_RATING_PERIOD_DAYS = int(os.environ["GLICKO2_RATING_PERIOD_DAYS"])
 NUMBER_OF_RATING_PERIODS_MISSED_TO_BE_INACTIVE = int(
     os.environ["NUMBER_OF_RATING_PERIODS_MISSED_TO_BE_INACTIVE"]
 )
+
+COUNTRIES_OVERRIDE = {
+    "EN": {
+        "name": gtl("England"),
+        "alpha3": gtl("ENG"),
+    },
+    "NI": {
+        "name": gtl("Northern Ireland"),
+        "alpha3": gtl("NIR"),
+    },
+    "SC": {
+        "name": gtl("Scotland"),
+        "alpha3": gtl("SCO"),
+    },
+    "WL": {
+        "name": gtl("Wales"),
+        "alpha3": gtl("WAL"),
+    },
+    "CL": {
+        "name": gtl("Chile"),
+        "alpha3": gtl("CHI"),
+    },
+    "DE": {
+        "name": gtl("Germany"),
+        "alpha3": gtl("GER"),
+    }
+}
