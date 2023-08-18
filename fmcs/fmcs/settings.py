@@ -191,5 +191,13 @@ COUNTRIES_OVERRIDE = {
     "DE": {
         "name": gtl("Germany"),
         "alpha3": gtl("GER"),
-    }
+    },
+    "MY": {
+        "name": gtl("Malaysia"),
+        "alpha3": gtl("MAS"),
+    },
+    "ZA": {
+        "name": gtl("South Africa"),
+        "alpha3": gtl("RSA"),
+    },
 }
