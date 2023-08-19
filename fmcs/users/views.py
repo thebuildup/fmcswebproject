@@ -8,18 +8,39 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login
 from glicko.models import Player
 from .models import Profile
+import re
 
 
 # Create your views here.
+
+def remove_dots_from_email(email):
+    # Удаляем все точки из email-адреса
+    return email.replace('.', '')
+
+
+def is_valid_username(username):
+    # Проверяем, что имя пользователя состоит только из букв, цифр и подчеркивания
+    # и не содержит пробелов или знаков, которые могли бы использоваться для SQL-инъекций
+    if re.match(r'^[\w.@+-]+$', username):
+        return True
+    return False
+
+
 def login_view(request):
     if request.method == "POST":
         if 'new_nickname' in request.POST and request.POST['new_nickname'].strip():
             new_username = request.POST.get('new_nickname')
             new_email = request.POST.get('new_email')
             new_password = request.POST.get('new_password')
-            if User.objects.filter(username=new_username).exists():
+
+            # Удаляем точки из email-адреса перед проверкой на уникальность
+            clean_email = remove_dots_from_email(new_email)
+
+            if not is_valid_username(new_username):
+                messages.error(request, "Invalid characters in username")
+            elif User.objects.filter(username=new_username).exists():
                 messages.error(request, "Username already exists")
-            elif User.objects.filter(email=new_email).exists():
+            elif User.objects.filter(email=clean_email).exists():
                 messages.error(request, "Email already exists")
             else:
                 new_user = User.objects.create_user(new_username, new_email, new_password)
