@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from glicko.models import Player, PlayerRatingNode, RatingPeriod, Match
 from django.urls import reverse
 from django.template.defaultfilters import slugify
@@ -7,11 +7,10 @@ import json
 
 
 # Create your views here.
-def team_profile(request, player_id):
-    player = Player.objects.get(pk=player_id)
+def team_profile(request, formatted_player_name):
+    player = get_object_or_404(Player, formatted_name=formatted_player_name)
 
-    # player_ratings = PlayerRatingNode.objects.filter(player_id=player_id).order_by('-rating_period__end_datetime')[:12]
-    player_ratings = PlayerRatingNode.objects.filter(player_id=player_id).order_by('-rating_period__end_datetime')
+    player_ratings = PlayerRatingNode.objects.filter(player_id=player.id).order_by('-rating_period__end_datetime')
 
     ratings_data = [
         round(rating.rating) for rating in player_ratings

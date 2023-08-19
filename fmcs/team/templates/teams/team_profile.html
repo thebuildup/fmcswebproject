@@ -71,7 +71,7 @@
                                                     <img src="{% static 'images/logo_fmcs.png' %}" alt=""
                                                          class="team-logo">
                                                     <span class="team-details team1-details">
-                                                        <a href="{% url 'team_profile' match.player1.id %}"
+                                                        <a href="{% url 'team_profile' match.player1.formatted_name %}"
                                                            class="team-name">{{ match.player1.name }}</a>
                                                     </span>
                                                     <span class="goals">
@@ -79,7 +79,7 @@
                                                         {{ match.player1_goals_m2 }} - {{ match.player2_goals_m2 }}
                                                     </span>
                                                     <span class="team-details team2-details">
-                                                        <a href="{% url 'team_profile' match.player2.id %}"
+                                                        <a href="{% url 'team_profile' match.player2.formatted_name %}"
                                                            class="team-name">{{ match.player2.name }}</a>
                                                     </span>
                                                     <img src="{% static 'images/logo_fmcs.png' %}" alt=""

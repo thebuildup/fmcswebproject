@@ -7,6 +7,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 from django_countries.fields import CountryField
+from django.utils.text import slugify
 
 from . import stats
 
@@ -52,6 +53,7 @@ class Player(models.Model):
         blank=True,
         null=True
     )
+    formatted_name = models.SlugField(unique=True, default='', blank=True)
 
     class Meta:
         """Model metadata."""
@@ -306,6 +308,12 @@ class Player(models.Model):
             return None
 
         return games_played.first()
+
+    def save(self, *args, **kwargs):
+        # Перед сохранением объекта, автоматически создаем formatted_name
+        if not self.formatted_name:
+            self.formatted_name = slugify(self.name)
+        super(Player, self).save(*args, **kwargs)
 
 
 class Match(models.Model):

@@ -59,14 +59,12 @@ def profile(request, username):
         twitter_link = profile.twitter  # Получаем полную ссылку на Twitter профиль
         twitter_username = twitter_link.split("/")[-1]  # Разделяем по "/" и берем последний элемент
     except:
-        twitter_link = None
         twitter_username = None
 
     try:
         telegram_link = profile.telegram  # Получаем полную ссылку на Twitter профиль
         telegram_username = telegram_link.split("/")[-1]  # Разделяем по "/" и берем последний элемент
     except:
-        telegram_link = None
         telegram_username = None
 
     try:

@@ -110,7 +110,8 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="main-button">
-                                <a href="{% url 'team_profile' player.id %}">View Details</a>
+                                <a href="{% url 'team_profile' formatted_player_name=player.formatted_name %}">View
+                                    Team</a>
                             </div>
                         </div>
                     </div>
