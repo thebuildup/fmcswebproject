@@ -62,10 +62,10 @@
                     <ul class="nav">
                         <li><a href="{% url 'home' %}" class="{% block home_active %}{% endblock %}">Home</a></li>
                         <li><a href="{% url 'events' %}" class="{% block events_active %}{% endblock %}">Events</a></li>
-                        <li><a href="{% url '404' %}"
-                               class="{% block fantasy_active %}{% endblock %}">FMCS Fantasy</a></li>
-                        <li><a href="{% url '404' %}"
-                               class="{% block ladder_active %}{% endblock %}">Ladder</a></li>
+                        <!--                        <li><a href="{% url '404' %}"-->
+                        <!--                               class="{% block fantasy_active %}{% endblock %}">FMCS Fantasy</a></li>-->
+                        <!--                        <li><a href="{% url '404' %}"-->
+                        <!--                               class="{% block ladder_active %}{% endblock %}">Ladder</a></li>-->
                         <li><a href="{% url 'ranking' %}"
                                class="{% block leaderboard_active %}{% endblock %}">Leaderboard</a></li>
                         {% if user.is_authenticated %}
