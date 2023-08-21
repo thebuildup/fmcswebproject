@@ -75,7 +75,7 @@
                         <div class="col-7">
                             {% if user.is_authenticated and username == request.user %}
                             <div class="main-button">
-                                <a href="#">Edit Profile</a>
+                                <a href="#" id="edit-profile-link">Edit Profile</a>
                             </div>
                             {% endif %}
                         </div>
@@ -131,4 +131,31 @@
 
 {% block owl %}
 <script src="{% static 'js/owl-carousel.js' %}"></script>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    $(document).ready(function () {
+        // Скрыть поля редактирования при загрузке страницы
+        $("input[name='twitter']").prop("disabled", true);
+        $("input[name='discord']").prop("disabled", true);
+        $("input[name='telegram']").prop("disabled", true);
+        $("input[name='country']").prop("disabled", true);
+        $("input[name='first_name']").prop("disabled", true);
+        $("input[name='last_name']").prop("disabled", true);
+
+        // Обработчик клика по ссылке "Edit Profile"
+        $("#edit-profile-link").click(function (e) {
+            e.preventDefault();
+
+            // Активировать поля редактирования
+            $("input[name='twitter']").prop("disabled", false);
+            $("input[name='discord']").prop("disabled", false);
+            $("input[name='telegram']").prop("disabled", false);
+            $("input[name='country']").prop("disabled", false);
+            $("input[name='first_name']").prop("disabled", false);
+            $("input[name='last_name']").prop("disabled", false);
+        });
+    });
+</script>
 {% endblock %}
