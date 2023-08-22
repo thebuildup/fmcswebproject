@@ -29,10 +29,16 @@
                         <div class="col-5">
                             <div class="info-item">
                                 <i class="fa fa-discord"></i>
-                                {% if discord %}
-                                <h6><a> {{ discord }}</a></h6>
+                                {% if editing_profile %}
+                                {{ form.discord }}
                                 {% else %}
-                                <h6> NO INFO </h6>
+                                <h6>
+                                    {% if discord %}
+                                    {{ discord }}
+                                    {% else %}
+                                    NO INFO
+                                    {% endif %}
+                                </h6>
                                 {% endif %}
                             </div>
                         </div>
@@ -75,7 +81,11 @@
                         <div class="col-7">
                             {% if user.is_authenticated and username == request.user %}
                             <div class="main-button">
-                                <a href="#" id="edit-profile-link">Edit Profile</a>
+                                {% if editing_profile %}
+                                <button type="submit" form="profile-form">Save Profile</button>
+                                {% else %}
+                                <a href="?edit" id="edit-profile-link">Edit Profile</a>
+                                {% endif %}
                             </div>
                             {% endif %}
                         </div>
@@ -127,6 +137,11 @@
     </div>
 </div>
 
+<form method="post" id="profile-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+</form>
+
 {% endblock %}
 
 {% block owl %}
@@ -136,25 +151,28 @@
 {% block extra_scripts %}
 <script>
     $(document).ready(function () {
-        // Скрыть поля редактирования при загрузке страницы
-        $("input[name='twitter']").prop("disabled", true);
-        $("input[name='discord']").prop("disabled", true);
-        $("input[name='telegram']").prop("disabled", true);
-        $("input[name='country']").prop("disabled", true);
-        $("input[name='first_name']").prop("disabled", true);
-        $("input[name='last_name']").prop("disabled", true);
+        // Проверка, был ли запрос на редактирование
+        var editing_profile = {% if request.GET.edit %} true {% else %} false {% endif %};
+
+        // Скрыть форму редактирования при загрузке страницы
+        if (!editing_profile) {
+            $("#profile-form").hide();
+        }
 
         // Обработчик клика по ссылке "Edit Profile"
         $("#edit-profile-link").click(function (e) {
             e.preventDefault();
 
-            // Активировать поля редактирования
-            $("input[name='twitter']").prop("disabled", false);
-            $("input[name='discord']").prop("disabled", false);
-            $("input[name='telegram']").prop("disabled", false);
-            $("input[name='country']").prop("disabled", false);
-            $("input[name='first_name']").prop("disabled", false);
-            $("input[name='last_name']").prop("disabled", false);
+            // Переключение между режимами редактирования и просмотра
+            if (editing_profile) {
+                $("#profile-form").hide();
+                $(this).text("Edit Profile");
+            } else {
+                $("#profile-form").show();
+                $(this).text("Cancel");
+            }
+
+            editing_profile = !editing_profile;
         });
     });
 </script>

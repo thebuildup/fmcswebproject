@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login
 from glicko.models import Player
 from .models import Profile
 import re
+from .forms import ProfileEditForm
 
 
 # Create your views here.
@@ -102,3 +103,17 @@ def profile(request, username):
         'telegram_username': telegram_username,
         'country': country,
     })
+
+
+def edit_profile(request):
+    editing_profile = False
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+    else:
+        form = ProfileEditForm(instance=request.user.profile)
+        if 'edit' in request.GET:
+            editing_profile = True
+
+    return render(request, 'user_profile.html', {'form': form, 'editing_profile': editing_profile})
