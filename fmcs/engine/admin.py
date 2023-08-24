@@ -9,7 +9,7 @@ class ParticipantInline(admin.TabularInline):
 
 
 class TournamentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'format', 'start_date', 'swiss_rounds')
+    list_display = ('id', 'name', 'format', 'start_date', 'end_date', 'swiss_rounds')
     inlines = [ParticipantInline]
 
 

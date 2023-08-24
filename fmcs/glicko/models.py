@@ -10,6 +10,7 @@ from django_countries.fields import CountryField
 from django.utils.text import slugify
 
 from . import stats
+from engine.models import Tournament
 
 
 # Create your models here.
@@ -392,6 +393,15 @@ class Match(models.Model):
         default=timezone.now,
         help_text="The date and time when the game was played.",
     )
+
+    event = models.ForeignKey(
+        Tournament,
+        default=False,
+        null=True,
+        on_delete=models.SET_NULL,
+        help_text="Event"
+    )
+
     confirmed = models.ForeignKey(
         User,
         default=False,
