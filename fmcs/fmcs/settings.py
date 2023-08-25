@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "glicko",
     "team",
     "django_countries",
+    "ranking",
 ]
 
 MIDDLEWARE = [

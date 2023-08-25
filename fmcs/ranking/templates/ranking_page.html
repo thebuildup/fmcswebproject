@@ -1,0 +1,40 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}Rankings{% endblock %}
+
+{% block leaderboard_active %}active{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/ranking_page.css' %}">
+<link rel="stylesheet" href="{% static 'css/registr.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-banner-login">
+    <div class="section">
+        <div class="container">
+            <div class="row full-height justify-content-center">
+                <div class="col-12 text-center align-self-center py-5">
+                    <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                        <div class="ranking">
+                            <div>
+                                <a href="{% url 'ranking' %}"><img class="rotate"
+                                                                   src="{% static 'images/logo_fmcs.png' %}" alt="City"
+                                                                   style="max-width: 33%;"></a>
+                                <a href="{% url '404' %}"><img src="{% static 'images/logo_fmcs.png' %}" alt="Trees"
+                                                               style="max-width: 33%;"></a>
+                                <a href="{% url '404' %}"><img src="{% static 'images/logo_fmcs.png' %}" alt="Trees"
+                                                               style="max-width: 33%;"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block owl %}
+<script src="{% static 'js/owl-carousel.js' %}"></script>
+{% endblock %}

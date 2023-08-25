@@ -67,7 +67,7 @@
                         <!--                               class="{% block fantasy_active %}{% endblock %}">FMCS Fantasy</a></li>-->
                         <!--                        <li><a href="{% url '404' %}"-->
                         <!--                               class="{% block ladder_active %}{% endblock %}">Ladder</a></li>-->
-                        <li><a href="{% url 'ranking' %}"
+                        <li><a href="{% url 'ranking_page' %}"
                                class="{% block leaderboard_active %}{% endblock %}">Leaderboard</a></li>
                         {% if user.is_authenticated %}
                         <li><a href="{% url 'user_profile' username=user.get_username %}"
