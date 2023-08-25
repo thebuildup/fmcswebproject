@@ -48,9 +48,11 @@
                     <strong>{{ player.ranking }}</strong>
                     {% if player.ranking_delta is not None %}
                         {% if player.ranking_delta > 0 %}
-                                        <span style="color: #00FF00;"> <strong>+{{ player.ranking_delta }}</strong></span>
+                                        <span style="color: #00FF00;">
+                                            <strong>    +{{ player.ranking_delta }}</strong></span>
                         {% elif player.ranking_delta < 0 %}
-                            <span style="color: #FF0000;"> <strong>-{{ player.ranking_delta }}</strong></span>
+                            <span style="color: #FF0000;">
+                                <strong>    -{{ player.ranking_delta }}</strong></span>
                         {% endif %}
                     {% endif %}
                 {% else %}
