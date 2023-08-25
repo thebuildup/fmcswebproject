@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Запрос на отображение всех участников при открытии страницы
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/ranking/search/', true);
+    xhr.open('GET', '/fmcs/search/', true);
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Отправляем AJAX-запрос на сервер с параметром keyword
         var xhr = new XMLHttpRequest();
         console.log(xhr)
-        var url = '/ranking/search/?keyword=' + encodeURIComponent(keyword);
+        var url = '/fmcs/search/?keyword=' + encodeURIComponent(keyword);
         console.log(url)
         xhr.open('GET', url, true);
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
