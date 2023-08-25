@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <!--                <div class="collections">-->
+                <div class="collections">
                 <div class="page-content">
                     <div class="row">
                         <div class="col-lg-12">
@@ -21,13 +21,14 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <div class="owl-collection owl-carousel">
+                            <div class="owl-collection owl-carousel owl-loaded owl-drag">
                                 {% for player in top_players %}
                                 <div class="item">
                                     <img src="{% static 'images/logo_fmcs.png' %}" alt="">
                                     <div class="down-content">
                                         <h4>{{ player.name }}</h4>
-                                        <span class="collection">Rating:<br><strong>{{ player.rating|floatformat:"0" }}</strong></span>
+                                        <span class="collection">Rating:<br><strong>
+                                            {{ player.rating|floatformat:"0" }}</strong></span>
                                         <span class="category">Ranking:<br><strong>{{ player.ranking }}</strong></span>
                                         <div class="main-button">
                                             <a href="{% url 'team_profile' player.formatted_name %}">View Profile</a>
