@@ -1104,7 +1104,7 @@ Currently Market Style
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  padding: 400px 0px 120px 0px;
+  padding: 100px 0px 120px 0px;
   position: relative;
 }
 
@@ -1331,7 +1331,7 @@ Explore Style
 
 .featured-explore {
   margin-top: 60px;
-  margin-bottom: -300px;
+  margin-bottom: 0px;
 }
 
 .featured-explore .owl-features {
