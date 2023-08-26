@@ -15,7 +15,7 @@
             <div class="col-lg-12">
                 <h6>FMCS Events</h6>
                 <h2>Discover Our Events</h2>
-                <span><a href="{% url 'home' %}">Home </a> > <a href="#">Events</a></span>
+<!--                <span><a href="{% url 'home' %}">Home </a> > Events</span>-->
             </div>
         </div>
     </div>
@@ -30,10 +30,12 @@
                                 <img src="{% static 'images/featured-04.jpg' %}" alt="" style="border-radius: 20px;">
                                 <div class="hover-effect">
                                     <div class="content">
-                                        <h4>{{ event.name }}</h4>
+                                        <a href="{% url 'tournament_detail' tournament_id=event.id %}">
+                                            <h4>{{ event.name }}</h4>
+                                        </a>
                                         <span class="author">
-                        <img src="{% static 'images/author.jpg' %}" alt=""
-                             style="max-width: 50px; max-height: 50px; border-radius: 50%;">
+<!--                        <img src="{% static 'images/author.jpg' %}" alt=""-->
+<!--                             style="max-width: 50px; max-height: 50px; border-radius: 50%;">-->
                         <h6>{{event.org.name}}<br><a href="#">@{{event.org.description}}</a></h6>
                         <h6>{{event.get_status}}<br></h6>
                       </span>
@@ -63,7 +65,7 @@
                     <div class="filters">
                         <ul>
                             <li data-filter="*" class="active">All Events</li>
-                            <li data-filter=".msc">Past</li>
+                            <li data-filter=".msc">Finished</li>
                             <li data-filter=".dig">Ongoing</li>
                             <li data-filter=".blc">Upcoming</li>
                         </ul>
@@ -92,7 +94,7 @@
                                 <h4>{{ event.name }}</h4>
                                 <span class="author">
 <!--                    <img src="{% static 'images/author.jpg' %}" alt="" style="max-width: 80px; border-radius: 50%;">-->
-                    <img src="{% static 'images/author.jpg' %}" alt="" style="max-width: 70%; border-radius: 30%;">
+<!--                    <img src="{% static 'images/author.jpg' %}" alt="" style="max-width: 70%; border-radius: 30%;">-->
                     <h6>{{event.org.name}}<br><a href="#">@{{event.org.description}}</a></h6>
                   </span>
                                 <div class="line-dec"></div>

@@ -1157,7 +1157,7 @@ Currently Market Style
 }
 
 .currently-market .item .right-content {
-  margin-left: 30px;
+  margin-left: 20px;
   width: 100%;
 }
 
@@ -1169,6 +1169,7 @@ Currently Market Style
 .currently-market .item .right-content span.author {
   display: flex;
   margin-bottom: 25px;
+  justify-content: center;
 }
 
 .currently-market .item .right-content span.author img {
@@ -1273,11 +1274,11 @@ Page Heading Style
 }
 
 .page-heading {
-  background-image: url(../images/heading-bg.jpg);
+  background-image: url(../images/dark-bg.jpg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  padding-top: 250px;
+  padding-top: 150px;
   text-align: center;
   background-color: #2a2a2a;
 }

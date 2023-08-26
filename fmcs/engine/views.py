@@ -10,10 +10,14 @@ from .utils.bracket_generator import generate_single_elimination_bracket
 
 def event_view(request):
     events_list = Tournament.objects.all()
-    reversed_events_list = [event for event in reversed(events_list)]
-    # event_list_filter = Tournament.objects.filter(status_name__status_name__in=["Ongoing", "Upcoming"])
-    ongoing_upcoming_tournaments = [event for event in events_list if event.get_status() in ['Ongoing', 'Upcoming']]
-    carousel_list = [event for event in reversed(ongoing_upcoming_tournaments)]
+    reversed_events_list = sorted(events_list, key=lambda event: event.start_date, reverse=True)
+    ongoing_upcoming_tournaments = [event for event in reversed_events_list
+                                    if event.get_status() in ['Ongoing', 'Upcoming']]
+    past_tournaments = [event for event in reversed_events_list if event.get_status() in ['Finished']]
+    if ongoing_upcoming_tournaments:
+        carousel_list = [event for event in ongoing_upcoming_tournaments]
+    else:
+        carousel_list = [event for event in past_tournaments[:5]]
     context = {
         'events_list': reversed_events_list,
         'carousel_list': carousel_list,
