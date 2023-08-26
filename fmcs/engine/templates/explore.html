@@ -83,20 +83,26 @@
                             <div class="left-image">
                                 <img src="{% static 'images/featured-04.jpg' %}" alt=""
                                      style="border-radius: 20px; min-width: 195px;">
-                            </div>
-                            <div class="right-content">
-                                <h4>{{ event.name }}</h4>
-                                <span class="author">
-                    <img src="{% static 'images/author.jpg' %}" alt="" style="max-width: 50px; border-radius: 50%;">
-                    <h6>{{event.org.name}}<br><a href="#">@{{event.org.description}}</a></h6>
-                  </span>
                                 <div class="line-dec"></div>
                                 <span class="bid">
                     Status<br><strong>{{event.get_status}}</strong><br>
                   </span>
+                            </div>
+                            <div class="right-content">
+                                <h4>{{ event.name }}</h4>
+                                <span class="author">
+<!--                    <img src="{% static 'images/author.jpg' %}" alt="" style="max-width: 80px; border-radius: 50%;">-->
+                    <img src="{% static 'images/author.jpg' %}" alt="" style="max-width: 70%; border-radius: 30%;">
+                    <h6>{{event.org.name}}<br><a href="#">@{{event.org.description}}</a></h6>
+                  </span>
+                                <div class="line-dec"></div>
 <!--                                <span class="ends">-->
                                 <span class="bid">
-                    Format<br><strong>{{event.get_format_display}}</strong><br>
+                    Start Date<br><strong>{{event.start_date}}</strong><br>
+                  </span>
+                                <div class="line-dec"></div>
+                                <span class="bid">
+                    End Date<br><strong>{{event.end_date}}</strong><br>
                   </span>
                                 <div class="text-button">
                                     <a href="{% url 'tournament_detail' tournament_id=event.id %}">View Event</a>
