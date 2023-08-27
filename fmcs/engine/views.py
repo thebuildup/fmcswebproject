@@ -129,3 +129,7 @@ def get_participants_data(request, tournament_id):
     participants = Participant.objects.filter(tournament__id=tournament_id).values('name')
     data = [{'name': participant['name']} for participant in participants]
     return JsonResponse(data, safe=False)
+
+
+def match_view(request):
+    return render(request, 'match_detail.html')

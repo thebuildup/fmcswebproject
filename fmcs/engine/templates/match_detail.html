@@ -1,0 +1,101 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}FMCS | {{ tournament.name }} {% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/match.css' %}">
+{% endblock %}
+{% block content %}
+<div class="categories-collections">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-content">
+                    <!--    <main class="site-content site-content&#45;&#45;center page" id="wrapper">-->
+
+                    <!--    <div class="container">-->
+                    <!--        <div class="match-heading page-heading&#45;&#45;default text-small text-center w-100 ">-->
+                    <div class="match-heading page-heading--default text-small text-center w-100 ">
+                        <div class="page-heading__subtitle h5"><span class="color-primary">Date /</span>
+                            FMCS Buildupplay <span class="color-primary">vs</span> BroFist
+                        </div>
+                        <h1 class="page-heading__title h2">FMCS Season 1 Final</h1></div>
+                    <ul class="match-stats-links match-stats-links--main">
+                        <li><a href="#" class="active">
+                            <svg role="img" class="df-icon df-icon--overview">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="0.75em" viewBox="0 0 192 512">
+                                    <path d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z"/>
+                                </svg>
+                            </svg>
+                        </a></li>
+                        <li><a href="./matches-stats-1.html">
+                            <svg role="img" class="df-icon df-icon--stats">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                    <path d="M332.8 320h38.4c6.4 0 12.8-6.4 12.8-12.8V172.8c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v134.4c0 6.4 6.4 12.8 12.8 12.8zm96 0h38.4c6.4 0 12.8-6.4 12.8-12.8V76.8c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v230.4c0 6.4 6.4 12.8 12.8 12.8zm-288 0h38.4c6.4 0 12.8-6.4 12.8-12.8v-70.4c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v70.4c0 6.4 6.4 12.8 12.8 12.8zm96 0h38.4c6.4 0 12.8-6.4 12.8-12.8V108.8c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v198.4c0 6.4 6.4 12.8 12.8 12.8zM496 384H64V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v336c0 17.67 14.33 32 32 32h464c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z"/>
+                                </svg>
+                            </svg>
+                        </a></li>
+<!--                                        <li><a href="./matches-lineups-1.html">-->
+<!--                                            <svg role="img" class="df-icon df-icon&#45;&#45;lineups">-->
+<!--                                                <use xlink:href="assets/img/necromancers.svg#lineups"></use>-->
+<!--                                            </svg>-->
+<!--                                        </a></li>-->
+<!--                                        <li><a href="./matches-replay.html">-->
+<!--                                            <svg role="img" class="df-icon df-icon&#45;&#45;replay">-->
+<!--                                                <use xlink:href="assets/img/necromancers.svg#replay"></use>-->
+<!--                                            </svg>-->
+<!--                                        </a></li>-->
+                    </ul>
+                                    <div class="match-overview mt-sm-auto mb-sm-auto">
+                                        <div class="match-overview__body">
+                                            <figure class="match-team" role="group">
+                                                <figure class="match-team-logo match-team-logo--team-1" role="group"><img
+                                                        src="{% static 'images/logo_fmcs.png' %}"
+                                                        srcset="{% static 'images/logo_fmcs.png' %} 2x" alt="Necromancers Logo">
+                                                </figure>
+                                                <figcaption>
+                                                    <div class="match-team__name">FMCS Buildupplay</div>
+                                                    <div class="match-team__country">Belarus</div>
+                                                </figcaption>
+                                            </figure>
+                                            <div class="col-md-4">
+                                                <div class="match-overview__result">
+                                                    <div class="match-result match-result--winner-left"><span
+                                                            class="match-result__score">1 : 0</span>
+                                                    </div>
+                                                    <div class="match-result match-result--winner-right"><span
+                                                            class="match-result__score">0 : 1</span> <span
+                                                            class="match-result__label">Final score</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <figure class="match-team" role="group">
+                                                <figure class="match-team-logo match-team-logo--team-2" role="group"><img
+                                                        src="{% static 'images/logo_fmcs.png' %}"
+                                                        srcset="{% static 'images/logo_fmcs.png' %} 2x" alt="Raging Rhinos Logo"></figure>
+                                                <figcaption>
+                                                    <div class="match-team__name">BroFist</div>
+                                                    <div class="match-team__country">Ukraine</div>
+                                                </figcaption>
+                                            </figure>
+                                        </div>
+                                        <!--                <ul class="match-overview__footer list-unstyled">-->
+                                        <!--                    <li><span>Instance</span>Week 5 Day 2</li>-->
+                                        <!--                    <li><span>Time</span>10:30pm PCT</li>-->
+                                        <!--                    <li><span>Total Duration</span>01:56:32</li>-->
+                                        <!--                    <li><span>Venue</span>Shenlong Arena</li>-->
+                                        <!--                    <li><span>Game</span>Xenowatch</li>-->
+                                        <!--                </ul>-->
+                                    </div>
+                        </div>
+
+                    <!--    </main>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+
+{% endblock %}

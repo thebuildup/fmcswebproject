@@ -1,9 +1,9 @@
 from django.urls import path
-
 from . import views
 
 urlpatterns = [
     path('', views.event_view, name='events'),
+    path('test/', views.match_view, name='match'),
     path('create/', views.create_tournament, name='create_tournament'),
     path('<int:tournament_id>/', views.tournament_detail, name='tournament_detail'),
     # path('<int:tournament_id>/', views.add_participant, name='add_participant'),

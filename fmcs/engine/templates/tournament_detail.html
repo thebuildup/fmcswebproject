@@ -1,64 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ tournament.name }} Details</title>
-    {% load static %}
-    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/jquery.bracket.min.css' %}" rel="stylesheet">
-</head>
-<body>
-<h1>{{ tournament.name }} Details</h1>
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#participants">Participants</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#matches">Matches</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#grid">Grid/Table</a>
-    </li>
-</ul>
-<div class="tab-content mt-3">
-    <div class="tab-pane fade show active" id="participants">
-        <h2>Participants:</h2>
-        <ul>
-            {% for participant in participants %}
-            <li>{{ participant.name }}</li>
-            {% endfor %}
-        </ul>
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}FMCS | {{ tournament.name }} {% endblock %}
 
-        <h2>Add New Participant:</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Add">
-        </form>
+{% block content %}
 
-        <!-- Форма для изменения даты старта турнира -->
-        <h2>Change Start Date:</h2>
-        <form method="post">
-            {% csrf_token %}
-            <label for="start_date">New Start Date:</label>
-            <input type="date" id="start_date" name="start_date" value="{{ tournament.start_date }}">
-            <input type="submit" value="Update Start Date">
-        </form>
-    </div>
-    <div class="tab-pane fade" id="matches">
-        <!-- Ваш код для отображения матчей -->
-        <div id="dataOutput"></div>
-    </div>
-    <div class="tab-pane fade" id="grid">
-        <!-- Ваш код для отображения сетки/таблицы -->
-        <h2>Bracket</h2>
-        <div id="bracket-container" data-tournament-id="{{ tournament.id }}"></div>
-    </div>
-</div>
+{% endblock %}
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="{% static 'js/test_1.js' %}"></script>
-<script src="{% static 'js/jquery.bracket.min.js' %}"></script>
-</body>
-</html>
+{% block extra_scripts %}
+
+{% endblock %}

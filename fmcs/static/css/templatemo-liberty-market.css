@@ -1283,6 +1283,14 @@ Page Heading Style
   background-color: #2a2a2a;
 }
 
+.match-heading {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding-top: 0px;
+  text-align: center;
+}
+
 .page-heading h6 {
   font-size: 20px;
   margin-bottom: 15px;
