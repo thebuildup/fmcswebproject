@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "team",
     "django_countries",
     "ranking",
+    "match",
 ]
 
 MIDDLEWARE = [

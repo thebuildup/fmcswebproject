@@ -131,5 +131,3 @@ def get_participants_data(request, tournament_id):
     return JsonResponse(data, safe=False)
 
 
-def match_view(request):
-    return render(request, 'match_detail.html')

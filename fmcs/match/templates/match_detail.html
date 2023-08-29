@@ -1,6 +1,6 @@
 {% extends "base_generic.html" %}
 {% load static %}
-{% block title %}FMCS | {{ tournament.name }} {% endblock %}
+{% block title %}FMCS | {{match.player1.name}} vs {{match.player2.name}} {% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/match.css' %}">
 {% endblock %}
@@ -15,10 +15,11 @@
                     <!--    <div class="container">-->
                     <!--        <div class="match-heading page-heading&#45;&#45;default text-small text-center w-100 ">-->
                     <div class="match-heading page-heading--default text-small text-center w-100 ">
-                        <div class="page-heading__subtitle h5"><span class="color-primary">Date /</span>
-                            FMCS Buildupplay <span class="color-primary">vs</span> BroFist
+                        <div class="page-heading__subtitle h5"><span class="color-primary">{{match.date_played}} /</span>
+                            {{match.player1.name}} <span class="color-primary">vs</span> {{match.player2.name}}
                         </div>
-                        <h1 class="page-heading__title h2">FMCS Season 1 Final</h1></div>
+                        <a href="{% url 'tournament_detail' match.event.id %}">
+                        <h1 class="page-heading__title h2">{{match.event}}</h1></a></div>
                     <ul class="match-stats-links match-stats-links--main">
                         <li><a href="#" class="active">
                             <svg role="img" class="df-icon df-icon--overview">
@@ -50,20 +51,24 @@
                                             <figure class="match-team" role="group">
                                                 <figure class="match-team-logo match-team-logo--team-1" role="group"><img
                                                         src="{% static 'images/logo_fmcs.png' %}"
-                                                        srcset="{% static 'images/logo_fmcs.png' %} 2x" alt="Necromancers Logo">
+                                                        srcset="{% static 'images/logo_fmcs.png' %} 2x" alt={{match.player1.name}}>
                                                 </figure>
                                                 <figcaption>
-                                                    <div class="match-team__name">FMCS Buildupplay</div>
-                                                    <div class="match-team__country">Belarus</div>
+                                                    <a href="{% url 'team_profile' match.player1.formatted_name%}">
+                                                    <div class="match-team__name">{{match.player1.name}}</div>
+                                                        </a>
+                                                    <div class="match-team__country">{{match.player1.country.name}}</div>
                                                 </figcaption>
                                             </figure>
                                             <div class="col-md-4">
                                                 <div class="match-overview__result">
                                                     <div class="match-result match-result--winner-left"><span
-                                                            class="match-result__score">1 : 0</span>
+                                                            class="match-result__score">{{match.player1_goals_m1}} :
+                                                        {{match.player2_goals_m1}}</span>
                                                     </div>
                                                     <div class="match-result match-result--winner-right"><span
-                                                            class="match-result__score">0 : 1</span> <span
+                                                            class="match-result__score">{{match.player1_goals_m2}} :
+                                                        {{match.player2_goals_m2}}</span> <span
                                                             class="match-result__label">Final score</span>
                                                     </div>
                                                 </div>
@@ -71,10 +76,12 @@
                                             <figure class="match-team" role="group">
                                                 <figure class="match-team-logo match-team-logo--team-2" role="group"><img
                                                         src="{% static 'images/logo_fmcs.png' %}"
-                                                        srcset="{% static 'images/logo_fmcs.png' %} 2x" alt="Raging Rhinos Logo"></figure>
+                                                        srcset="{% static 'images/logo_fmcs.png' %} 2x" alt={{match.player2.name}}></figure>
                                                 <figcaption>
-                                                    <div class="match-team__name">BroFist</div>
-                                                    <div class="match-team__country">Ukraine</div>
+                                                    <a href="{% url 'team_profile' match.player2.formatted_name%}">
+                                                    <div class="match-team__name">{{match.player2.name}}</div>
+                                                    </a>
+                                                    <div class="match-team__country">{{match.player2.country.name}}</div>
                                                 </figcaption>
                                             </figure>
                                         </div>

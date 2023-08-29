@@ -26,4 +26,5 @@ urlpatterns = [
     path("tournaments/", include("engine.urls")),
     path("team/", include("team.urls")),
     path("ranking/", include("ranking.urls")),
+    path("match/", include("match.urls")),
 ]
