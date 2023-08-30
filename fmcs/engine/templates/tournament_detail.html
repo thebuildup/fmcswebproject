@@ -4,6 +4,142 @@
 
 {% block content %}
 
+<div class="author-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="author">
+                    <img src="{% static 'images/single-author.jpg' %}" alt=""
+                         style="max-width: 170px;">
+                    <!--                    <img src="{% static request.user.profile.avatar.url %}" alt=""-->
+                    <!--                    <img src="{{ request.user.profile.avatar.url }}" alt=""-->
+
+                    <!--                         style="border-radius: 50%; max-width: 170px;">-->
+                    <h4> {{tournament.name}}<br>
+                        <a href="#">@{{tournament.org.name}}</a>
+                    </h4>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="right-info">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="info-item">
+                                <i class="fa fa-discord"></i>
+                                {% if editing_profile %}
+                                {{ form.discord }}
+                                {% else %}
+                                <h6>
+                                    {% if discord %}
+                                    {{ discord }}
+                                    {% else %}
+                                    NO INFO
+                                    {% endif %}
+                                </h6>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="info-item">
+                                <i class="fa-brands fa-x-twitter"></i>
+                                <!--                                <h6>@profile <em>Twitter</em></h6>-->
+                                {% if twitter_username %}
+                                <h6><a href="{{profile.twitter}}"> {{twitter_username}} </a></h6>
+                                {% else %}
+                                <h6> NO INFO </h6>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="info-item">
+                                <i class="fa fa-telegram"></i>
+                                {% if telegram_username %}
+                                <h6><a href="{{profile.telegram}}"> {{telegram_username}} </a></h6>
+                                {% else %}
+                                <h6> NO INFO </h6>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="info-item">
+                                <i class="fa-solid fa-location-pin"></i>
+                                {% if country %}
+                                <h6><a>{{country.alpha3}} | {{country.name}}</a></h6>
+                                {% else %}
+                                <h6> NO INFO </h6>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <h5>Last login: {{ username.last_login }}</h5>
+                        </div>
+                        <div class="col-7">
+                            {% if user.is_authenticated and username == request.user %}
+                            <div class="main-button">
+                                {% if editing_profile %}
+                                <button type="submit" form="profile-form">Save Profile</button>
+                                {% else %}
+                                <a href="?edit" id="edit-profile-link">Edit Profile</a>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="section-heading">
+                    <div class="line-dec"></div>
+                    <h2>{{username.get_username}} <em>Teams</em>.</h2>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                {% if player %}
+                <div class="item">
+                    <div class="row">
+                        <div class="col-lg-12">
+                        <span class="author">
+                          <img src="{% static 'images/author.jpg' %}" alt=""
+                               style="max-width: 50px; border-radius: 50%;">
+                        </span>
+                            <img src="{% static 'images/logo_fmcs.png' %}" alt="" style="border-radius: 20px;">
+                            <h4>{{player.name}}</h4>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="line-dec"></div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <span>Rating: <br> <strong>{{ player.rating|floatformat:"0" }}</strong></span>
+                                </div>
+                                <div class="col-6">
+                                    <span>Rating Name: <br> <strong>FMCS</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="main-button">
+                                <a href="{% url 'team_profile' formatted_player_name=player.formatted_name %}">View
+                                    Team</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p>NO TEAMS</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block owl %}
+<script src="{% static 'js/owl-carousel.js' %}"></script>
 {% endblock %}
 
 {% block extra_scripts %}
