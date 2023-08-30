@@ -23,71 +23,71 @@
             </div>
             <div class="col-lg-6">
                 <div class="right-info">
-                    <div class="row">
-                        <div class="col-5">
-                            <div class="info-item">
-                                <i class="fa fa-discord"></i>
-                                {% if editing_profile %}
-                                {{ form.discord }}
-                                {% else %}
-                                <h6>
-                                    {% if discord %}
-                                    {{ discord }}
-                                    {% else %}
-                                    NO INFO
-                                    {% endif %}
-                                </h6>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <div class="info-item">
-                                <i class="fa-brands fa-x-twitter"></i>
-                                <!--                                <h6>@profile <em>Twitter</em></h6>-->
-                                {% if twitter_username %}
-                                <h6><a href="{{profile.twitter}}"> {{twitter_username}} </a></h6>
-                                {% else %}
-                                <h6> NO INFO </h6>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <div class="info-item">
-                                <i class="fa fa-telegram"></i>
-                                {% if telegram_username %}
-                                <h6><a href="{{profile.telegram}}"> {{telegram_username}} </a></h6>
-                                {% else %}
-                                <h6> NO INFO </h6>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <div class="info-item">
-                                <i class="fa-solid fa-location-pin"></i>
-                                {% if country %}
-                                <h6><a>{{country.alpha3}} | {{country.name}}</a></h6>
-                                {% else %}
-                                <h6> NO INFO </h6>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-5">
-                            <h5>Last login: {{ username.last_login }}</h5>
-                        </div>
-                        <div class="col-7">
-                            {% if user.is_authenticated and username == request.user %}
-                            <div class="main-button">
-                                {% if editing_profile %}
-                                <button type="submit" form="profile-form">Save Profile</button>
-                                {% else %}
-                                <a href="?edit" id="edit-profile-link">Edit Profile</a>
-                                {% endif %}
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div>
+                    <!--                    <div class="row">-->
+                    <!--                        <div class="col-5">-->
+                    <!--                            <div class="info-item">-->
+                    <!--                                <i class="fa fa-discord"></i>-->
+                    <!--                                {% if editing_profile %}-->
+                    <!--                                {{ form.discord }}-->
+                    <!--                                {% else %}-->
+                    <!--                                <h6>-->
+                    <!--                                    {% if discord %}-->
+                    <!--                                    {{ discord }}-->
+                    <!--                                    {% else %}-->
+                    <!--                                    NO INFO-->
+                    <!--                                    {% endif %}-->
+                    <!--                                </h6>-->
+                    <!--                                {% endif %}-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="col-5">-->
+                    <!--                            <div class="info-item">-->
+                    <!--                                <i class="fa-brands fa-x-twitter"></i>-->
+                    <!--                                &lt;!&ndash;                                <h6>@profile <em>Twitter</em></h6>&ndash;&gt;-->
+                    <!--                                {% if twitter_username %}-->
+                    <!--                                <h6><a href="{{profile.twitter}}"> {{twitter_username}} </a></h6>-->
+                    <!--                                {% else %}-->
+                    <!--                                <h6> NO INFO </h6>-->
+                    <!--                                {% endif %}-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="col-5">-->
+                    <!--                            <div class="info-item">-->
+                    <!--                                <i class="fa fa-telegram"></i>-->
+                    <!--                                {% if telegram_username %}-->
+                    <!--                                <h6><a href="{{profile.telegram}}"> {{telegram_username}} </a></h6>-->
+                    <!--                                {% else %}-->
+                    <!--                                <h6> NO INFO </h6>-->
+                    <!--                                {% endif %}-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="col-5">-->
+                    <!--                            <div class="info-item">-->
+                    <!--                                <i class="fa-solid fa-location-pin"></i>-->
+                    <!--                                {% if country %}-->
+                    <!--                                <h6><a>{{country.alpha3}} | {{country.name}}</a></h6>-->
+                    <!--                                {% else %}-->
+                    <!--                                <h6> NO INFO </h6>-->
+                    <!--                                {% endif %}-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="row">-->
+                    <!--                        <div class="col-5">-->
+                    <!--                            <h5>Last login: {{ username.last_login }}</h5>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="col-7">-->
+                    <!--                            {% if user.is_authenticated and username == request.user %}-->
+                    <!--                            <div class="main-button">-->
+                    <!--                                {% if editing_profile %}-->
+                    <!--                                <button type="submit" form="profile-form">Save Profile</button>-->
+                    <!--                                {% else %}-->
+                    <!--                                <a href="?edit" id="edit-profile-link">Edit Profile</a>-->
+                    <!--                                {% endif %}-->
+                    <!--                            </div>-->
+                    <!--                            {% endif %}-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
                 </div>
             </div>
             <div class="col-lg-12">
