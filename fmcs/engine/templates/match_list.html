@@ -1,0 +1,136 @@
+{% load static %}
+
+{% for match in page %}
+<div class="match-score">
+    <div class="match-score__header">
+        <div class="match-score__competition">{{match.event.name}}</div>
+        <div class="match-score__date">{{match.date_played}}</div>
+    </div>
+    <div class="match-score__body">
+        <figure class="match-team" role="group">
+            <figure class="match-team-logo match-team-logo--team-1" role="group"><img
+                    src="{% static 'images/logo_fmcs.png' %}"
+                    srcset="{% static 'images/logo_fmcs.png' %} 2x" alt="NCR Logo"></figure>
+            <figcaption>
+                <div class="match-team__name">{{match.player1.name}}</div>
+                <div class="match-team__country">{{match.player1.country.alpha3}}</div>
+            </figcaption>
+        </figure>
+        <div class="match-overview__result">
+            <div class="{% if match.player1_goals_m1 > match.player2_goals_m1 %}match-result match-result--winner-left{% elif match.player1_goals_m1 < match.player2_goals_m1 %}match-result match-result--winner-right{% else %}match-result{% endif %}">
+                <span class="match-result__score">{{ match.player1_goals_m1 }} : {{ match.player2_goals_m1 }}</span>
+            </div>
+            <div class="{% if match.player1_goals_m2 > match.player2_goals_m2 %}match-result match-result--winner-left{% elif match.player1_goals_m2 < match.player2_goals_m2 %}match-result match-result--winner-right{% else %}match-result{% endif %}">
+                <span class="match-result__score">{{ match.player1_goals_m2 }} : {{ match.player2_goals_m2 }}</span>
+                <span class="match-result__label">Final score</span>
+            </div>
+        </div>
+        <figure class="match-team" role="group">
+            <figure class="match-team-logo match-team-logo--team-2" role="group"><img
+                    src="{% static 'images/logo_fmcs.png' %}"
+                    srcset="{% static 'images/logo_fmcs.png' %} 2x" alt="RRH Logo"></figure>
+            <figcaption>
+                <div class="match-team__name">{{match.player2.name}}</div>
+                <div class="match-team__country">{{match.player2.country.alpha3}}</div>
+            </figcaption>
+        </figure>
+    </div>
+    <div class="match-score__footer">
+        <figure class="match-team-logo match-team-logo--team-1" role="group"><img
+                src="{% static 'images/logo_fmcs.png' %}"
+                srcset="{% static 'images/logo_fmcs.png' %} 2x" alt="Necromancers Logo">
+        </figure>
+        <ul class="match-stats-links">
+            <li><a href="#" tabindex="0">
+                <svg role="img" class="df-icon df-icon--overview">
+                    <use xlink:href="assets/img/necromancers.svg#overview"></use>
+                </svg>
+            </a></li>
+            <li><a href="#" tabindex="0">
+                <svg role="img" class="df-icon df-icon--stats">
+                    <use xlink:href="assets/img/necromancers.svg#stats"></use>
+                </svg>
+            </a></li>
+            <li><a href="#" tabindex="0">
+                <svg role="img" class="df-icon df-icon--lineups">
+                    <use xlink:href="assets/img/necromancers.svg#lineups"></use>
+                </svg>
+            </a></li>
+            <li><a href="#" tabindex="0">
+                <svg role="img" class="df-icon df-icon--replay">
+                    <use xlink:href="assets/img/necromancers.svg#replay"></use>
+                </svg>
+            </a></li>
+        </ul>
+        <figure class="match-team-logo match-team-logo--team-2" role="group"><img
+                src="{% static 'images/logo_fmcs.png' %}"
+                srcset="{% static 'images/logo_fmcs.png' %} 2x" alt="Raging Rhinos Logo"></figure>
+    </div>
+    <!--                </div>-->
+</div>
+{% endfor %}
+<!--<div class="flex-container">-->
+<div class="pagination">
+    <!--    <span class="step-links">-->
+    {% if page.has_previous %}
+    <div class="flex-child">
+        <button class="lottie_button_3"><a aria-label="Back" href="#" class="prev-page"
+                                           data-page="{{ page.previous_page_number }}">
+            <lottie-player
+                    id="Lottie_3"
+                    src="https://lottie.host/169ace12-cc18-43d3-b00c-4a19b52d5b34/xqj1mqdHrR.json"></lottie-player>
+        </a>
+        </button>
+    </div>
+    <!--            <a href="#" class="prev-page" data-page="{{ page.previous_page_number }}">предыдущая</a>-->
+    {% endif %}
+    
+    <div class="flex-child"></div>
+    <!--        <span class="active">{{ page.number }}</span>-->
+
+    {% if page.has_next %}
+    <div class="flex-child">
+        <button class="lottie_button_3"><a aria-label="Next" href="#" class="next-page"
+                                           data-page="{{ page.next_page_number }}">
+            <lottie-player id="Lottie_4"
+                           src="https://lottie.host/169ace12-cc18-43d3-b00c-4a19b52d5b34/xqj1mqdHrR.json"></lottie-player>
+        </a>
+        </button>
+    </div>
+    <!--            <a href="#" class="next-page" data-page="{{ page.next_page_number }}">следующая</a>-->
+    {% endif %}
+    <!--    </span>-->
+    <!--    </div>-->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@0.4.0/dist/tgs-player.js"></script>
+
+<script>
+    $(document).ready(function () {
+    // Обработчик клика на ссылку "предыдущая страница"
+    $('#matches-container').on('click', '.prev-page', function (e) {
+        e.preventDefault();
+        loadMatches($(this).data('page'));
+    });
+
+    // Обработчик клика на ссылку "следующая страница"
+    $('#matches-container').on('click', '.next-page', function (e) {
+        e.preventDefault();
+        loadMatches($(this).data('page'));
+    });
+
+    // Функция для загрузки матчей через AJAX и обновления контейнера
+    function loadMatches(page) {
+        $.ajax({
+            url: window.location.href,  // Используем текущий URL
+            data: {page: page},  // Передаем номер страницы
+            dataType: 'html',
+            success: function (data) {
+                $('#matches-container').html($(data).find('#matches-container').html());
+            }
+        });
+    }
+});
+
+</script>

@@ -2433,3 +2433,52 @@ Gaming Library Style
   text-align: center;
   margin-bottom: -53px;
 }
+
+
+.flex-container {
+  display: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+#Lottie_3 {
+  transform: scale(0.60);
+}
+
+#Lottie_4 {
+  transform: scale(0.60) rotate(180deg);
+}
+
+/* Button Style - Solid 2 */
+
+.lottie_button_3 {
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  margin: 0;
+  background-color: #7453fc;
+  border: 0px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: box-shadow 0.4s ease;
+}
+
+.lottie_button_3 a {
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+.lottie_button_3 i {
+  transition: transform 0.4s ease;
+}
+
+.lottie_button_3:hover {
+  box-shadow: 3px 3px 8px 2px #3F3F3F inset;
+}
+
+.lottie_button_3:hover i {
+  transform: scale(1.25);
+}

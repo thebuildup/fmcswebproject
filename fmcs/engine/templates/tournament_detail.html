@@ -1,7 +1,9 @@
 {% extends "base_generic.html" %}
 {% load static %}
 {% block title %}FMCS | {{ tournament.name }} {% endblock %}
-
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/match.css' %}">
+{% endblock %}
 {% block content %}
 
 <div class="author-page">
@@ -79,43 +81,12 @@
             <div class="col-lg-12">
                 <div class="section-heading">
                     <div class="line-dec"></div>
-                    <h2>{{username.get_username}} <em>Teams</em>.</h2>
+                    <h2><em>Matches</em>.</h2>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
-                {% if player %}
-                <div class="item">
-                    <div class="row">
-                        <div class="col-lg-12">
-                        <span class="author">
-                          <img src="{% static 'images/author.jpg' %}" alt=""
-                               style="max-width: 50px; border-radius: 50%;">
-                        </span>
-                            <img src="{% static 'images/logo_fmcs.png' %}" alt="" style="border-radius: 20px;">
-                            <h4>{{player.name}}</h4>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="line-dec"></div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <span>Rating: <br> <strong>{{ player.rating|floatformat:"0" }}</strong></span>
-                                </div>
-                                <div class="col-6">
-                                    <span>Rating Name: <br> <strong>FMCS</strong></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="main-button">
-                                <a href="{% url 'team_profile' formatted_player_name=player.formatted_name %}">View
-                                    Team</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% else %}
-                <p>NO TEAMS</p>
-                {% endif %}
+            <!--            <div class="col-lg-3 col-md-6">-->
+            <div id="matches-container">
+                {% include 'match_list.html' %}
             </div>
         </div>
     </div>
@@ -128,6 +99,32 @@
 <script src="{% static 'js/owl-carousel.js' %}"></script>
 {% endblock %}
 
-{% block extra_scripts %}
+<!--{% block extra_scripts %}-->
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        // Обработчик клика на ссылку "предыдущая страница"-->
+<!--        $('#match-list').on('click', '.prev-page', function (e) {-->
+<!--            e.preventDefault();-->
+<!--            loadMatches($(this).data('page'));-->
+<!--        });-->
 
-{% endblock %}
+<!--        // Обработчик клика на ссылку "следующая страница"-->
+<!--        $('#match-list').on('click', '.next-page', function (e) {-->
+<!--            e.preventDefault();-->
+<!--            loadMatches($(this).data('page'));-->
+<!--        });-->
+
+<!--        // Функция для загрузки матчей через AJAX и обновления контейнера-->
+<!--        function loadMatches(page) {-->
+<!--            $.ajax({-->
+<!--                url: window.location.href,  // Используем текущий URL-->
+<!--                data: {page: page},  // Передаем номер страницы-->
+<!--                dataType: 'html',-->
+<!--                success: function (data) {-->
+<!--                    $('#match-list').html($(data).find('#match-list').html());-->
+<!--                }-->
+<!--            });-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
+<!--{% endblock %}-->

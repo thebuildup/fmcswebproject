@@ -304,32 +304,6 @@ template {
     display: none!important
 }
 
-.h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6 {
-    margin-bottom: .5rem;
-    font-weight: 500;
-    line-height: 1.2
-}
-
-.h1,h1 {
-    font-size: 2.5rem
-}
-
-.h2,h2 {
-    font-size: 2rem
-}
-
-.h3,h3 {
-    font-size: 1.75rem
-}
-
-.h5,h5 {
-    font-size: 1.25rem
-}
-
-.h6,h6 {
-    font-size: 1rem
-}
-
 .display-1 {
     font-size: 6rem
 }
@@ -15712,18 +15686,6 @@ a.text-dark:focus,a.text-dark:hover {
     }
 }
 
-.h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6 {
-    margin-bottom: 1.125rem;
-    font-family: Rajdhani,sans-serif;
-    font-weight: 700;
-    line-height: .875;
-    text-transform: uppercase;
-    color: #222430
-}
-
-.h1,.h2,.h3,.h4,.h5,h1,h2,h3,h4,h5 {
-    letter-spacing: -.06em
-}
 
 .h1,h1 {
     font-size: 2.55rem
@@ -29400,7 +29362,7 @@ body:not(.cursor-is--active) .product--single .slick-slider .slick-arrow {
 }
 
 .match-score-inline .match-result--winner-right .match-result__score:before,.match-score .match-result--winner-right .match-result__score:before,.match-stats-widget .match-result--winner-right .match-result__score:before {
-    border-right: 4px solid #a3ff12
+    border-right: 4px solid #957df7
 }
 
 @media (min-width: 1920px) {

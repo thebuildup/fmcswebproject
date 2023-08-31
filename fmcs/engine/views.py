@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.core.paginator import Paginator
 from .forms import TournamentForm, ParticipantForm
 from .models import Tournament, Participant
 from .utils.bracket_generator import generate_single_elimination_bracket
@@ -94,31 +94,24 @@ def add_participant(request, tournament_id):
 def tournament_detail(request, tournament_id):
     tournament = get_object_or_404(Tournament, pk=tournament_id)
 
-    # if request.method == 'POST':
-    #     form = ParticipantForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         return redirect('tournament_detail', tournament_id=tournament_id)
-    #
-    #     new_start_date = request.POST.get('start_date')
-    #     if new_start_date:
-    #         tournament.start_date = new_start_date
-    #         tournament.save()
-    #         return redirect('tournament_detail', tournament_id=tournament_id)
-    #
-    # else:
-    #     form = ParticipantForm()
-    # match = Match.objects.get(event=tournament_id)
+    matches = Match.objects.filter(event=tournament_id)
     matches_played = Match.objects.filter(event=tournament_id).count()
     participants = tournament.participants.all()
+
+    paginator = Paginator(matches, 5)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
 
     context = {
         'tournament': tournament,
         'participants': participants,
-        # 'match': match,
+        'matches': matches,
         'matches_played': matches_played,
-        # 'form': form,
+        'page': page
     }
+
+    # if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+    #     return render(request, 'match_lisr.html', context)
 
     return render(request, 'tournament_detail.html', context=context)
 
