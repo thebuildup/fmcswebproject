@@ -29343,7 +29343,7 @@ body:not(.cursor-is--active) .product--single .slick-slider .slick-arrow {
 }
 
 .match-score-inline .match-result--winner-left .match-result__score:before,.match-score .match-result--winner-left .match-result__score:before,.match-stats-widget .match-result--winner-left .match-result__score:before {
-    border-left: 4px solid #a3ff12
+    border-left: 4px solid #957df7
 }
 
 @media (min-width: 1920px) {
@@ -29368,27 +29368,27 @@ body:not(.cursor-is--active) .product--single .slick-slider .slick-arrow {
 
 .match-overview .match-result--winner-left .match-result__score:before {
     left: -16px;
-    border-left: 6px solid #a3ff12
+    border-left: 6px solid #957df7
 }
 
 @media (min-width: 576px) {
     .match-overview .match-result--winner-left .match-result__score:before {
         left:-20px;
-        border-left: 8px solid #a3ff12
+        border-left: 8px solid #957df7
     }
 }
 
 @media (min-width: 768px) {
     .match-overview .match-result--winner-left .match-result__score:before {
         left:-22px;
-        border-left: 10px solid #a3ff12
+        border-left: 10px solid #957df7
     }
 }
 
 @media (min-width: 992px) {
     .match-overview .match-result--winner-left .match-result__score:before {
         left:-35px;
-        border-left: 14px solid #a3ff12
+        border-left: 14px solid #957df7
     }
 }
 
@@ -29425,20 +29425,20 @@ body:not(.cursor-is--active) .product--single .slick-slider .slick-arrow {
 
 .match-overview .match-result--winner-right .match-result__score:before {
     right: -16px;
-    border-right: 6px solid #a3ff12
+    border-right: 6px solid #957df7
 }
 
 @media (min-width: 576px) {
     .match-overview .match-result--winner-right .match-result__score:before {
         right:-20px;
-        border-right: 8px solid #a3ff12
+        border-right: 8px solid #957df7
     }
 }
 
 @media (min-width: 768px) {
     .match-overview .match-result--winner-right .match-result__score:before {
         right:-22px;
-        border-right: 10px solid #a3ff12
+        border-right: 10px solid #957df7
     }
 }
 

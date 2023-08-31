@@ -60,16 +60,27 @@
                                                     <div class="match-team__country">{{match.player1.country.name}}</div>
                                                 </figcaption>
                                             </figure>
+<!--                                            <div class="col-md-4">-->
+<!--                                                <div class="match-overview__result">-->
+<!--                                                    <div class="match-result match-result&#45;&#45;winner-left"><span-->
+<!--                                                            class="match-result__score">{{match.player1_goals_m1}} :-->
+<!--                                                        {{match.player2_goals_m1}}</span>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="match-result match-result&#45;&#45;winner-right"><span-->
+<!--                                                            class="match-result__score">{{match.player1_goals_m2}} :-->
+<!--                                                        {{match.player2_goals_m2}}</span> <span-->
+<!--                                                            class="match-result__label">Final score</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
                                             <div class="col-md-4">
                                                 <div class="match-overview__result">
-                                                    <div class="match-result match-result--winner-left"><span
-                                                            class="match-result__score">{{match.player1_goals_m1}} :
-                                                        {{match.player2_goals_m1}}</span>
+                                                    <div class="{% if match.player1_goals_m1 > match.player2_goals_m1 %}match-result match-result--winner-left{% elif match.player1_goals_m1 < match.player2_goals_m1 %}match-result match-result--winner-right{% else %}match-result{% endif %}">
+                                                        <span class="match-result__score">{{ match.player1_goals_m1 }} : {{ match.player2_goals_m1 }}</span>
                                                     </div>
-                                                    <div class="match-result match-result--winner-right"><span
-                                                            class="match-result__score">{{match.player1_goals_m2}} :
-                                                        {{match.player2_goals_m2}}</span> <span
-                                                            class="match-result__label">Final score</span>
+                                                    <div class="{% if match.player1_goals_m2 > match.player2_goals_m2 %}match-result match-result--winner-left{% elif match.player1_goals_m2 < match.player2_goals_m2 %}match-result match-result--winner-right{% else %}match-result{% endif %}">
+                                                        <span class="match-result__score">{{ match.player1_goals_m2 }} : {{ match.player2_goals_m2 }}</span>
+                                                        <span class="match-result__label">Final score</span>
                                                     </div>
                                                 </div>
                                             </div>
