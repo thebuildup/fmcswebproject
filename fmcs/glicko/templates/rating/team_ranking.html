@@ -4,6 +4,11 @@
 
 {% block leaderboard_active %}active{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/searchbar.css' %}">
+{% endblock %}
+
+
 {% block content %}
 
 <!-- ***** TOP Players carousel Start ***** -->
@@ -60,42 +65,45 @@
                 <div id="leaderboard-container">
                     <form id="search-form" name="gs" method="get" role="search">
                         <div class="row">
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-2"></div>
                             <div class="col-lg-4">
                                 <fieldset>
                                     <input type="text" name="keyword" id="searchInput" class="searchText"
                                            placeholder="Type Something..." autocomplete="on">
                                 </fieldset>
                             </div>
-                            <div class="col-lg-3">
-                                <fieldset>
-                                    <select name="category" class="form-select" aria-label="Default select example"
-                                            id="chooseCategory" onchange="this.form.submit()">
-                                        <option value="">All Regions</option>
-                                        <option value="UK">UK</option>
-                                        <option value="CIS">CIS</option>
-                                        <option value="Europe">Europe</option>
-                                        <option value="Asia">Asia</option>
-                                        <option value="America">America</option>
-                                    </select>
-                                </fieldset>
-                            </div>
-                            <div class="col-lg-3">
-                                <fieldset>
-                                    <select name="ranking_period" class="form-select"
-                                            aria-label="Default select example" id="chooseCategory"
-                                            onchange="this.form.submit()">
-                                        <option value="">Ranking Period</option>
-                                        <option value="Ending-Soon">Ending Soon</option>
-                                        <option value="Coming-Soon">Coming Soon</option>
-                                        <option value="Closed">Closed</option>
-                                    </select>
-                                </fieldset>
-                            </div>
-                            <div class="col-lg-2">
-                                <fieldset>
-                                    <button type="submit" class="main-button">Search</button>
-                                </fieldset>
-                            </div>
+<!--                            <div class="col-lg-3">-->
+<!--                                <fieldset>-->
+<!--                                    <select name="category" class="form-select" aria-label="Default select example"-->
+<!--                                            id="chooseCategory" onchange="this.form.submit()">-->
+<!--                                        <option value="">All Regions</option>-->
+<!--                                        <option value="UK">UK</option>-->
+<!--                                        <option value="CIS">CIS</option>-->
+<!--                                        <option value="Europe">Europe</option>-->
+<!--                                        <option value="Asia">Asia</option>-->
+<!--                                        <option value="America">America</option>-->
+<!--                                    </select>-->
+<!--                                </fieldset>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-3">-->
+<!--                                <fieldset>-->
+<!--                                    <select name="ranking_period" class="form-select"-->
+<!--                                            aria-label="Default select example" id="chooseCategory"-->
+<!--                                            onchange="this.form.submit()">-->
+<!--                                        <option value="">Ranking Period</option>-->
+<!--                                        <option value="Ending-Soon">Ending Soon</option>-->
+<!--                                        <option value="Coming-Soon">Coming Soon</option>-->
+<!--                                        <option value="Closed">Closed</option>-->
+<!--                                    </select>-->
+<!--                                </fieldset>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-2">-->
+<!--                                <fieldset>-->
+<!--                                    <button type="submit" class="main-button">Search</button>-->
+<!--                                </fieldset>-->
+<!--                            </div>-->
                         </div>
                     </form>
                 </div>
@@ -112,4 +120,5 @@
 
 {% block extra_scripts %}
 <script src="{% static 'js/ranking_search.js' %}"></script>
+<script src="{% static 'js/searchbar.js' %}"></script>
 {% endblock %}

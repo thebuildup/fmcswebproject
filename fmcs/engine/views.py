@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import TournamentForm, ParticipantForm
 from .models import Tournament, Participant
 from .utils.bracket_generator import generate_single_elimination_bracket
+from glicko.models import Match
 
 
 # Create your views here.
@@ -93,27 +94,30 @@ def add_participant(request, tournament_id):
 def tournament_detail(request, tournament_id):
     tournament = get_object_or_404(Tournament, pk=tournament_id)
 
-    if request.method == 'POST':
-        form = ParticipantForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('tournament_detail', tournament_id=tournament_id)
-
-        new_start_date = request.POST.get('start_date')
-        if new_start_date:
-            tournament.start_date = new_start_date
-            tournament.save()
-            return redirect('tournament_detail', tournament_id=tournament_id)
-
-    else:
-        form = ParticipantForm()
-
+    # if request.method == 'POST':
+    #     form = ParticipantForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('tournament_detail', tournament_id=tournament_id)
+    #
+    #     new_start_date = request.POST.get('start_date')
+    #     if new_start_date:
+    #         tournament.start_date = new_start_date
+    #         tournament.save()
+    #         return redirect('tournament_detail', tournament_id=tournament_id)
+    #
+    # else:
+    #     form = ParticipantForm()
+    # match = Match.objects.get(event=tournament_id)
+    matches_played = Match.objects.filter(event=tournament_id).count()
     participants = tournament.participants.all()
 
     context = {
         'tournament': tournament,
         'participants': participants,
-        'form': form,
+        # 'match': match,
+        'matches_played': matches_played,
+        # 'form': form,
     }
 
     return render(request, 'tournament_detail.html', context=context)
@@ -129,5 +133,3 @@ def get_participants_data(request, tournament_id):
     participants = Participant.objects.filter(tournament__id=tournament_id).values('name')
     data = [{'name': participant['name']} for participant in participants]
     return JsonResponse(data, safe=False)
-
-
