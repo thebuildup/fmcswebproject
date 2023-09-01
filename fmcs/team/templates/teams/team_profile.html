@@ -75,30 +75,32 @@
                                                 <div class="col-lg-auto">
                                                     <div class="rating-card">
                                                         <h2>Team Rating</h2>
-                                                        <div id="area-chart" data-series="{{ series }}"
-                                                             data-categories="{{ categories }}">
-                                                            <div class="grid"></div>
-                                                        </div>
+
+                                                    </div>
+                                                    <div id="area-chart" data-series="{{ series }}"
+                                                         data-categories="{{ categories }}">
+                                                        <div class="grid"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <div class="rating-card">
                                                         <h2>Team Stat</h2>
-                                                        <div class="circle-container">
-                                                            <div class="circle-box">
-                                                                <h2>
-                                                                    <span style="color: lime;">{{ player.wins }}</span>
-                                                                    <span style="color: white;">/</span>
-                                                                    <span style="color: white;">{{ player.draws }}</span>
-                                                                    <span style="color: white;">/</span>
-                                                                    <span style="color: red;">{{ player.losses }}</span>
-                                                                </h2>
-                                                                <div class="chart"
-                                                                     data-percent="{{ win_rate|floatformat:'0' }}"
-                                                                     data-scale-color="#ffb400">
-                                                                    {{ win_rate|floatformat:'0' }} %
-                                                                    <h3>WIN RATE</h3>
-                                                                </div>
+
+                                                    </div>
+                                                    <div class="circle-container">
+                                                        <div class="circle-box">
+                                                            <h2>
+                                                                <span style="color: lime;">{{ player.wins }}</span>
+                                                                <span style="color: white;">/</span>
+                                                                <span style="color: white;">{{ player.draws }}</span>
+                                                                <span style="color: white;">/</span>
+                                                                <span style="color: red;">{{ player.losses }}</span>
+                                                            </h2>
+                                                            <div class="chart"
+                                                                 data-percent="{{ win_rate|floatformat:'0' }}"
+                                                                 data-scale-color="#ffb400">
+                                                                {{ win_rate|floatformat:'0' }} %
+                                                                <h3>WIN RATE</h3>
                                                             </div>
                                                         </div>
                                                     </div>
