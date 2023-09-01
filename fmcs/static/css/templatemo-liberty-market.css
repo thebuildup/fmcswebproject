@@ -834,14 +834,6 @@ Categories & Collections Style
   position: relative;
 }
 
-.categories-collections:after {
-  width: 300px;
-  height: 282px;
-  position: absolute;
-  bottom: 0;
-  right: 30px;
-  content: '';
-}
 
 .categories .item {
   background-color: #282b2f;
