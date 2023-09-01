@@ -49,10 +49,12 @@
                                     <div class="match-overview mt-sm-auto mb-sm-auto">
                                         <div class="match-overview__body">
                                             <figure class="match-team" role="group">
+                                                <a href="{% url 'team_profile' match.player1.formatted_name %}">
                                                 <figure class="match-team-logo match-team-logo--team-1" role="group"><img
                                                         src="{% static 'images/logo_fmcs.png' %}"
                                                         srcset="{% static 'images/logo_fmcs.png' %} 2x" alt={{match.player1.name}}>
                                                 </figure>
+                                                </a>
                                                 <figcaption>
                                                     <a href="{% url 'team_profile' match.player1.formatted_name%}">
                                                     <div class="match-team__name">{{match.player1.name}}</div>
@@ -85,9 +87,11 @@
                                                 </div>
                                             </div>
                                             <figure class="match-team" role="group">
+                                                <a href="{% url 'team_profile' match.player2.formatted_name %}">
                                                 <figure class="match-team-logo match-team-logo--team-2" role="group"><img
                                                         src="{% static 'images/logo_fmcs.png' %}"
                                                         srcset="{% static 'images/logo_fmcs.png' %} 2x" alt={{match.player2.name}}></figure>
+                                                </a>
                                                 <figcaption>
                                                     <a href="{% url 'team_profile' match.player2.formatted_name%}">
                                                     <div class="match-team__name">{{match.player2.name}}</div>
