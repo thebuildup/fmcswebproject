@@ -22,7 +22,7 @@ def remove_dots_from_email(email):
 def is_valid_username(username):
     # Проверяем, что имя пользователя состоит только из букв, цифр и подчеркивания
     # и не содержит пробелов или знаков, которые могли бы использоваться для SQL-инъекций
-    if re.match(r'^[\w.@+-]+$', username):
+    if re.match(r'^[a-zA-Z0-9_]+$', username):
         return True
     return False
 
