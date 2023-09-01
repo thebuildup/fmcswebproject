@@ -15704,23 +15704,6 @@ a.text-dark:focus,a.text-dark:hover {
     }
 }
 
-@media (min-width: 992px) {
-    .h2,h2 {
-        font-size:4.5rem
-    }
-}
-
-@media (min-width: 992px) {
-    .h3,h3 {
-        font-size:2.875rem
-    }
-}
-
-@media (min-width: 1920px) {
-    .h3,h3 {
-        font-size:4rem
-    }
-}
 
 .h4,h4 {
     font-size: 1.5rem
