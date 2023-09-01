@@ -20,14 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-9r(=gp%fjo47(($mq3p1%!@t2%j8ye-y!71k5g!#1o%wi!t+eg"
+# SECRET_KEY = "django-insecure-9r(=gp%fjo47(($mq3p1%!@t2%j8ye-y!71k5g!#1o%wi!t+eg"
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['http://127.0.0.1:8000', 'localhost', '127.0.0.1', '0.0.0.0', '']
+ALLOWED_HOSTS = ['fmchamps.vh104.hosterby.com', 'http://127.0.0.1:8000', 'localhost', '127.0.0.1', '0.0.0.0', '']
 
 # Application definition
 
@@ -92,15 +93,15 @@ WSGI_APPLICATION = "fmcs.wsgi.application"
 
 # To use Neon with Django, you have to create a Project on Neon and specify the project connection settings in your settings.py in the same way as for standalone Postgres.
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'neondb',
-        'NAME': 'fmcstest',
-        'USER': 'ramanrudakou',
-        'PASSWORD': 'zoL2r3Vnpfat',
-        'HOST': 'ep-square-art-051666.eu-central-1.aws.neon.tech',
-        'PORT': '5432',
+        'ENGINE': os.environ["ENGINE"],
+        'NAME': os.environ["NAME"],
+        'USER': os.environ["USERDB"],
+        'PASSWORD': os.environ["PASSWORD"],
+        'HOST': os.environ["HOST"],
+        'PORT': os.environ["PORT"],
     }
 }
 # Password validation
@@ -135,7 +136,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "/static/"
+# STATIC_URL = "/static/"
+STATIC_ROOT = "/home/fmchamps/public_html/fmcs/static"
+STATIC_URL = "fmcs/static/"
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 # Default primary key field type
