@@ -1,0 +1,86 @@
+{% load static %}
+
+{% for match in last_matches %}
+<div class="match-score">
+    <div class="match-score__header">
+        <div class="match-score__competition">{{match.event.name}}</div>
+        <div class="match-score__date">{{match.date_played}}</div>
+    </div>
+    <div class="match-score__body">
+        <figure class="match-team" role="group">
+            <figure class="match-team-logo match-team-logo--team-1"
+                    role="group"><img
+                    src="{% static 'images/logo_fmcs.png' %}"
+                    srcset="{% static 'images/logo_fmcs.png' %} 2x"
+                    alt="NCR Logo"></figure>
+            <figcaption>
+                <div class="match-team__name">{{match.player1.name}}</div>
+                <div class="match-team__country">
+                    {{match.player1.country.alpha3}}
+                </div>
+            </figcaption>
+        </figure>
+        <div class="match-overview__result">
+            <div class="{% if match.player1_goals_m1 > match.player2_goals_m1 %}match-result match-result--winner-left{% elif match.player1_goals_m1 < match.player2_goals_m1 %}match-result match-result--winner-right{% else %}match-result{% endif %}">
+                <span class="match-result__score">{{ match.player1_goals_m1 }} : {{ match.player2_goals_m1 }}</span>
+            </div>
+            <div class="{% if match.player1_goals_m2 > match.player2_goals_m2 %}match-result match-result--winner-left{% elif match.player1_goals_m2 < match.player2_goals_m2 %}match-result match-result--winner-right{% else %}match-result{% endif %}">
+                <span class="match-result__score">{{ match.player1_goals_m2 }} : {{ match.player2_goals_m2 }}</span>
+                <span class="match-result__label">Final score</span>
+            </div>
+        </div>
+        <figure class="match-team" role="group">
+            <figure class="match-team-logo match-team-logo--team-2"
+                    role="group"><img
+                    src="{% static 'images/logo_fmcs.png' %}"
+                    srcset="{% static 'images/logo_fmcs.png' %} 2x"
+                    alt="RRH Logo"></figure>
+            <figcaption>
+                <div class="match-team__name">{{match.player2.name}}</div>
+                <div class="match-team__country">
+                    {{match.player2.country.alpha3}}
+                </div>
+            </figcaption>
+        </figure>
+    </div>
+    <div class="match-score__footer">
+        <a href="{% url 'team_profile' match.player1.formatted_name %}">
+            <figure class="match-team-logo match-team-logo--team-1"
+                    role="group"><img
+                    src="{% static 'images/logo_fmcs.png' %}"
+                    srcset="{% static 'images/logo_fmcs.png' %} 2x"
+                    alt="Necromancers Logo">
+            </figure>
+        </a>
+        <ul class="match-stats-links">
+            <li><a href="{% url 'match' match.id %}" tabindex="0">
+                <svg xmlns="http://www.w3.org/2000/svg" height="0.75em" viewBox="0 0 192 512">
+                    <path d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z"/>
+                </svg>
+            </a></li>
+            <!--            <li><a href="#" tabindex="0">-->
+            <!--                <svg role="img" class="df-icon df-icon&#45;&#45;stats">-->
+            <!--                    <use xlink:href="assets/img/necromancers.svg#stats"></use>-->
+            <!--                </svg>-->
+            <!--            </a></li>-->
+            <!--            <li><a href="#" tabindex="0">-->
+            <!--                <svg role="img" class="df-icon df-icon&#45;&#45;lineups">-->
+            <!--                    <use xlink:href="assets/img/necromancers.svg#lineups"></use>-->
+            <!--                </svg>-->
+            <!--            </a></li>-->
+            <!--            <li><a href="#" tabindex="0">-->
+            <!--                <svg role="img" class="df-icon df-icon&#45;&#45;replay">-->
+            <!--                    <use xlink:href="assets/img/necromancers.svg#replay"></use>-->
+            <!--                </svg>-->
+            <!--            </a></li>-->
+        </ul>
+        <a href="{% url 'team_profile' match.player1.formatted_name %}">
+            <figure class="match-team-logo match-team-logo--team-2"
+                    role="group"><img
+                    src="{% static 'images/logo_fmcs.png' %}"
+                    srcset="{% static 'images/logo_fmcs.png' %} 2x"
+                    alt="Raging Rhinos Logo"></figure>
+        </a>
+    </div>
+</div>
+{% endfor %}

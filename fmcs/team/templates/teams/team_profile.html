@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{% static 'css/cardflip.css' %}">
 <link rel="stylesheet" href="{% static 'css/circlechart.css' %}">
 <link rel="stylesheet" href="{% static 'css/chart.css' %}">
+<link rel="stylesheet" href="{% static 'css/match.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -61,36 +62,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 align-self-center-matches">
-                                        <ul>
-                                            <h2>Match History</h2>
-                                            <li></li>
-                                            {% for match in last_matches %}
-                                            <li class="match-item">
-                                                <div class="match-details">
-                                                    <img src="{% static 'images/logo_fmcs.png' %}" alt=""
-                                                         class="team-logo">
-                                                    <span class="team-details team1-details">
-                                                        <a href="{% url 'team_profile' match.player1.formatted_name %}"
-                                                           class="team-name">{{ match.player1.name }}</a>
-                                                    </span>
-                                                    <a href="{% url 'match' match.id %}">
-                                                    <span class="goals">
-                                                        {{ match.player1_goals_m1 }} - {{ match.player2_goals_m1 }} |
-                                                        {{ match.player1_goals_m2 }} - {{ match.player2_goals_m2 }}
-                                                    </span>
-                                                    </a>
-                                                    <span class="team-details team2-details">
-                                                        <a href="{% url 'team_profile' match.player2.formatted_name %}"
-                                                           class="team-name">{{ match.player2.name }}</a>
-                                                    </span>
-                                                    <img src="{% static 'images/logo_fmcs.png' %}" alt=""
-                                                         class="team-logo">
-                                                </div>
-                                            </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -137,19 +108,19 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="gaming-library profile-library">
-                        <div class="col-lg-12">
-                            <div class="heading-section">
-                                <h4><em></em> Team performance of month</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gaming-library profile-library">
-                        <div class="col-lg-12">
-                            <div class="heading-section">
-                                <h4><em></em>Top Achievements</h4>
+                            <div class="currently-market">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="section-heading">
+                                                <div class="line-dec"></div>
+                                                <h2><em>Match History</em></h2>
+
+                                            </div>
+                                        </div>
+                                        {% include 'teams/match_history.html' %}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
