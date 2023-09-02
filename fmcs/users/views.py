@@ -153,6 +153,10 @@ def edit_profile(request):
             profile.telegram = telegram
         if selected_country != "None":
             profile.country = selected_country
+            # Обработка загрузки новой аватарки
+            if 'avatar' in request.FILES:
+                avatar = request.FILES['avatar']
+                profile.avatar = avatar
 
         profile.save()
 
