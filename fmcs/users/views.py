@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login
 from glicko.models import Player
 from .models import Profile
 import re
+from django_countries import countries
 
 
 # Create your views here.
