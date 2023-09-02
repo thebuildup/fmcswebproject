@@ -125,7 +125,7 @@ def edit_profile(request):
         email = request.POST.get('new_email')
         old_password = request.POST.get('oldpassword')
         new_password = request.POST.get('newpassword')
-        avatar = request.FILES['avatar']
+        avatar = request.FILES.get('avatar')
         # Проверьте, не пустые ли поля
         if first_name:
             user.first_name = first_name
