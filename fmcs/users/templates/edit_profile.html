@@ -10,149 +10,152 @@
 {% block content %}
 
 <div class="author-page">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="author">
-                    <div class="col-lg-5">
-                        <input type="file" id="avatarInput" accept="image/*" style="display: none;">
-                        <img id="avatarPreview" src="{{ request.user.profile.avatar.url }}" alt=""
-                             style="max-width: 170px;">
-                        <br>
-
-                        <label for="avatarInput" id="avatarInputLabel" class="reg-btn mt-4">
-                            Upload Avatar
-                        </label>
-                    </div>
-                    <div class="col-lg-6">
-                        <!--                         style="border-radius: 50%; max-width: 170px;">-->
-                        <h3>
-                            <div class="form-group">
-                                <input type="text" class="form-style"
-                                       placeholder="First Name - {{request.user.first_name}}"
-                                       name="firstname">
-                                <i class="input-icon uil uil-user"></i>
-                            </div>
+    <form method="post">
+        {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="author">
+                        <div class="col-lg-5">
+                            <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                            <img id="avatarPreview" src="{{ request.user.profile.avatar.url }}" alt=""
+                                 style="max-width: 170px;">
                             <br>
-                            <div class="form-group">
-                                <input type="text" class="form-style"
-                                       placeholder="Last Name - {{request.user.last_name}}"
-                                       name="lastname">
-                                <i class="input-icon uil uil-user"></i>
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <input type="text" class="form-style"
-                                       placeholder="Username - {{request.user.get_username}}"
-                                       name="username">
-                                <i class="input-icon uil uil-user"></i>
-                            </div>
-                        </h3>
-                    </div>
 
+                            <label for="avatarInput" id="avatarInputLabel" class="reg-btn mt-4">
+                                Upload Avatar
+                            </label>
+                        </div>
+                        <div class="col-lg-6">
+                            <!--                         style="border-radius: 50%; max-width: 170px;">-->
+                            <h3>
+                                <div class="form-group">
+                                    <input type="text" class="form-style"
+                                           placeholder="First Name - {{request.user.first_name}}"
+                                           name="firstname">
+                                    <i class="input-icon uil uil-user"></i>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <input type="text" class="form-style"
+                                           placeholder="Last Name - {{request.user.last_name}}"
+                                           name="lastname">
+                                    <i class="input-icon uil uil-user"></i>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <input type="text" class="form-style"
+                                           placeholder="Username - {{request.user.get_username}}"
+                                           name="username">
+                                    <i class="input-icon uil uil-user"></i>
+                                </div>
+                            </h3>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="right-info">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="info-item">
-                                <h6>
-                                    <div class="form-group">
-                                        <input type="text" class="form-style"
-                                               placeholder="nickname"
-                                               name="discord">
-                                        <i class="input-icon fa fa-discord"></i>
-                                    </div>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="info-item">
-                                <!--                                <h6>@profile <em>Twitter</em></h6>-->
-                                <h6>
-                                    <div class="form-group">
-                                        <input type="text" class="form-style"
-                                               placeholder="Twitter link"
-                                               name="twitter">
-                                        <i class="input-icon fa-brands fa-x-twitter"></i>
-                                    </div>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="info-item">
-                                <h6>
-                                    <div class="form-group">
-                                        <input type="text" class="form-style"
-                                               placeholder="t.me link"
-                                               name="telegram">
-                                        <i class="input-icon fa fa-telegram"></i>
-                                    </div>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="info-item">
-                                <h6>
-                                    <select class="form-selected" name="country">
-                                        <option value="None"></option>
-                                        {% for country in countries %}
-                                        <option value="{{country.code}}">{{country.name}}</option>
-                                        {% endfor %}
-                                    </select>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="info-item">
-                                <h6>
-                                    <div class="form-group">
-                                        <div class="form-group mt-2">
-                                            <input type="password" class="form-style" placeholder="Old Password"
-                                                   name="oldpassword">
-                                            <i class="input-icon uil uil-lock-alt"></i>
+                <div class="col-lg-6">
+                    <div class="right-info">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="info-item">
+                                    <h6>
+                                        <div class="form-group">
+                                            <input type="text" class="form-style"
+                                                   placeholder="nickname"
+                                                   name="discord">
+                                            <i class="input-icon fa fa-discord"></i>
                                         </div>
-                                    </div>
-                                </h6>
+                                    </h6>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="info-item">
-                                <h6>
-                                    <div class="form-group">
-                                        <div class="form-group mt-2">
-                                            <input type="password" class="form-style" placeholder="New Password"
-                                                   name="newpassword">
-                                            <i class="input-icon uil uil-lock-alt"></i>
+                            <div class="col-6">
+                                <div class="info-item">
+                                    <!--                                <h6>@profile <em>Twitter</em></h6>-->
+                                    <h6>
+                                        <div class="form-group">
+                                            <input type="text" class="form-style"
+                                                   placeholder="Twitter link"
+                                                   name="twitter">
+                                            <i class="input-icon fa-brands fa-x-twitter"></i>
                                         </div>
-                                    </div>
-                                </h6>
+                                    </h6>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="info-item">
-                                <h6>
-                                    <div class="form-group">
-                                        <div class="form-group mt-2">
-                                            <input type="email" class="form-style" placeholder="Email"
-                                                   name="new_email">
-                                            <i class="input-icon uil uil-at"></i>
+                            <div class="col-6">
+                                <div class="info-item">
+                                    <h6>
+                                        <div class="form-group">
+                                            <input type="text" class="form-style"
+                                                   placeholder="t.me link"
+                                                   name="telegram">
+                                            <i class="input-icon fa fa-telegram"></i>
                                         </div>
-                                    </div>
-                                </h6>
+                                    </h6>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-8">
-                            <div class="main-button">
-                                <button type="submit" class="reg-btn mt-4">Save Changes</button>
+                            <div class="col-6">
+                                <div class="info-item">
+                                    <h6>
+                                        <select class="form-selected" name="country">
+                                            <option value="None"></option>
+                                            {% for country in countries %}
+                                            <option value="{{country.code}}">{{country.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="info-item">
+                                    <h6>
+                                        <div class="form-group">
+                                            <div class="form-group mt-2">
+                                                <input type="password" class="form-style" placeholder="Old Password"
+                                                       name="oldpassword">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+                                        </div>
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="info-item">
+                                    <h6>
+                                        <div class="form-group">
+                                            <div class="form-group mt-2">
+                                                <input type="password" class="form-style" placeholder="New Password"
+                                                       name="newpassword">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+                                        </div>
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="info-item">
+                                    <h6>
+                                        <div class="form-group">
+                                            <div class="form-group mt-2">
+                                                <input type="email" class="form-style" placeholder="Email"
+                                                       name="new_email">
+                                                <i class="input-icon uil uil-at"></i>
+                                            </div>
+                                        </div>
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="main-button">
+                                    <button type="submit" class="reg-btn mt-4">Save Changes</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 
 
