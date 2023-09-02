@@ -32,7 +32,7 @@
                                 <i class="fas fa-calendar-alt"></i>
                                 <h6>
                                     {% if tournament.start_date %}
-                                    Start Date: {{ tournament.start_date }}
+                                    <span style="color: white;">Start Date:</span> {{ tournament.start_date }}
                                     {% else %}
                                     TBA
                                     {% endif %}
@@ -44,7 +44,7 @@
                                 <i class="fas fa-calendar-alt"></i>
                                 <!--                                <h6>@profile <em>Twitter</em></h6>-->
                                 {% if tournament.end_date %}
-                                <h6>End Date: {{tournament.end_date}}</h6>
+                                <h6><span style="color: white;">End Date:</span> {{tournament.end_date}}</h6>
                                 {% else %}
                                 <h6> TBA </h6>
                                 {% endif %}
@@ -55,10 +55,10 @@
                                 {% if tournament.get_status %}
                                 {% if event.get_status == "Upcoming" %}
                                 <i class="fas fa-lock-open"></i>
-                                <h6>Status: {{tournament.get_status}}</h6>
+                                <h6><span style="color: white;">Status:</span> {{tournament.get_status}}</h6>
                                 {% else %}
                                 <i class="fas fa-lock"></i>
-                                <h6>Status: {{tournament.get_status}}</h6>
+                                <h6><span style="color: white;">Status:</span> {{tournament.get_status}}</h6>
                                 {% endif %}
                                 {% else %}
                                 <h6> TBA </h6>
@@ -69,7 +69,7 @@
                             <div class="info-item">
                                 <i class="fas fa-chart-bar"></i>
                                 {% if matches_played %}
-                                <h6>Matches Played: {{ matches_played }}</h6>
+                                <h6><span style="color: white;">Matches Played:</span> {{ matches_played }}</h6>
                                 {% else %}
                                 <h6> NO MATCHES </h6>
                                 {% endif %}
