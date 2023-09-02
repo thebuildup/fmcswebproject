@@ -138,7 +138,7 @@ USE_TZ = True
 
 # STATIC_URL = "/static/"
 STATIC_ROOT = "/home/fmchamps/public_html/fmcs/static"
-STATIC_URL = "fmcs/static/"
+STATIC_URL = "/fmcs/static/"
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 # Default primary key field type
