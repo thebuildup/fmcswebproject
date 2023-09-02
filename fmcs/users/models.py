@@ -9,7 +9,7 @@ from django_countries.fields import CountryField
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to='media/avatars/',
-                               default='media/avatars/default.jpg',
+                               default='avatars/default.jpg',
                                blank=True, null=True)
     country = CountryField(countries_flag_url="//flagcdn.com/32x24/{code}.png", default=None, blank=True, null=True)
     twitter = models.CharField(max_length=100, default=None, blank=True, null=True)
