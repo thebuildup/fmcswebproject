@@ -33,7 +33,10 @@
                     <img src="{% static 'images/author.jpg' %}" alt=""
                          style="max-width: 50px; max-height: 50px; border-radius: 50%;">
                 </span>
-                            <img src="{% static 'images/logo_fmcs.png' %}" alt="" style="border-radius: 20px;">
+                            <div style="text-align: center;"> <!-- Центрирование -->
+                                <img src="{% static 'images/logo_fmcs.png' %}" alt=""
+                                     style="max-width: 250px; display: inline-block; border-radius: 20px;">
+                            </div>
                             <h4>{{ player.name }}</h4>
                         </div>
                         <div class="col-lg-12">
