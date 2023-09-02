@@ -41,26 +41,26 @@
                 srcset="{% static 'images/logo_fmcs.png' %} 2x" alt="Necromancers Logo">
         </figure>
         <ul class="match-stats-links">
-            <li><a href="#" tabindex="0">
-                <svg role="img" class="df-icon df-icon--overview">
-                    <use xlink:href="assets/img/necromancers.svg#overview"></use>
+            <li><a href="{% url 'match' match.id %}" tabindex="0">
+                <svg xmlns="http://www.w3.org/2000/svg" height="0.75em" viewBox="0 0 192 512">
+                    <path d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z"/>
                 </svg>
             </a></li>
-            <li><a href="#" tabindex="0">
-                <svg role="img" class="df-icon df-icon--stats">
-                    <use xlink:href="assets/img/necromancers.svg#stats"></use>
-                </svg>
-            </a></li>
-            <li><a href="#" tabindex="0">
-                <svg role="img" class="df-icon df-icon--lineups">
-                    <use xlink:href="assets/img/necromancers.svg#lineups"></use>
-                </svg>
-            </a></li>
-            <li><a href="#" tabindex="0">
-                <svg role="img" class="df-icon df-icon--replay">
-                    <use xlink:href="assets/img/necromancers.svg#replay"></use>
-                </svg>
-            </a></li>
+            <!--            <li><a href="#" tabindex="0">-->
+            <!--                <svg role="img" class="df-icon df-icon&#45;&#45;stats">-->
+            <!--                    <use xlink:href="assets/img/necromancers.svg#stats"></use>-->
+            <!--                </svg>-->
+            <!--            </a></li>-->
+            <!--            <li><a href="#" tabindex="0">-->
+            <!--                <svg role="img" class="df-icon df-icon&#45;&#45;lineups">-->
+            <!--                    <use xlink:href="assets/img/necromancers.svg#lineups"></use>-->
+            <!--                </svg>-->
+            <!--            </a></li>-->
+            <!--            <li><a href="#" tabindex="0">-->
+            <!--                <svg role="img" class="df-icon df-icon&#45;&#45;replay">-->
+            <!--                    <use xlink:href="assets/img/necromancers.svg#replay"></use>-->
+            <!--                </svg>-->
+            <!--            </a></li>-->
         </ul>
         <figure class="match-team-logo match-team-logo--team-2" role="group"><img
                 src="{% static 'images/logo_fmcs.png' %}"
@@ -84,7 +84,7 @@
     </div>
     <!--            <a href="#" class="prev-page" data-page="{{ page.previous_page_number }}">предыдущая</a>-->
     {% endif %}
-    
+
     <div class="flex-child"></div>
     <!--        <span class="active">{{ page.number }}</span>-->
 
