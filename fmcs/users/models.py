@@ -8,7 +8,7 @@ from django_countries.fields import CountryField
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='static/avatars/', default='avatars/default-avatar.jpg',
+    avatar = models.ImageField(upload_to='static/avatars/', default='avatars/default.jpg',
                                blank=True, null=True)
     country = CountryField(countries_flag_url="//flagcdn.com/32x24/{code}.png", default=None, blank=True, null=True)
     twitter = models.CharField(max_length=100, default=None, blank=True, null=True)

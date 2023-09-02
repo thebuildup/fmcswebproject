@@ -105,15 +105,41 @@ def profile(request, username):
     })
 
 
+@login_required
 def edit_profile(request):
-    editing_profile = False
     if request.method == 'POST':
-        form = ProfileEditForm(request.POST, instance=request.user.profile)
-        if form.is_valid():
-            form.save()
-    else:
-        form = ProfileEditForm(instance=request.user.profile)
-        if 'edit' in request.GET:
-            editing_profile = True
+        user = request.user
+        profile = user.profile
 
-    return render(request, 'user_profile.html', {'form': form, 'editing_profile': editing_profile})
+        # Получите данные из POST-запроса
+        first_name = request.POST.get('firstname')
+        last_name = request.POST.get('lastname')
+        new_username = request.POST.get('new_username')
+        discord = request.POST.get('discord')
+        twitter = request.POST.get('twitter')
+        telegram = request.POST.get('telegram')
+        selected_country = request.POST.get('country')
+
+        # Проверьте, не пустые ли поля
+        if first_name:
+            user.first_name = first_name
+        if last_name:
+            user.last_name = last_name
+        if new_username:
+            user.username = new_username
+
+        user.save()
+
+        # Обновите данные профиля
+        if discord:
+            profile.discord = discord
+        if twitter:
+            profile.twitter = twitter
+        if telegram:
+            profile.telegram = telegram
+        # profile.country = selected_country
+        profile.save()
+
+        messages.success(request, 'Profile successfully updated')
+        return redirect('user_profile', username=request.user.username)
+    return render(request, 'edit_profile.html')
