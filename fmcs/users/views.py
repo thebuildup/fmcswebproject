@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.http import HttpResponseForbidden, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -107,6 +109,7 @@ def profile(request, username):
 
 @login_required
 def edit_profile(request):
+    country_list = list(countries)
     if request.method == 'POST':
         user = request.user
         profile = user.profile
@@ -119,7 +122,9 @@ def edit_profile(request):
         twitter = request.POST.get('twitter')
         telegram = request.POST.get('telegram')
         selected_country = request.POST.get('country')
-
+        email = request.POST.get('new_email')
+        old_password = request.POST.get('oldpassword')
+        new_password = request.POST.get('newpassword')
         # Проверьте, не пустые ли поля
         if first_name:
             user.first_name = first_name
@@ -127,6 +132,15 @@ def edit_profile(request):
             user.last_name = last_name
         if new_username:
             user.username = new_username
+        if email:
+            user.email = email
+        if old_password and new_password:
+            # Проверьте старый пароль
+            if user.check_password(old_password):
+                # Устанавливаем новый пароль
+                user.set_password(new_password)
+                user.save()
+                update_session_auth_hash(request, user)  # Обновите сеанс после смены пароля
 
         user.save()
 
@@ -137,9 +151,10 @@ def edit_profile(request):
             profile.twitter = twitter
         if telegram:
             profile.telegram = telegram
-        # profile.country = selected_country
+        if selected_country != "None":
+            profile.country = selected_country
+
         profile.save()
 
-        messages.success(request, 'Profile successfully updated')
         return redirect('user_profile', username=request.user.username)
-    return render(request, 'edit_profile.html')
+    return render(request, 'edit_profile.html', {'countries': country_list})

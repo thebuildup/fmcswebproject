@@ -95,15 +95,11 @@
                         <div class="col-6">
                             <div class="info-item">
                                 <h6>
-                                    <!--                                    <div class="form-group">-->
-                                    <select class="form-selected">
-                                        <!--                                        <input type="text" class="form-style"-->
-                                        <!--                                               placeholder="Choose country"-->
-                                        <!--                                               name="country">-->
-                                        <!--                                        <i class="input-icon fa-solid fa-location-pin"></i>-->
-                                        <option value="option1">Option 1</option>
-                                        <option value="option2">Option 2</option>
-                                        <option value="option3">Option 3</option>
+                                    <select class="form-selected" name="country">
+                                        <option value="None"></option>
+                                        {% for country in countries %}
+                                        <option value="{{country.code}}">{{country.name}}</option>
+                                        {% endfor %}
                                     </select>
                                 </h6>
                             </div>
