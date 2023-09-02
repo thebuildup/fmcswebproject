@@ -11,7 +11,6 @@ from django.contrib.auth import authenticate, login
 from glicko.models import Player
 from .models import Profile
 import re
-from .forms import ProfileEditForm
 
 
 # Create your views here.
