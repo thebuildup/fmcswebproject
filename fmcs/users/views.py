@@ -125,6 +125,7 @@ def edit_profile(request):
         email = request.POST.get('new_email')
         old_password = request.POST.get('oldpassword')
         new_password = request.POST.get('newpassword')
+        avatar = request.FILES['avatar']
         # Проверьте, не пустые ли поля
         if first_name:
             user.first_name = first_name
@@ -154,8 +155,9 @@ def edit_profile(request):
         if selected_country != "None":
             profile.country = selected_country
         # Обработка загрузки новой аватарки
-        if 'avatar' in request.FILES:
-            avatar = request.FILES['avatar']
+        # if 'avatar' in request.FILES:
+        if avatar:
+            # avatar = request.FILES['avatar']
             profile.avatar = avatar
 
         profile.save()
