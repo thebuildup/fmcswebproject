@@ -11,26 +11,26 @@
 
 <div class="main-banner-login">
     <div class="section">
-        <!-- Всплывающие уведомления Bootstrap -->
-        {% if messages %}
-        <div class="toast-container">
-            {% for message in messages %}
-            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
-                <div class="toast-header">
-                    <img src="{% static 'images/avatar.png' %}" class="rounded me-2" alt="...">
-                    <strong class="me-auto">FMCS</strong>
-                    <small class="text-muted">{{ message.timestamp|date:"F d, Y H:i" }}</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast"
-                            aria-label="Закрыть"></button>
-                </div>
-                <div class="toast-body">
-                    {{ message }}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
         <div class="container">
+            <!-- Всплывающие уведомления Bootstrap -->
+            {% if messages %}
+            <div class="toast-container">
+                {% for message in messages %}
+                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+                    <div class="toast-header">
+                        <img src="{% static 'images/avatar.png' %}" class="rounded me-2" alt="...">
+                        <strong class="me-auto">FMCS</strong>
+                        <small class="text-muted">{{ message.timestamp|date:"F d, Y H:i" }}</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                aria-label="Закрыть"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{ message }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
             <div class="row full-height justify-content-center">
                 <div class="col-12 text-center align-self-center py-5">
                     <div class="section pb-5 pt-5 pt-sm-2 text-center">
