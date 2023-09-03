@@ -801,8 +801,7 @@ Banner Style
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  padding-top: 290px;
-  padding-bottom: 240px;
+  padding: 299px 0px 240px 0px;
   background-color: #2a2a2a;
 }
 
@@ -897,8 +896,6 @@ Categories & Collections Style
   background-position: center center;
   background-size: cover;
   padding: 20px 0px 0px 0px;
-  height: 100%
-  weight: 100%
   position: relative;
 }
 
@@ -1502,8 +1499,6 @@ Explore Style
   background-position: center center;
   background-size: cover;
   padding: 30px 0px 120px 0px;
-  height: 100%; /* Заполняем высоту экрана */
-  width: 100%; /* Заполняем ширину экрана */
   position: relative;
 }
 
@@ -1955,8 +1950,6 @@ Author Page Style
   background-position: center center;
   background-size: cover;
   padding: 160px 0px 220px 0px;
-  height: 100%; /* Заполняем высоту экрана */
-  width: 100%; /* Заполняем ширину экрана */
   position: relative;
 }
 
