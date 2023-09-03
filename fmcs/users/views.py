@@ -60,7 +60,7 @@ def login_view(request):
                 return redirect('home')
             else:
                 messages.error(request, "Invalid username or password")
-    context = {'error': messages.get_messages(request)}
+    context = {'messages': messages.get_messages(request)}
     return render(request, 'login.html', context)
 
 
