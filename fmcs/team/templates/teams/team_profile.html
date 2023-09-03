@@ -1,6 +1,7 @@
 {% extends "base_generic.html" %}
 {% load static %}
 {% block title %}FMCS | {{ player.name }} {% endblock %}
+{% block favicon %}{{player.logo.url}}{% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/cardflip.css' %}">
 <link rel="stylesheet" href="{% static 'css/circlechart.css' %}">

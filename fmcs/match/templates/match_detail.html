@@ -1,6 +1,7 @@
 {% extends "base_generic.html" %}
 {% load static %}
 {% block title %}FMCS | {{match.player1.name}} vs {{match.player2.name}} {% endblock %}
+{% block favicon %}{% static 'images/logo_fmcs.png' %}{% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/match.css' %}">
 {% endblock %}
