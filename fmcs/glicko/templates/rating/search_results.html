@@ -30,8 +30,13 @@
                     <div class="row">
                         <div class="col-lg-12">
                 <span class="author">
+                    {% if player.user %}
+                    <img src="{{ player.user.profile.avatar.url }}" alt=""
+                         style="max-width: 50px; max-height: 50px; border-radius: 50%;">
+                    {% else %}
                     <img src="{% static 'images/author.jpg' %}" alt=""
                          style="max-width: 50px; max-height: 50px; border-radius: 50%;">
+                    {% endif %}
                 </span>
                             <div style="text-align: center;"> <!-- Центрирование -->
                                 <img src="{% static 'images/logo_fmcs.png' %}" alt=""
