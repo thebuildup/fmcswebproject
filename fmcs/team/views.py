@@ -68,8 +68,8 @@ def edit_team(request, formatted_player_name):
 
         player.save()
 
-        return redirect('team_profile', formatted_player_name=formatted_player_name)
-    return render(request, 'edit_team.html', {
+        return redirect('teams/team_profile', formatted_player_name=formatted_player_name)
+    return render(request, 'teams/edit_team.html', {
         'countries': country_list,
         'player': player,
     })
