@@ -85,25 +85,6 @@
     </div>
 </header>
 <!-- ***** Header Area End ***** -->
-<!-- Всплывающие уведомления Bootstrap -->
-{% if messages %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <ul>
-                    {% for message in messages %}
-                    <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
 
 {% block content %}{% endblock %}
 
@@ -121,6 +102,30 @@
     </div>
 </footer>
 <!-- ***** Footer End ***** -->
+
+
+<!-- Всплывающие уведомления Bootstrap -->
+{% if messages %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% for message in messages %}
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+                <div class="toast-header">
+                    <img src="{% static 'images/avatar.png' %}" class="rounded me-2" alt="...">
+                    <strong class="me-auto">FMCS</strong>
+                    <small class="text-muted">{{ message.timestamp|date:"F d, Y H:i" }}</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Закрыть"></button>
+                </div>
+                <div class="toast-body">
+                    {{ message }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
 
 
 <!-- Scripts -->
