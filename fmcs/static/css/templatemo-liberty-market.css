@@ -2565,3 +2565,12 @@ Gaming Library Style
 .lottie_button_3:hover i {
   transform: scale(1.25);
 }
+
+.section{
+  position: relative;
+  width: 100%;
+  display: block;
+}
+.full-height{
+  min-height: 100vh;
+}
