@@ -9,8 +9,8 @@
     <div class="match-score__body">
         <figure class="match-team" role="group">
             <figure class="match-team-logo match-team-logo--team-1" role="group"><img
-                    src="{% static 'images/logo_fmcs.png' %}"
-                    srcset="{% static 'images/logo_fmcs.png' %} 2x" alt="NCR Logo"></figure>
+                    src="{{ match.player1.logo.url }}"
+                    srcset="{{ match.player1.logo.url }} 2x" alt="{{match.player1.name}}"></figure>
             <figcaption>
                 <div class="match-team__name">{{match.player1.name}}</div>
                 <div class="match-team__country">{{match.player1.country.alpha3}}</div>
@@ -27,8 +27,8 @@
         </div>
         <figure class="match-team" role="group">
             <figure class="match-team-logo match-team-logo--team-2" role="group"><img
-                    src="{% static 'images/logo_fmcs.png' %}"
-                    srcset="{% static 'images/logo_fmcs.png' %} 2x" alt="RRH Logo"></figure>
+                    src="{{ match.player2.logo.url }}"
+                    srcset="{{ match.player2.logo.url }} 2x" alt="{{match.player2.name}}"></figure>
             <figcaption>
                 <div class="match-team__name">{{match.player2.name}}</div>
                 <div class="match-team__country">{{match.player2.country.alpha3}}</div>
@@ -37,8 +37,8 @@
     </div>
     <div class="match-score__footer">
         <figure class="match-team-logo match-team-logo--team-1" role="group"><img
-                src="{% static 'images/logo_fmcs.png' %}"
-                srcset="{% static 'images/logo_fmcs.png' %} 2x" alt="Necromancers Logo">
+                src="{{ match.player1.logo.url }}"
+                srcset="{{ match.player1.logo.url }} 2x" alt="{{ match.player1.name }}">
         </figure>
         <ul class="match-stats-links">
             <li><a href="{% url 'match' match.id %}" tabindex="0">
@@ -63,8 +63,8 @@
             <!--            </a></li>-->
         </ul>
         <figure class="match-team-logo match-team-logo--team-2" role="group"><img
-                src="{% static 'images/logo_fmcs.png' %}"
-                srcset="{% static 'images/logo_fmcs.png' %} 2x" alt="Raging Rhinos Logo"></figure>
+                src="{{ match.player2.logo.url }}"
+                srcset="{{ match.player2.logo.url }} 2x" alt="{{ match.player2.name }}"></figure>
     </div>
     <!--                </div>-->
 </div>

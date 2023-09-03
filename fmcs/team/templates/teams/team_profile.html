@@ -27,7 +27,7 @@
                                                 <div class="card">
                                                     <div class="card-contents card-front">
                                                         <div class="card-depth">
-                                                            <img src="{% static 'images/logo_fmcs.png' %}" alt=""
+                                                            <img src="{{ player.logo.url }}" alt=""
                                                                  style="max-width: 180px; max-height: 180px;">
                                                             <hr>
                                                             <h2>{{ player.name }}</h2>
@@ -57,9 +57,9 @@
                                             <h4>{{ player.name }}</h4>
                                             <!--                                            <p>FLAG</p>-->
                                             <!--                                            <p>{{series}}</p>-->
-                                            <div class="main-border-button">
-                                                <a href="#">Fantasy Squad</a>
-                                            </div>
+                                            <!--                                            <div class="main-border-button">-->
+                                            <!--                                                <a href="#">Fantasy Squad</a>-->
+                                            <!--                                            </div>-->
                                         </div>
                                     </div>
                                 </div>

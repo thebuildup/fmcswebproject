@@ -38,8 +38,8 @@
                          style="max-width: 50px; max-height: 50px; border-radius: 50%;">
                     {% endif %}
                 </span>
-                            <div style="text-align: center;"> <!-- Центрирование -->
-                                <img src="{% static 'images/logo_fmcs.png' %}" alt=""
+                            <div style="text-align: center;">
+                                <img src="{{ player.logo.url }}" alt=""
                                      style="max-width: 250px; display: inline-block; border-radius: 20px;">
                             </div>
                             <h4>{{ player.name }}</h4>
