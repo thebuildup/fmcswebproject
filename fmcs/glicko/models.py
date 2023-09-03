@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from django.utils import timezone
 from django_countries.fields import CountryField
 from django.utils.text import slugify
+from django_resized import ResizedImageField
 
 from . import stats
 from engine.models import Tournament
@@ -55,6 +56,7 @@ class Player(models.Model):
         null=True
     )
     formatted_name = models.SlugField(unique=True, default='', blank=True)
+    logo = ResizedImageField(upload_to='media/team_logos/', default='team_logos/logo_fmcs.png', blank=True)
 
     class Meta:
         """Model metadata."""
