@@ -1,11 +1,13 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.exceptions import ValidationError
 from glicko.models import Player, PlayerRatingNode, RatingPeriod, Match
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 import json
 from django_countries import countries
+from django.contrib import messages
 
 
 # Create your views here.
@@ -59,7 +61,12 @@ def edit_team(request, formatted_player_name):
 
             # Обновите данные профиля
             if team_name:
-                player.name = team_name
+                try:
+                    player.name = team_name
+                    player.clean_fields()  # Вызывает валидацию полей модели
+                    player.save()
+                except ValidationError as e:
+                    messages.error(request, e.message)
             if selected_country != "None":
                 player.country = selected_country
             if logo:
