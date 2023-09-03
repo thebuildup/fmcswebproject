@@ -56,6 +56,7 @@ class Player(models.Model):
         null=True
     )
     formatted_name = models.SlugField(unique=True, default='', blank=True)
+
     logo = ResizedImageField(upload_to='media/team_logos/', default='media/team_logos/logo_fmcs.png', blank=True)
 
     class Meta:
