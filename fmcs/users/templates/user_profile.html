@@ -119,6 +119,12 @@
                                 <a href="{% url 'team_profile' formatted_player_name=player.formatted_name %}">View
                                     Team</a>
                             </div>
+                            {% if user.is_authenticated and player.user == request.user %}
+                            <div class="main-button">
+                                <a href="{% url 'edit_team' formatted_player_name=player.formatted_name %}">Edit
+                                    Team</a>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
