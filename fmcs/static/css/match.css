@@ -31211,7 +31211,6 @@ body:not(.cursor-is--active) .matches-scores__navigation.slick-slider .slick-arr
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%) rotate(-45deg);
-    content: "";
     width: 70%;
     height: 70%;
     border-style: solid;
