@@ -147,6 +147,15 @@
                             <!--                                    </h6>-->
                             <!--                                </div>-->
                             <!--                            </div>-->
+                            {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <p class="mb-0 mt-4 text-center"
+                                   style="color: #c98dfc; text-shadow: 1px 1px 2px #000000; text-indent: -40px;">
+                                    {{message}}</p>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
                             <div class="col-8">
                                 <div class="main-button">
                                     <button type="submit" class="reg-btn mt-4">Save Changes</button>
