@@ -8,11 +8,15 @@
     </div>
     <div class="match-score__body">
         <figure class="match-team" role="group">
-            <figure class="match-team-logo match-team-logo--team-1" role="group"><img
-                    src="{{ match.player1.logo.url }}"
-                    srcset="{{ match.player1.logo.url }} 2x" alt="{{match.player1.name}}"></figure>
+            <a href="{% url 'team_profile' match.player1.formatted_name %}">
+                <figure class="match-team-logo match-team-logo--team-1" role="group"><img
+                        src="{{ match.player1.logo.url }}"
+                        srcset="{{ match.player1.logo.url }} 2x" alt="{{match.player1.name}}"></figure>
+            </a>
             <figcaption>
-                <div class="match-team__name">{{match.player1.name}}</div>
+                <a href="{% url 'team_profile' match.player1.formatted_name %}">
+                    <div class="match-team__name">{{match.player1.name}}</div>
+                </a>
                 <div class="match-team__country">{{match.player1.country.alpha3}}</div>
             </figcaption>
         </figure>
@@ -26,11 +30,15 @@
             </div>
         </div>
         <figure class="match-team" role="group">
-            <figure class="match-team-logo match-team-logo--team-2" role="group"><img
-                    src="{{ match.player2.logo.url }}"
-                    srcset="{{ match.player2.logo.url }} 2x" alt="{{match.player2.name}}"></figure>
+            <a href="{% url 'team_profile' match.player2.formatted_name %}">
+                <figure class="match-team-logo match-team-logo--team-2" role="group"><img
+                        src="{{ match.player2.logo.url }}"
+                        srcset="{{ match.player2.logo.url }} 2x" alt="{{match.player2.name}}"></figure>
+            </a>
             <figcaption>
-                <div class="match-team__name">{{match.player2.name}}</div>
+                <a href="{% url 'team_profile' match.player2.formatted_name %}">
+                    <div class="match-team__name">{{match.player2.name}}</div>
+                </a>
                 <div class="match-team__country">{{match.player2.country.alpha3}}</div>
             </figcaption>
         </figure>
@@ -62,9 +70,11 @@
             <!--                </svg>-->
             <!--            </a></li>-->
         </ul>
-        <figure class="match-team-logo match-team-logo--team-2" role="group"><img
-                src="{{ match.player2.logo.url }}"
-                srcset="{{ match.player2.logo.url }} 2x" alt="{{ match.player2.name }}"></figure>
+        <a href="{% url 'team_profile' match.player2.formatted_name %}">
+            <figure class="match-team-logo match-team-logo--team-2" role="group"><img
+                    src="{{ match.player2.logo.url }}"
+                    srcset="{{ match.player2.logo.url }} 2x" alt="{{ match.player2.name }}"></figure>
+        </a>
     </div>
     <!--                </div>-->
 </div>
