@@ -109,6 +109,18 @@ def profile(request, username):
 
 @login_required
 def edit_profile(request):
+    try:
+        twitter_link = profile.twitter  # Получаем полную ссылку на Twitter профиль
+        twitter_username = twitter_link.split("/")[-1]  # Разделяем по "/" и берем последний элемент
+    except:
+        twitter_username = None
+
+    try:
+        telegram_link = profile.telegram  # Получаем полную ссылку на Twitter профиль
+        telegram_username = telegram_link.split("/")[-1]  # Разделяем по "/" и берем последний элемент
+    except:
+        telegram_username = None
+
     country_list = list(countries)
     if request.method == 'POST':
         user = request.user
@@ -163,4 +175,8 @@ def edit_profile(request):
         profile.save()
 
         return redirect('user_profile', username=request.user.username)
-    return render(request, 'edit_profile.html', {'countries': country_list})
+    return render(request, 'edit_profile.html', {
+        'twitter_username': twitter_username,
+        'telegram_username': telegram_username,
+        'countries': country_list,
+    })

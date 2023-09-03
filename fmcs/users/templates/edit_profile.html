@@ -89,7 +89,7 @@
                                             {% if request.user.profile.twitter %}
                                             <div class="form-group">
                                                 <input type="text" class="form-style"
-                                                       placeholder="{{request.user.profile.twitter}}"
+                                                       placeholder="{{twitter_username}}"
                                                        name="twitter">
                                                 <i class="input-icon fa-brands fa-x-twitter"></i>
                                             </div>
@@ -110,7 +110,7 @@
                                             {% if request.user.profile.telegram %}
                                             <div class="form-group">
                                                 <input type="text" class="form-style"
-                                                       placeholder="{{request.user.profile.telegram}}"
+                                                       placeholder="{{telegram_username}}"
                                                        name="telegram">
                                                 <i class="input-icon fa fa-telegram"></i>
                                             </div>
