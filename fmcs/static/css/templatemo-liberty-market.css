@@ -184,6 +184,38 @@ body {
   overflow: hidden;
 }
 
+.main-button-1 a {
+  font-size: 14px;
+  color: #fff;
+  background-color: #7453fc;
+  border: 1px solid #7453fc;
+  padding: 12px 30px;
+  display: inline-block;
+  border-radius: 25px;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-button-2 a {
+  font-size: 14px;
+  color: #fff;
+  background-color: #7453fc;
+  border: 1px solid #7453fc;
+  padding: 12px 30px;
+  display: inline-block;
+  border-radius: 25px;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+}
+
 .main-button a:after {
   width: 78%;
   height: 2px;
@@ -195,7 +227,41 @@ body {
   transform: translateX(-50%);
 }
 
+.main-button-1 a:after {
+  width: 78%;
+  height: 2px;
+  background-color: #fff;
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+}
+
+.main-button-2 a:after {
+  width: 78%;
+  height: 2px;
+  background-color: #fff;
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+}
+
 .main-button a:hover {
+  background-color: #fff;
+  color: #7453fc;
+  border: 1px solid #fff;
+}
+
+.main-button-1 a:hover {
+  background-color: #fff;
+  color: #7453fc;
+  border: 1px solid #fff;
+}
+
+.main-button-2 a:hover {
   background-color: #fff;
   color: #7453fc;
   border: 1px solid #fff;
@@ -1578,6 +1644,18 @@ Explore Style
 }
 
 .discover-items .item .main-button {
+  margin-top: 20px;
+  margin-bottom: -60px;
+  text-align: center;
+}
+
+.discover-items .item .main-button-1 {
+  margin-top: 20px;
+  margin-bottom: -60px;
+  text-align: center;
+}
+
+.discover-items .item .main-button-2 {
   margin-top: 20px;
   margin-bottom: -60px;
   text-align: center;
