@@ -2077,14 +2077,13 @@ Author Page Style
 }
 
 .author-page .item .main-button-1 {
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: -60px;
   text-align: left;
 }
 
 .author-page .item .main-button-2 {
-  margin-top: 3px;
-  margin-bottom: -60px;
+  margin-top: 20px;
   text-align: right;
 }
 

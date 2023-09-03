@@ -116,14 +116,14 @@
                         </div>
                         {% if user.is_authenticated and player.user == request.user %}
                         <div class="col-lg-12">
-                            <div class="main-button-1">
-                                <a href="{% url 'team_profile' formatted_player_name=player.formatted_name %}">View
+                            <div class="main-button-2">
+                                <a href="{% url 'edit_team' formatted_player_name=player.formatted_name %}">Edit
                                     Team</a>
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <div class="main-button-2">
-                                <a href="{% url 'edit_team' formatted_player_name=player.formatted_name %}">Edit
+                            <div class="main-button-1">
+                                <a href="{% url 'team_profile' formatted_player_name=player.formatted_name %}">View
                                     Team</a>
                             </div>
                         </div>
