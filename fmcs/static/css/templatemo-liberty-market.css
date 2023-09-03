@@ -802,6 +802,7 @@ Banner Style
   background-position: center center;
   background-size: cover;
   padding: 299px 0px 240px 0px;
+  position: relative;
   background-color: #2a2a2a;
 }
 
