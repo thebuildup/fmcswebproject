@@ -3,6 +3,18 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_countries.fields import CountryField
+from django.core.exceptions import ValidationError
+import re
+
+
+def validate_twitter(value):
+    if not value.startswith('https://twitter.com/'):
+        raise ValidationError("Twitter username must start with 'https://twitter.com/'")
+
+
+def validate_telegram(value):
+    if not value.startswith('https://t.me/'):
+        raise ValidationError("Telegram username must start with 'https://t.me/'")
 
 
 # Create your models here.
