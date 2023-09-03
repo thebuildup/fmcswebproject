@@ -27,13 +27,26 @@
                                             <div class="section text-center">
                                                 <h4 class="mb-4 pb-3">Log In</h4>
                                                 {% if messages %}
-                                                <ul class="messages">
+                                                <div class="toast-container">
                                                     {% for message in messages %}
-                                                    <p class="mb-0 mt-4 text-center"
-                                                       style="color: #c98dfc; text-shadow: 1px 1px 2px #000000; text-indent: -40px;">
-                                                        {{message}}</p>
+                                                    <div class="toast" role="alert" aria-live="assertive"
+                                                         aria-atomic="true" data-bs-autohide="true">
+                                                        <div class="toast-header">
+                                                            <img src="{% static 'images/avatar.png' %}"
+                                                                 class="rounded me-2" alt="...">
+                                                            <strong class="me-auto">FMCS</strong>
+                                                            <small class="text-muted">{{ message.timestamp|date:"F d, Y
+                                                                H:i" }}</small>
+                                                            <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="toast"
+                                                                    aria-label="Закрыть"></button>
+                                                        </div>
+                                                        <div class="toast-body">
+                                                            {{ message }}
+                                                        </div>
+                                                    </div>
                                                     {% endfor %}
-                                                </ul>
+                                                </div>
                                                 {% endif %}
                                                 <div class="form-group">
                                                     <input type="text" class="form-style" placeholder="Nickname"
@@ -55,15 +68,6 @@
                                         <div class="center-wrap">
                                             <div class="section text-center">
                                                 <h4 class="mb-3 pb-3">Sign Up</h4>
-                                                <!--                                                {% if messages %}-->
-                                                <!--                                                <ul class="messages">-->
-                                                <!--                                                    {% for message in messages %}-->
-                                                <!--                                                    <p class="mb-0 mt-4 text-center"-->
-                                                <!--                                                       style="color: #c98dfc; text-shadow: 1px 1px 2px #000000; text-indent: -40px;">-->
-                                                <!--                                                        {{message}}</p>-->
-                                                <!--                                                    {% endfor %}-->
-                                                <!--                                                </ul>-->
-                                                <!--                                                {% endif %}-->
                                                 <div class="form-group">
                                                     <input type="text" class="form-style" placeholder="Nickname"
                                                            name="new_nickname">
@@ -87,26 +91,6 @@
                             </div>
                         </form>
                     </div>
-                    <!-- Всплывающие уведомления Bootstrap -->
-                    {% if messages %}
-                    <div class="toast-container">
-                        {% for message in messages %}
-                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true"
-                             data-bs-autohide="true">
-                            <div class="toast-header">
-                                <img src="{% static 'images/avatar.png' %}" class="rounded me-2" alt="...">
-                                <strong class="me-auto">FMCS</strong>
-                                <small class="text-muted">{{ message.timestamp|date:"F d, Y H:i" }}</small>
-                                <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                        aria-label="Закрыть"></button>
-                            </div>
-                            <div class="toast-body">
-                                {{ message }}
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
