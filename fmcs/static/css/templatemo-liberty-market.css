@@ -803,6 +803,8 @@ Banner Style
   background-size: cover;
   padding-top: 290px;
   padding-bottom: 240px;
+  height: 100%;
+  weight: 100%;
   background-color: #2a2a2a;
 }
 
