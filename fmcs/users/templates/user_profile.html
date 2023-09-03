@@ -100,7 +100,7 @@
                           <img src="{{ username.profile.avatar.url }}" alt=""
                                style="max-width: 50px; border-radius: 50%;">
                         </span>
-                            <img src="{% static 'images/logo_fmcs.png' %}" alt="" style="border-radius: 20px;">
+                            <img src="{{ player.logo.url }}" alt="" style="border-radius: 20px;">
                             <h4>{{player.name}}</h4>
                         </div>
                         <div class="col-lg-12">
@@ -129,11 +129,6 @@
         </div>
     </div>
 </div>
-
-<form method="post" id="profile-form">
-    {% csrf_token %}
-    {{ form.as_p }}
-</form>
 
 {% endblock %}
 
