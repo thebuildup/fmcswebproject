@@ -3,7 +3,10 @@
 {% for match in last_matches %}
 <div class="match-score">
     <div class="match-score__header">
-        <div class="match-score__competition">{{match.event.name}}</div>
+
+        <a href="{% url 'tournament_detail' match.event.id %}">
+            <div class="match-score__competition">{{match.event.name}}</div>
+        </a>
         <div class="match-score__date">{{match.date_played}}</div>
     </div>
     <div class="match-score__body">
