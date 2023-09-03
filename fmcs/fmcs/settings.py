@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
-from django.core.checks import messages
+from django.contrib.messages import constants as messages
 from django.utils.translation import gettext_lazy as gtl
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
