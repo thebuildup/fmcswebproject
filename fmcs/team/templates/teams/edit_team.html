@@ -1,6 +1,6 @@
 {% extends "base_generic.html" %}
 {% load static %}
-{% block title %}Profile | {{username.get_username}}{% endblock %}
+{% block title %}Edit | {{player.name}}{% endblock %}
 {% block favicon %}{% static 'images/logo_fmcs.png' %}{% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'flags/sprite-hq.css' %}">
@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="author">
-                        <div class="col-lg-5">
+                        <div class="col-lg-12">
                             <input type="file" id="avatarInput" name="teamlogo" accept="image/*" style="display: none;">
                             <img id="avatarPreview" src="{{ player.logo.url }}" alt=""
                                  style="max-width: 120px;">

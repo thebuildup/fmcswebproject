@@ -1,6 +1,6 @@
 {% extends "base_generic.html" %}
 {% load static %}
-{% block title %}Profile | {{username.get_username}}{% endblock %}
+{% block title %}Edit | {{request.user.get_username}}{% endblock %}
 {% block favicon %}{% static 'images/logo_fmcs.png' %}{% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'flags/sprite-hq.css' %}">
