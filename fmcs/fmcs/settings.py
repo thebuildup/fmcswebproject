@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+
+from django.core.checks import messages
 from django.utils.translation import gettext_lazy as gtl
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -210,4 +212,12 @@ COUNTRIES_OVERRIDE = {
         "name": gtl("South Africa"),
         "alpha3": gtl("RSA"),
     },
+}
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
 }
