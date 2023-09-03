@@ -60,7 +60,7 @@ def edit_team(request, formatted_player_name):
 
         # Обновите данные профиля
         if team_name:
-            player.twitter = team_name
+            player.name = team_name
         if selected_country != "None":
             player.country = selected_country
         if logo:
