@@ -65,8 +65,8 @@ def edit_team(request, formatted_player_name):
                     player.name = team_name
                     player.clean_fields()  # Вызывает валидацию полей модели
                     player.save()
-                except ValidationError as e:
-                    messages.error(request, e.message)
+                except:
+                    messages.error(request, "Invalid team name")
             if selected_country != "None":
                 player.country = selected_country
             if logo:
