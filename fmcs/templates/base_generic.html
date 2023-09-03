@@ -26,7 +26,14 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
     <link rel="shortcut icon" type="image/png"
           href="{% block favicon %}{% endblock %}"/>
+    <style>
+        .alert-dark {
+  border-left-width: 3px;
+  border-left-color: var(--color);
+  background-color: var(--bs-dark);
+}
 
+    </style>
     {% block extra_css %}{% endblock %}
 
 </head>
@@ -106,11 +113,11 @@
 </footer>
 <!-- ***** Footer End ***** -->
 {% for message in messages %}
-<div class="alert {{ message.tags }} alert-dismissible shadow fade show" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    {{ message | safe }}
+<div class="alert alert-dark d-flex p-4" role="alert" style="--color: var(--bs-green);">
+    <i class="fa fa-check-circle text-success me-3 align-self-center"></i>
+    <div class="mb-0"><span class="fw-semibold text-white">Well Done!</span>
+        <span class="text-body">This alert needs your attention, but it's not important.</span>
+    </div>
 </div>
 {% endfor %}
 
