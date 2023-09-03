@@ -9,7 +9,7 @@ from django.utils import timezone
 from django_countries.fields import CountryField
 from django.utils.text import slugify
 from django_resized import ResizedImageField
-
+import re
 from . import stats
 from engine.models import Tournament
 
@@ -36,11 +36,19 @@ class RatingPeriod(models.Model):
         return str(self.id)
 
 
+def validate_english_name(value):
+    if not re.match("^[a-zA-Z]+$", value):
+        raise ValidationError("Name must contain only English letters.")
+
+
 class Player(models.Model):
     """A model of a player and their stats."""
 
     name = models.CharField(
-        max_length=200, unique=True, help_text="The player's name."
+        max_length=200,
+        unique=True,
+        help_text="The player's name.",
+        validators=[validate_english_name],
     )
     user = models.OneToOneField(
         User,
