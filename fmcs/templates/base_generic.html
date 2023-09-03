@@ -86,6 +86,8 @@
 </header>
 <!-- ***** Header Area End ***** -->
 
+{% block content %}
+
 <!-- Всплывающие уведомления Bootstrap -->
 {% if messages %}
 <div class="container">
@@ -108,8 +110,7 @@
     </div>
 </div>
 {% endif %}
-
-{% block content %}{% endblock %}
+{% endblock %}
 
 <!-- ***** Footer Start ***** -->
 <footer>
