@@ -49,26 +49,29 @@ def team_profile(request, formatted_player_name):
 def edit_team(request, formatted_player_name):
     player = get_object_or_404(Player, formatted_name=formatted_player_name)
     country_list = list(countries)
-    if request.method == 'POST':
-        # player = request.user
+    if player.user == request.user:
+        if request.method == 'POST':
+            # player = request.user
 
-        team_name = request.POST.get('teamname')
-        selected_country = request.POST.get('country')
-        logo = request.FILES.get('teamlogo')
+            team_name = request.POST.get('teamname')
+            selected_country = request.POST.get('country')
+            logo = request.FILES.get('teamlogo')
 
-        player.save()
+            player.save()
 
-        # Обновите данные профиля
-        if team_name:
-            player.name = team_name
-        if selected_country != "None":
-            player.country = selected_country
-        if logo:
-            player.logo = logo
+            # Обновите данные профиля
+            if team_name:
+                player.name = team_name
+            if selected_country != "None":
+                player.country = selected_country
+            if logo:
+                player.logo = logo
 
-        player.save()
+            player.save()
 
-        return redirect('team_profile', formatted_player_name=formatted_player_name)
+            return redirect('team_profile', formatted_player_name=formatted_player_name)
+    else:
+        return redirect('404')
     return render(request, 'teams/edit_team.html', {
         'countries': country_list,
         'player': player,
