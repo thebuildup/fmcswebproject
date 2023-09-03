@@ -1500,7 +1500,7 @@ Explore Style
   background-position: center center;
   background-size: cover;
   padding: 30px 0px 120px 0px;
-  height: 100vh; /* Заполняем высоту экрана */
+  height: 100%; /* Заполняем высоту экрана */
   width: 100%; /* Заполняем ширину экрана */
   position: relative;
 }
