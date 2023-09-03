@@ -2079,12 +2079,12 @@ Author Page Style
 .author-page .item .main-button-1 {
   margin-top: 10px;
   margin-bottom: -60px;
-  text-align: left;
+  text-align: center;
 }
 
 .author-page .item .main-button-2 {
   margin-top: 20px;
-  text-align: right;
+  text-align: center;
 }
 
 
