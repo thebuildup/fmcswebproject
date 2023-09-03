@@ -712,7 +712,6 @@ Banner Style
 /* Добавьте стили для .form-selected, чтобы он совпадал с .form-style */
 .form-selected {
   padding: 13px 20px;
-  padding-left: 55px;
   height: 48px;
   width: 100%;
   font-weight: 500;
