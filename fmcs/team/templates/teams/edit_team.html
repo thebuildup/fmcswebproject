@@ -102,7 +102,7 @@
                                     <div class="info-item">
                                         <h6>
                                             <select class="form-selected" name="country">
-                                                <option value="None">Country</option>
+                                                <option value="None">{{player.country.name}}</option>
                                                 {% for country in countries %}
                                                 <option value="{{country.code}}">{{country.name}}</option>
                                                 {% endfor %}
