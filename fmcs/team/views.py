@@ -5,9 +5,10 @@ from glicko.models import Player, PlayerRatingNode, RatingPeriod, Match
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.template.defaultfilters import slugify
+from django.contrib import messages
 import json
 from django_countries import countries
-from django.contrib import messages
+import re
 
 
 # Create your views here.
@@ -59,22 +60,21 @@ def edit_team(request, formatted_player_name):
             selected_country = request.POST.get('country')
             logo = request.FILES.get('teamlogo')
 
-            # Обновите данные профиля
-            if team_name:
-                try:
+            if team_name and not re.match("^[a-zA-Z0-9_ ]+$", team_name):
+                messages.error(request,
+                               "Name must contain only English letters, numbers, underscores, and spaces.")
+            else:
+                # Если team_name прошло валидацию, обновляем данные профиля
+                if team_name:
                     player.name = team_name
-                    player.clean_fields()  # Вызывает валидацию полей модели
-                    player.save()
-                except:
-                    messages.error(request, "Invalid team name")
-            if selected_country != "None":
-                player.country = selected_country
-            if logo:
-                player.logo = logo
+                if selected_country != "None":
+                    player.country = selected_country
+                if logo:
+                    player.logo = logo
 
-            player.save()
+                player.save()
 
-            return redirect('team_profile', formatted_player_name=formatted_player_name)
+                return redirect('team_profile', formatted_player_name=formatted_player_name)
     else:
         return redirect('404')
     return render(request, 'teams/edit_team.html', {
