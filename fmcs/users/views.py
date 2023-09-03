@@ -109,6 +109,8 @@ def profile(request, username):
 
 @login_required
 def edit_profile(request):
+    profile = request.user.profile
+    
     try:
         twitter_link = profile.twitter  # Получаем полную ссылку на Twitter профиль
         twitter_username = twitter_link.split("/")[-1]  # Разделяем по "/" и берем последний элемент
