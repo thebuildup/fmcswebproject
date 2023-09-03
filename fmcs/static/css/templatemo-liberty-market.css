@@ -897,6 +897,8 @@ Categories & Collections Style
   background-position: center center;
   background-size: cover;
   padding: 20px 0px 0px 0px;
+  height: 100%
+  weight: 100%
   position: relative;
 }
 
