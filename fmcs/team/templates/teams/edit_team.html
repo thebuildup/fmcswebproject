@@ -1,0 +1,195 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block title %}Profile | {{username.get_username}}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'flags/sprite-hq.css' %}">
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
+<link rel="stylesheet" href="{% static 'css/registr.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="author-page">
+    <!--    <form method="post" enctype="multipart/form-data">-->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="author">
+                        <div class="col-lg-5">
+                            <input type="file" id="avatarInput" name="teamlogo" accept="image/*" style="display: none;">
+                            <img id="avatarPreview" src="{{ player.logo.url }}" alt=""
+                                 style="max-width: 120px;">
+                            <br>
+
+                            <label for="avatarInput" id="avatarInputLabel" class="reg-btn mt-4">
+                                Upload Logo
+                            </label>
+                        </div>
+                        <!--                        <div class="col-lg-6">-->
+                        <!--                            &lt;!&ndash;                         style="border-radius: 50%; max-width: 170px;">&ndash;&gt;-->
+                        <!--                            <h3>-->
+                        <!--                                <div class="form-group">-->
+                        <!--                                    <input type="text" class="form-style"-->
+                        <!--                                           placeholder="First Name - {{request.user.first_name}}"-->
+                        <!--                                           name="firstname">-->
+                        <!--                                    <i class="input-icon uil uil-user"></i>-->
+                        <!--                                </div>-->
+                        <!--                                <br>-->
+                        <!--                                <div class="form-group">-->
+                        <!--                                    <input type="text" class="form-style"-->
+                        <!--                                           placeholder="Last Name - {{request.user.last_name}}"-->
+                        <!--                                           name="lastname">-->
+                        <!--                                    <i class="input-icon uil uil-user"></i>-->
+                        <!--                                </div>-->
+                        <!--                                <br>-->
+                        <!--                                <div class="form-group">-->
+                        <!--                                    <input type="text" class="form-style"-->
+                        <!--                                           placeholder="Username - {{request.user.get_username}}"-->
+                        <!--                                           name="username">-->
+                        <!--                                    <i class="input-icon uil uil-user"></i>-->
+                        <!--                                </div>-->
+                        <!--                            </h3>-->
+                        <!--                        </div>-->
+
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="right-info">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="info-item">
+                                    <h6>
+                                        <div class="form-group">
+                                            <input type="text" class="form-style"
+                                                   placeholder="{{player.name}}"
+                                                   name="teamname">
+                                            <i class="fa-solid fa-user-group"></i>
+                                        </div>
+                                    </h6>
+                                </div>
+                            </div>
+                            <!--                            <div class="col-6">-->
+                            <!--                                <div class="info-item">-->
+                            <!--                                    &lt;!&ndash;                                <h6>@profile <em>Twitter</em></h6>&ndash;&gt;-->
+                            <!--                                    <h6>-->
+                            <!--                                        <div class="form-group">-->
+                            <!--                                            <input type="text" class="form-style"-->
+                            <!--                                                   placeholder="Twitter link"-->
+                            <!--                                                   name="twitter">-->
+                            <!--                                            <i class="input-icon fa-brands fa-x-twitter"></i>-->
+                            <!--                                        </div>-->
+                            <!--                                    </h6>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="col-6">-->
+                            <!--                                <div class="info-item">-->
+                            <!--                                    <h6>-->
+                            <!--                                        <div class="form-group">-->
+                            <!--                                            <input type="text" class="form-style"-->
+                            <!--                                                   placeholder="t.me link"-->
+                            <!--                                                   name="telegram">-->
+                            <!--                                            <i class="input-icon fa fa-telegram"></i>-->
+                            <!--                                        </div>-->
+                            <!--                                    </h6>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <div class="col-6">
+                                <div class="info-item">
+                                    <h6>
+                                        <select class="form-selected" name="country">
+                                            <option value="None">Country</option>
+                                            {% for country in countries %}
+                                            <option value="{{country.code}}">{{country.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </h6>
+                                </div>
+                            </div>
+                            <!--                            <div class="col-6">-->
+                            <!--                                <div class="info-item">-->
+                            <!--                                    <h6>-->
+                            <!--                                        <div class="form-group">-->
+                            <!--                                            <div class="form-group mt-2">-->
+                            <!--                                                <input type="password" class="form-style" placeholder="Old Password"-->
+                            <!--                                                       name="oldpassword">-->
+                            <!--                                                <i class="input-icon uil uil-lock-alt"></i>-->
+                            <!--                                            </div>-->
+                            <!--                                        </div>-->
+                            <!--                                    </h6>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="col-6">-->
+                            <!--                                <div class="info-item">-->
+                            <!--                                    <h6>-->
+                            <!--                                        <div class="form-group">-->
+                            <!--                                            <div class="form-group mt-2">-->
+                            <!--                                                <input type="password" class="form-style" placeholder="New Password"-->
+                            <!--                                                       name="newpassword">-->
+                            <!--                                                <i class="input-icon uil uil-lock-alt"></i>-->
+                            <!--                                            </div>-->
+                            <!--                                        </div>-->
+                            <!--                                    </h6>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="col-6">-->
+                            <!--                                <div class="info-item">-->
+                            <!--                                    <h6>-->
+                            <!--                                        <div class="form-group">-->
+                            <!--                                            <div class="form-group mt-2">-->
+                            <!--                                                <input type="email" class="form-style" placeholder="Email"-->
+                            <!--                                                       name="new_email">-->
+                            <!--                                                <i class="input-icon uil uil-at"></i>-->
+                            <!--                                            </div>-->
+                            <!--                                        </div>-->
+                            <!--                                    </h6>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <div class="col-8">
+                                <div class="main-button">
+                                    <button type="submit" class="reg-btn mt-4">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
+
+{% block owl %}
+<script src="{% static 'js/owl-carousel.js' %}"></script>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Функция для обновления предпросмотра изображения
+    function updatePreview(input) {
+        const preview = document.getElementById('avatarPreview');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // Обработчик изменения файла
+    document.getElementById('avatarInput').addEventListener('change', function () {
+        updatePreview(this);
+    });
+
+    // Обработчик клика на метке
+    document.getElementById('avatarInputLabel').addEventListener('click', function (e) {
+        e.preventDefault(); // Предотвращаем действие по умолчанию для метки
+        document.getElementById('avatarInput').click();
+    });
+</script>
+
+{% endblock %}

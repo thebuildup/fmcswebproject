@@ -60,6 +60,11 @@
                                             <!--                                            <div class="main-border-button">-->
                                             <!--                                                <a href="#">Fantasy Squad</a>-->
                                             <!--                                            </div>-->
+                                            {% if user.is_authenticated and player.user == request.user %}
+                                            <div class="main-border-button">
+                                                <a href="{% url 'edit_team' player.formatted_name%}">Edit Team</a>
+                                            </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>

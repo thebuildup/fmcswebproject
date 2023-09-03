@@ -1,9 +1,11 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from glicko.models import Player, PlayerRatingNode, RatingPeriod, Match
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 import json
+from django_countries import countries
 
 
 # Create your views here.
@@ -41,3 +43,33 @@ def team_profile(request, formatted_player_name):
     }
 
     return render(request, 'teams/team_profile.html', context)
+
+
+@login_required
+def edit_team(request, formatted_player_name):
+    player = get_object_or_404(Player, formatted_name=formatted_player_name)
+    country_list = list(countries)
+    if request.method == 'POST':
+        # player = request.user
+
+        team_name = request.POST.get('teamname')
+        selected_country = request.POST.get('country')
+        logo = request.FILES.get('teamlogo')
+
+        player.save()
+
+        # Обновите данные профиля
+        if team_name:
+            player.twitter = team_name
+        if selected_country != "None":
+            player.country = selected_country
+        if logo:
+            player.logo = logo
+
+        player.save()
+
+        return redirect('team_profile', formatted_player_name=formatted_player_name)
+    return render(request, 'edit_team.html', {
+        'countries': country_list,
+        'player': player,
+    })
