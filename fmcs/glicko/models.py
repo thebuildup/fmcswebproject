@@ -37,8 +37,8 @@ class RatingPeriod(models.Model):
 
 
 def validate_english_name(value):
-    if not re.match("^[a-zA-Z]+$", value):
-        raise ValidationError("Name must contain only English letters.")
+    if not re.match("^[a-zA-Z0-9_ ]+$", value):
+        raise ValidationError("Name must contain only English letters, numbers, underscores, and spaces.")
 
 
 class Player(models.Model):

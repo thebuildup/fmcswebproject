@@ -57,8 +57,6 @@ def edit_team(request, formatted_player_name):
             selected_country = request.POST.get('country')
             logo = request.FILES.get('teamlogo')
 
-            player.save()
-
             # Обновите данные профиля
             if team_name:
                 player.name = team_name
