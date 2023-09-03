@@ -44,10 +44,12 @@
         </figure>
     </div>
     <div class="match-score__footer">
-        <figure class="match-team-logo match-team-logo--team-1" role="group"><img
-                src="{{ match.player1.logo.url }}"
-                srcset="{{ match.player1.logo.url }} 2x" alt="{{ match.player1.name }}">
-        </figure>
+        <a href="{% url 'team_profile' match.player1.formatted_name %}">
+            <figure class="match-team-logo match-team-logo--team-1" role="group"><img
+                    src="{{ match.player1.logo.url }}"
+                    srcset="{{ match.player1.logo.url }} 2x" alt="{{ match.player1.name }}">
+            </figure>
+        </a>
         <ul class="match-stats-links">
             <li><a href="{% url 'match' match.id %}" tabindex="0">
                 <svg xmlns="http://www.w3.org/2000/svg" height="0.75em" viewBox="0 0 192 512">
