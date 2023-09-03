@@ -64,12 +64,21 @@
                                 <div class="col-6">
                                     <div class="info-item">
                                         <h6>
+                                            {% if request.user.profile.discord %}
+                                            <div class="form-group">
+                                                <input type="text" class="form-style"
+                                                       placeholder="{{request.user.profile.discord}}"
+                                                       name="discord">
+                                                <i class="input-icon fa fa-discord"></i>
+                                            </div>
+                                            {% else %}
                                             <div class="form-group">
                                                 <input type="text" class="form-style"
                                                        placeholder="nickname"
                                                        name="discord">
                                                 <i class="input-icon fa fa-discord"></i>
                                             </div>
+                                            {% endif %}
                                         </h6>
                                     </div>
                                 </div>
@@ -77,24 +86,42 @@
                                     <div class="info-item">
                                         <!--                                <h6>@profile <em>Twitter</em></h6>-->
                                         <h6>
+                                            {% if request.user.profile.twitter %}
+                                            <div class="form-group">
+                                                <input type="text" class="form-style"
+                                                       placeholder="{{request.user.profile.twitter}}"
+                                                       name="twitter">
+                                                <i class="input-icon fa-brands fa-x-twitter"></i>
+                                            </div>
+                                            {% else %}
                                             <div class="form-group">
                                                 <input type="text" class="form-style"
                                                        placeholder="Twitter link"
                                                        name="twitter">
                                                 <i class="input-icon fa-brands fa-x-twitter"></i>
                                             </div>
+                                            {% endif %}
                                         </h6>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="info-item">
                                         <h6>
+                                            {% if request.user.profile.telegram %}
+                                            <div class="form-group">
+                                                <input type="text" class="form-style"
+                                                       placeholder="{{request.user.profile.telegram}}"
+                                                       name="telegram">
+                                                <i class="input-icon fa fa-telegram"></i>
+                                            </div>
+                                            {% else %}
                                             <div class="form-group">
                                                 <input type="text" class="form-style"
                                                        placeholder="t.me link"
                                                        name="telegram">
                                                 <i class="input-icon fa fa-telegram"></i>
                                             </div>
+                                            {% endif %}
                                         </h6>
                                     </div>
                                 </div>
@@ -141,7 +168,8 @@
                                         <h6>
                                             <div class="form-group">
                                                 <div class="form-group mt-2">
-                                                    <input type="email" class="form-style" placeholder="Email"
+                                                    <input type="email" class="form-style"
+                                                           placeholder="{{request.user.email}}"
                                                            name="new_email">
                                                     <i class="input-icon uil uil-at"></i>
                                                 </div>
