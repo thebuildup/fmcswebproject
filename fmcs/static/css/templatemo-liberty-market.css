@@ -1998,6 +1998,18 @@ Author Page Style
   text-align: center;
 }
 
+.author-page .item .main-button-1 {
+  margin-top: 20px;
+  margin-bottom: -60px;
+  text-align: left;
+}
+
+.author-page .item .main-button-2 {
+  margin-top: 20px;
+  margin-bottom: -60px;
+  text-align: right;
+}
+
 
 /* 
 ---------------------------------------------
