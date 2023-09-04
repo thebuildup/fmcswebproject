@@ -27,9 +27,9 @@
                             <li><a href="#" class="active">
                                 <i class="fa-solid fa-shield-halved"></i>
                             </a></li>
-                            <li><a href="#">
-                                <i class="fa-solid fa-chart-simple"></i>
-                            </a></li>
+                            <!--                            <li><a href="#">-->
+                            <!--                                <i class="fa-solid fa-chart-simple"></i>-->
+                            <!--                            </a></li>-->
                             <!--                                        <li><a href="./matches-lineups-1.html">-->
                             <!--                                            <svg role="img" class="df-icon df-icon&#45;&#45;lineups">-->
                             <!--                                                <use xlink:href="assets/img/necromancers.svg#lineups"></use>-->
@@ -46,7 +46,7 @@
                                 <figure class="match-team" role="group">
                                     <a href="{% url 'team_profile' match.player1.formatted_name %}">
                                         <figure class="match-team-logo match-team-logo--team-1" role="group"
-                                                style="height: 42px; display: flex;
+                                                style="height: 180px; display: flex;
                                         align-items: center; justify-content: center;">
                                             <img src="{{ match.player1.logo.url }}"
                                                  srcset="{{ match.player1.logo.url }} 2x" alt={{match.player1.name}}>
