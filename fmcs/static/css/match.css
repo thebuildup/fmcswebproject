@@ -31285,7 +31285,7 @@ body:not(.cursor-is--active) .matches-scores__navigation.slick-slider .slick-arr
 }
 
 .match-overview .match-team__name,.match-stats-widget .match-team__name,.standings-table .match-team__name,.team-carousel-tabs .match-team__name {
-    font-size: .875rem
+    font-size: .675rem
 }
 
 .match-overview .match-team__name {
