@@ -12,10 +12,11 @@
     <div class="match-score__body">
         <figure class="match-team" role="group">
             <figure class="match-team-logo match-team-logo--team-1"
-                    role="group"><img
-                    src="{{ match.player1.logo.url }}"
-                    srcset="{{ match.player1.logo.url }} 2x"
-                    alt="{{ match.player1.name }}"></figure>
+                    role="group" style="height: 42px; display: flex; align-items: center; justify-content: center;">
+                <img src="{{ match.player1.logo.url }}"
+                     srcset="{{ match.player1.logo.url }} 2x"
+                     alt="{{ match.player1.name }}">
+            </figure>
             <figcaption>
                 <a href="{% url 'team_profile' match.player1.formatted_name %}">
                     <div class="match-team__name">{{match.player1.name}}</div>
@@ -37,7 +38,7 @@
         <figure class="match-team" role="group">
             <figure class="match-team-logo match-team-logo--team-2"
                     role="group"
-                    style="width: 100%; height: 42px; display: flex; align-items: center; justify-content: center;">
+                    style="height: 42px; display: flex; align-items: center; justify-content: center;">
                 <img src="{{ match.player2.logo.url }}" srcset="{{ match.player2.logo.url }} 2x"
                      alt="{{ match.player2.name }}">
             </figure>
