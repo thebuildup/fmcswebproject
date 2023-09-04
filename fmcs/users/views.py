@@ -188,11 +188,11 @@ def edit_profile(request):
             profile.telegram = telegram
         if telegram:
             # Проверяем формат Twitter-ссылки
-            if twitter.startswith("https://t.me/"):
+            if telegram.startswith("https://t.me/"):
                 profile.telegram = telegram  # Ссылка полная, оставляем как есть
-            elif twitter.startswith("t.me/"):
+            elif telegram.startswith("t.me/"):
                 profile.telegram = "https://" + telegram  # Добавляем протокол
-            elif twitter.strip():  # Если введен только никнейм (не пустая строка)
+            elif telegram.strip():  # Если введен только никнейм (не пустая строка)
                 profile.telegram = "https://t.me/" + telegram
         if selected_country != "None":
             profile.country = selected_country
