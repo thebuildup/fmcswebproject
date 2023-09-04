@@ -39,6 +39,11 @@ def login_view(request):
             # Удаляем точки из email-адреса перед проверкой на уникальность
             clean_email = remove_dots_from_email(new_email)
 
+            # Проверка формата email
+            email_pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+
+            if not re.match(email_pattern, clean_email):
+                messages.error(request, "Invalid email format")
             if not is_valid_username(new_username):
                 messages.error(request, "Invalid characters in username")
             elif User.objects.filter(username=new_username).exists():
@@ -110,7 +115,7 @@ def profile(request, username):
 @login_required
 def edit_profile(request):
     profile = request.user.profile
-    
+
     try:
         twitter_link = profile.twitter  # Получаем полную ссылку на Twitter профиль
         twitter_username = twitter_link.split("/")[-1]  # Разделяем по "/" и берем последний элемент
@@ -148,6 +153,15 @@ def edit_profile(request):
         if new_username:
             user.username = new_username
         if email:
+            # Проверка формата email
+            email_pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+            if not re.match(email_pattern, email):
+                messages.error(request, "Invalid email format")
+                return render(request, 'edit_profile.html', {
+                    'twitter_username': twitter_username,
+                    'telegram_username': telegram_username,
+                    'countries': country_list,
+                })
             user.email = email
         if old_password and new_password:
             # Проверьте старый пароль
@@ -163,9 +177,23 @@ def edit_profile(request):
         if discord:
             profile.discord = discord
         if twitter:
-            profile.twitter = twitter
+            # Проверяем формат Twitter-ссылки
+            if twitter.startswith("https://twitter.com/"):
+                profile.twitter = twitter  # Ссылка полная, оставляем как есть
+            elif twitter.startswith("twitter.com/"):
+                profile.twitter = "https://" + twitter  # Добавляем протокол
+            elif twitter.strip():  # Если введен только никнейм (не пустая строка)
+                profile.twitter = "https://twitter.com/" + twitter
         if telegram:
             profile.telegram = telegram
+        if telegram:
+            # Проверяем формат Twitter-ссылки
+            if twitter.startswith("https://t.me/"):
+                profile.telegram = telegram  # Ссылка полная, оставляем как есть
+            elif twitter.startswith("t.me/"):
+                profile.telegram = "https://" + telegram  # Добавляем протокол
+            elif twitter.strip():  # Если введен только никнейм (не пустая строка)
+                profile.telegram = "https://t.me/" + telegram
         if selected_country != "None":
             profile.country = selected_country
         # Обработка загрузки новой аватарки
