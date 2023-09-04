@@ -45,9 +45,11 @@
                             <div class="match-overview__body">
                                 <figure class="match-team" role="group">
                                     <a href="{% url 'team_profile' match.player1.formatted_name %}">
-                                        <figure class="match-team-logo match-team-logo--team-1" role="group"><img
-                                                src="{{ match.player1.logo.url }}"
-                                                srcset="{{ match.player1.logo.url }} 2x" alt={{match.player1.name}}>
+                                        <figure class="match-team-logo match-team-logo--team-1" role="group"
+                                                style="height: 42px; display: flex;
+                                        align-items: center; justify-content: center;">
+                                            <img src="{{ match.player1.logo.url }}"
+                                                 srcset="{{ match.player1.logo.url }} 2x" alt={{match.player1.name}}>
                                         </figure>
                                     </a>
                                     <figcaption>
@@ -83,9 +85,12 @@
                                 </div>
                                 <figure class="match-team" role="group">
                                     <a href="{% url 'team_profile' match.player2.formatted_name %}">
-                                        <figure class="match-team-logo match-team-logo--team-2" role="group"><img
-                                                src="{{ match.player2.logo.url }}"
-                                                srcset="{{ match.player2.logo.url }} 2x" alt={{match.player2.name}}>
+                                        <figure class="match-team-logo match-team-logo--team-2" role="group"
+                                                style="height: 180px; display: flex;
+                                        align-items: center; justify-content: center;">
+                                            <img
+                                                    src="{{ match.player2.logo.url }}"
+                                                    srcset="{{ match.player2.logo.url }} 2x" alt={{match.player2.name}}>
                                         </figure>
                                     </a>
                                     <figcaption>
