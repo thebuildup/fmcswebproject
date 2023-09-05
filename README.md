@@ -73,7 +73,6 @@
 - _Django Framework_
 - _PostgreSQL_
 - _AJAX, HTML5, CSS_
-- _Django Templates_
 
 ---
 
