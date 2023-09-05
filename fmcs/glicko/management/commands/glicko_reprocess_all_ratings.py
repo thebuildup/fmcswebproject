@@ -1,4 +1,4 @@
-"""Custom command to reprocess all ratings."""
+"""Пользовательская команда для повторной обработки всех оценок."""
 
 from django.core.management.base import BaseCommand
 # from api.util import reprocess_all_ratings

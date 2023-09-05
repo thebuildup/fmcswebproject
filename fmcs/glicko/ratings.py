@@ -7,38 +7,32 @@ from django.conf import settings
 
 def calculate_new_rating_period(start_datetime, end_datetime):
     print("calc new rating period")
-    """Calculate a new ratings and a corresponding new rating period.
-    Args:
-        start_datetime: The datetime for the start of the rating period.
-        end_datetime: The datetime for the end of the rating period.
-    """
-    # Create the rating period or get the existing one
+    # Создаём рейтинговый период или получите существующий
     rating_period, _ = models.RatingPeriod.objects.get_or_create(
         start_datetime=start_datetime, end_datetime=end_datetime
     )
 
-    # Grab all games that will be in this rating period
+    # Получаем все игры в этот рейтинговый период
     games = models.Match.objects.filter(
         date_played__gte=start_datetime, date_played__lte=end_datetime
     )
     # num_matches = models.Match.num_matches
 
-    # Mark all of the above games as belonging in this rating period
+    # Отметить все вышеперечисленные игры как принадлежащие этому рейтинговому периоду.
     for game in games:
         game.rating_period = rating_period
         game.save()
 
-    # For each player, find all their matches, their scores in those
-    # matches; then calculate their ratings. The new_ratings dictionary
-    # contains players as keys, and dictionaries containing their new
-    # rating parameters as the dictionary values.
+    # Для каждого игрока найдите все его матчи и их результаты в этих матчах; затем подсчитайте их рейтинги.
+    # Словарь new_ratings содержит игроков в качестве ключей, а словари, содержащие их новые параметры рейтинга,
+    # в качестве значений словаря.
     new_ratings = {}
     new_player_ratings = []
     num_matches = models.Match.objects.first().num_matches
     # players = models.Player.objects.all()
 
     for player in models.Player.objects.all():
-        # Get all games played by the player in this rating period
+        # Получить все игры, сыгранные игроком за этот рейтинговый период.
         # games_played_by_player = games.filter(Q(player1=player) | Q(player2=player))
         first_game_played = player.get_first_game_played()
         # If the player didn't play in this rating period, update inactivity
@@ -48,8 +42,8 @@ def calculate_new_rating_period(start_datetime, end_datetime):
         ):
             continue
 
-        # Player played in this rating period
-        # Get the players rating parameters
+        # Игрок, игравший в этом рейтинговом периоде
+        # Получить параметры рейтинга игроков
         player_rating = player.rating
         player_rating_deviation = player.rating_deviation
         player_inactivity = player.inactivity
@@ -99,17 +93,17 @@ def calculate_new_rating_period(start_datetime, end_datetime):
         if new_player_ratings:
             average_new_player_rating = sum(new_player_ratings) / len(new_player_ratings)
         else:
-            # Handle the case when no matches were played by any player in the rating period
+            # Обработка случая, когда ни один игрок не сыграл ни одного матча за рейтинговый период.
             average_new_player_rating = 0.0
         print('Перед проверкой')
         print(opponent_ratings)
-        # Calculate new inactivity
+        # Рассчитать новое бездействие
         if opponent_ratings is None:
             new_player_inactivity = player_inactivity + 1
         else:
             new_player_inactivity = 0
 
-        # Determine if the player is labelled as active
+        # Определите, помечен ли игрок как активный
         new_player_is_active = bool(
             new_player_inactivity
             < settings.NUMBER_OF_RATING_PERIODS_MISSED_TO_BE_INACTIVE
@@ -125,7 +119,7 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             "player_is_active": new_player_is_active,
         }
 
-    # Filter all active players and sort by rating
+    # Фильтровать всех активных игроков и сортировать по рейтингу
     new_active_player_ratings = [
         (player, new_rating["player_rating"])
         for player, new_rating in new_ratings.items()
@@ -133,15 +127,15 @@ def calculate_new_rating_period(start_datetime, end_datetime):
     ]
     new_active_player_ratings.sort(key=lambda x: x[1], reverse=True)
 
-    # Process new rankings and ranking changes
+    # Обрабатывать новые рейтинги и изменения в рейтингах
     num_active_players = len(new_active_player_ratings)
 
-    # Keep track of the previous player's integer rating for ranking ties
+    # Отслеживайте целочисленный рейтинг предыдущего игрока для определения равенства в рейтинге.
     last_integer_rating = None
     last_ranking = None
 
     for idx, player_tuple in enumerate(new_active_player_ratings, 1):
-        # Unpack the player tuple
+        # Распакуйте кортеж игрока
         player, rating = player_tuple
         integer_rating = round(rating)
 
@@ -149,17 +143,16 @@ def calculate_new_rating_period(start_datetime, end_datetime):
                 last_integer_rating is not None
                 and last_integer_rating == integer_rating
         ):
-            # Tie
             ranking = last_ranking
         else:
             last_integer_rating = integer_rating
             last_ranking = idx
             ranking = idx
 
-        # Ranking
+        # Рейтинг
         new_ratings[player]["player_ranking"] = ranking
 
-        # Ranking delta
+        # Дельта рейтинга
         if player.ranking is None:
             new_ratings[player]["player_ranking_delta"] = (
                     num_active_players - ranking + 1
@@ -169,7 +162,7 @@ def calculate_new_rating_period(start_datetime, end_datetime):
                     player.ranking - ranking
             )
 
-    # Now save all ratings
+    # Теперь сохраняем все рейтинги
     for player, ratings_dict in new_ratings.items():
         models.PlayerRatingNode.objects.create(
             player=player,

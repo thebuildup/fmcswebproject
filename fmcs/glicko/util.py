@@ -1,4 +1,4 @@
-"""Helper functions."""
+"""Вспомогательные функции"""
 
 from datetime import timedelta
 
@@ -14,17 +14,14 @@ import csv
 
 def glicko_reprocess_all_stats(reset_id_counter=True):
     print('Reprocess all stats')
-    """Wipes all existing stats nodes and creates new stats nodes.
-
-    Args:
-        reset_id_counter: An optional boolean specifying whether to
-            reset to ID counter for stats nodes back to 1.
+    """Удаление всей статистики и создание новой.
     """
-    # Wipe existing nodes
+
+    # Удаление всех записей статистики
     PlayerStatsNode.objects.all().delete()
     MatchupStatsNode.objects.all().delete()
 
-    # Reset ID counter
+    # Сброс ID
     if reset_id_counter:
         with connection.cursor() as cursor:
             cursor.execute(
@@ -34,7 +31,7 @@ def glicko_reprocess_all_stats(reset_id_counter=True):
                 "ALTER SEQUENCE glicko_matchupstatsnode_id_seq RESTART with 1"
             )
 
-    # Recreate nodes
+    # Пересоздание статистики
     for game in Match.objects.order_by("date_played"):
         game.process_game()
 
@@ -42,8 +39,8 @@ def glicko_reprocess_all_stats(reset_id_counter=True):
 def glicko_process_new_ratings():
     print('Process new ratings')
     """Calculates any new potential rating periods."""
-    # Find first datetime where there exists unrated games. Recall that
-    # rating periods and games are ordered from newest to oldest.
+    # Найдите первую дату и время, где существуют игры без рейтинга. Напомним, что
+    # рейтинговых периодов и игр упорядочены от самых новых к самым старым.
     latest_rating_period = RatingPeriod.objects.first()
 
     if latest_rating_period:
@@ -51,8 +48,8 @@ def glicko_process_new_ratings():
                 latest_rating_period.end_datetime + timedelta.resolution
         )
     else:
-        # No rating periods. Use the date of the earliest game if one
-        # exists; if no games exist, return.
+        # Нет рейтинговых периодов. Используйте дату самой ранней игры, если она есть.
+        # существует; если игр не существует, вернитесь.
         earliest_game = Match.objects.last()
 
         if not earliest_game:
@@ -60,38 +57,34 @@ def glicko_process_new_ratings():
 
         start_datetime = earliest_game.date_played
 
-    # Find out whether there's been enough time elapsed to make a new
-    # rating period
+    # Узнайте, прошло ли достаточно времени для создания нового
+    # рейтинговый период
     end_datetime = start_datetime + timedelta(
         days=settings.GLICKO2_RATING_PERIOD_DAYS
     )
 
-    # Not enough time elapsed: return.
+    # Прошло недостаточно времени: возврат.
     if end_datetime > timezone.now():
         return
 
-    # Calculate the new rating period and call this function again
+    # Рассчитаем новый рейтинговый период и снова вызовем эту функцию
     calculate_new_rating_period(start_datetime, end_datetime)
     print('Calculate completed')
-    # Go again
+    # Еще раз
     glicko_process_new_ratings()
 
 
 def glicko_reprocess_all_ratings(reset_id_counter=True):
     print('Reprocess all ratings')
-    """Wipes existing rating periods and rating nodes and creates new ones.
-
-    Args:
-        reset_id_counter: An optional boolean specifying whether to
-            reset to ID counter for stats nodes back to 1.
+    """Удаляет существующие рейтинговые периоды и рейтинговые записи и создает новые.
     """
-    # Wipe all existing rating periods and rating nodes. Note that
-    # manually deleting player rating nodes isn't strictly necessary,
-    # since they should all be deleted when their corresponding rating
-    # periods are deleted.
+    # Сотрите все существующие периоды рейтинга и записи рейтинга. Обратите внимание, что
+    # удаление записей рейтинга игроков вручную не является строго необходимым,
+    # так как все они должны быть удалены, когда их соответствующий рейтинговый
+    # период удален.
     RatingPeriod.objects.all().delete()
 
-    # Reset ID counter
+    # Сбросить счетчик идентификаторов
     if reset_id_counter:
         with connection.cursor() as cursor:
             cursor.execute(
@@ -101,12 +94,12 @@ def glicko_reprocess_all_ratings(reset_id_counter=True):
                 "ALTER SEQUENCE glicko_ratingperiod_id_seq RESTART with 1"
             )
 
-    # Recalculate ratings
+    # Пересчёт рейтинга
     glicko_process_new_ratings()
 
 
 def clear_match_table():
-    # Clear the Match table
+    # Удаление таблицы матчей
     Match.objects.all().delete()
 
 

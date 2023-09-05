@@ -1,4 +1,4 @@
-"""Custom command to process new ratings."""
+"""Пользовательская команда для обработки нового рейтинга."""
 
 from django.core.management.base import BaseCommand
 # from .util import process_new_ratings

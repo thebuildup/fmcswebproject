@@ -6,7 +6,6 @@ from .util import import_csv_to_match
 
 
 class ReadOnlyModelAdminMixin:
-    """Mixin to make models read-only on admin page."""
 
     def has_add_permission(self, request):
         return False

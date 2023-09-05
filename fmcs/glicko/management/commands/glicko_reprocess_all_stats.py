@@ -1,4 +1,4 @@
-"""Custom command to reprocess stats over all games."""
+"""Пользовательская команда для повторной обработки статистики по всем играм.."""
 
 from django.core.management.base import BaseCommand
 # from api.util import reprocess_all_stats

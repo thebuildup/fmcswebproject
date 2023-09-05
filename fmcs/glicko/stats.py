@@ -1,4 +1,4 @@
-"""Contains functions for calculating player and matchup statistics."""
+"""Содержит функции для расчета статистики игроков и матчей.."""
 # from .models import PlayerStatsNode, MatchupStatsNode
 
 
@@ -8,18 +8,9 @@
 from . import models
 
 
-# def calculate_new_average(avg, N, new_val):
 def calculate_new_average(avg, N, new_vals):
     print("calculate_new_average")
-    """Calculate new average given a new value and an existing average.
-
-    Args:
-        avg: The old average value.
-        N: The old number of data points averaged over.
-        new_val: The new value to recalculate the average with.
-
-    Returns:
-        The new average value.
+    """Рассчитать новое среднее значение с учетом нового значения и существующего среднего значения.
     """
     if isinstance(new_vals, list):
         return (avg * N + sum(new_vals)) / (N + len(new_vals))
@@ -32,31 +23,28 @@ def calculate_new_common_stats(old_games, old_wins, old_draws, old_losses,
                                player_is_winner, player_score, opponent_score):
     print("calculate_new_common_stats")
     print(player_is_winner)
-    """Calculate new common stats for a player.
+    """Рассчитать новую общую статистику для игрока.
 
-    This can be done in the context of all games or a particular
-    matchup.
+    Это можно сделать в контексте всех игр или конкретной
+    совпадают.
 
     Args:
-        old_games: The number of games previously played by the player.
-        old_wins: The number of games won previously by the player.
-        old_draws: The number of games draw previously by the player.
-        old_losses: The number of games lost previously by the player.
-        old_average_goals_per_game: The previous average goals per game
-            the player scored.
-        old_average_goals_against_per_game: The previous average goals
-            per game the opponent(s) scored.
-        player_is_winner: A boolean indicating whether the player won
-            the game.
-        player_score: The number of goals the player scored for the game
-            under consideration.
-        opponent_score: The number of goals the opponent scored for the
-            game under consideration.
+        old_games: Количество игр, ранее сыгранных игроком.
+        old_wins: Количество игр, выигранных игроком ранее.
+        old_draws: Количество игр, разыгранных игроком ранее.
+        old_losses: Количество игр, проигранных игроком ранее.
+        old_average_goals_per_game: Предыдущее среднее количество голов за игру
+            игрок забил.
+        old_average_goals_against_per_game: Предыдущие средние цели
+            за игру соперник(и) забили.
+        player_is_winner: Буллево значение, указывающее, выиграл ли игрок
+            игра.
+        player_score: Количество голов, забитых игроком в рассматраиваемой игре.
+        opponent_score: Количество голов, забитых соперником в рассматриваемой игре.
 
     Returns:
-        A dictionary containing the new number of games, wins, draws, losses,
-        average goals per game, average goals against per game, and win
-        rate.
+        Словарь, содержащий новое количество игр, побед, ничьих, поражений, 
+        среднее количество голов за игру, среднее количество голов за игру и процент побед..
     """
     new_stats = {}
     new_games = old_games + 1
@@ -72,8 +60,6 @@ def calculate_new_common_stats(old_games, old_wins, old_draws, old_losses,
     )
 
     new_win_rate = new_wins / new_games
-    # new_draw_rate = new_draws / new_games
-    # new_lose_rate = new_losses / new_games
     print("new stats")
     new_stats['games'] = new_games
     new_stats['wins'] = new_wins
@@ -82,21 +68,12 @@ def calculate_new_common_stats(old_games, old_wins, old_draws, old_losses,
     new_stats['average_goals_per_game'] = new_average_goals_per_game
     new_stats['average_goals_against_per_game'] = new_average_goals_against_per_game
     new_stats['win_rate'] = new_win_rate
-    # new_stats['draw_rate'] = new_draw_rate
-    # new_stats['lose_rate'] = new_lose_rate
 
     return new_stats
 
 
 def create_player_stats_node(player, game, previous_node=None):
     print("create_player_stats_node")
-    """Create a stats node for a player.
-
-    Args:
-        player: An instance of the Player model corresponding to the player.
-        game: An instance of the Match model corresponding to the game to adjust stats from.
-        previous_node: An optional instance of the PlayerStatsNode model corresponding to the player's last stats node.
-    """
     player_stats_node = models.PlayerStatsNode()
     player_stats_node.player = player
     player_stats_node.game = game
@@ -116,7 +93,7 @@ def create_player_stats_node(player, game, previous_node=None):
         player_stats_node.average_goals_per_game = previous_node.average_goals_per_game
         player_stats_node.average_goals_against_per_game = previous_node.average_goals_against_per_game
 
-    # Accumulate stats from each match of the player
+    # Накапливайте статистику с каждого матча игрока
     wins = player_stats_node.wins
     draws = player_stats_node.draws
     losses = player_stats_node.losses
@@ -140,7 +117,7 @@ def create_player_stats_node(player, game, previous_node=None):
             total_goals_scored += player1_goals
             total_goals_conceded += player2_goals
 
-    # Update stats based on the accumulated values
+    # Обновить статистику на основе накопленных значений
     player_stats_node.wins = wins
     player_stats_node.draws = draws
     player_stats_node.losses = losses
@@ -149,10 +126,8 @@ def create_player_stats_node(player, game, previous_node=None):
         player_stats_node.average_goals_per_game = total_goals_scored / player_stats_node.games
         player_stats_node.average_goals_against_per_game = total_goals_conceded / player_stats_node.games
 
-    # Calculate and set the win rate, draw rate, and lose rate
+    # Рассчитайте и установите процент побед
     player_stats_node.win_rate = wins / player_stats_node.games if player_stats_node.games > 0 else 0.0
-    # player_stats_node.draw_rate = draws / player_stats_node.games if player_stats_node.games > 0 else 0.0
-    # player_stats_node.lose_rate = losses / player_stats_node.games if player_stats_node.games > 0 else 0.0
 
     player_stats_node.save()
 
@@ -160,21 +135,7 @@ def create_player_stats_node(player, game, previous_node=None):
 def create_matchup_stats_node(player1, player2, game, previous_node=None):
     print("create_matchup_stats_node")
 
-    """Create a stats node for a player.
-
-    Args:
-        player1: An instance of the Player model corresponding to the
-            player whose perspective to take.
-        player2: An instance of the Player model corresponding to the
-            opponent player.
-        game: An instance of the Match model corresponding to the game to
-            adjust stats from.
-        previous_node: An optional instance of the MatchupStatsNode
-            model corresponding to the matchup's last stats node
-            (between player 1 and 2—in that order—as provided).
-    """
-
-    # Grab previous stats (if they exist)
+    # Получите предыдущую статистику (если она существует)
     if previous_node is not None:
         games = previous_node.games
         wins = previous_node.wins
