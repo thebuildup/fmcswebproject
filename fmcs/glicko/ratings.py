@@ -111,7 +111,7 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             player_games = games.filter(Q(player1=player) | Q(player2=player))
             num_player_games = player_games.count()
             new_player_rating_deviation = (700 - 2 * new_player_rating_deviation) * (
-                    (math.atan(0.06 * period_games / num_player_games)) / math.pi) + new_player_rating_deviation
+                    (math.atan(0.02 * period_games / num_player_games)) / math.pi) + new_player_rating_deviation
 
         # Определите, помечен ли игрок как активный
         new_player_is_active = bool(
