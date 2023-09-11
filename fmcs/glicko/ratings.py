@@ -17,6 +17,8 @@ def calculate_new_rating_period(start_datetime, end_datetime):
     games = models.Match.objects.filter(
         date_played__gte=start_datetime, date_played__lte=end_datetime
     )
+    # Получаем все игры в этот рейтинговый период
+    period_games = games.count()
     # num_matches = models.Match.num_matches
 
     # Отметить все вышеперечисленные игры как принадлежащие этому рейтинговому периоду.
@@ -106,6 +108,10 @@ def calculate_new_rating_period(start_datetime, end_datetime):
                                            + new_player_rating_deviation)
         else:
             new_player_inactivity = 0
+            player_games = games.filter(Q(player1=player) | Q(player2=player))
+            num_player_games = player_games.count()
+            new_player_rating_deviation = (700 - 2 * new_player_rating_deviation) * (
+                    (math.atan(0.06 * period_games / num_player_games)) / math.pi) + new_player_rating_deviation
 
         # Определите, помечен ли игрок как активный
         new_player_is_active = bool(
