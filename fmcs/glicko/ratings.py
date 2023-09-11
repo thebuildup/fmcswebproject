@@ -101,9 +101,9 @@ def calculate_new_rating_period(start_datetime, end_datetime):
         # Рассчитать новое бездействие
         if opponent_ratings is None:
             new_player_inactivity = player_inactivity + 1
-            updated_player_rating_deviation = ((700 - 2 * new_player_rating_deviation) *
-                                               ((math.atan(new_player_inactivity * 30 / 90)) / math.pi)
-                                               + new_player_rating_deviation)
+            new_player_rating_deviation = ((700 - 2 * new_player_rating_deviation) *
+                                           ((math.atan(new_player_inactivity * 30 / 90)) / math.pi)
+                                           + new_player_rating_deviation)
         else:
             new_player_inactivity = 0
 
@@ -117,7 +117,7 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             "player_ranking": None,
             "player_ranking_delta": None,
             "player_rating": new_player_rating,
-            "player_rating_deviation": updated_player_rating_deviation,
+            "player_rating_deviation": new_player_rating_deviation,
             "player_rating_volatility": new_player_rating_volatility,
             "player_inactivity": new_player_inactivity,
             "player_is_active": new_player_is_active,
