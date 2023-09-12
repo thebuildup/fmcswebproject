@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "django_countries",
     "ranking",
     "match",
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

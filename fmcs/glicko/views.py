@@ -1,5 +1,6 @@
 from django.shortcuts import render
-
+from rest_framework import generics
+from . import serializers
 from .models import Player, PlayerRatingNode
 
 
@@ -44,3 +45,8 @@ def search_players(request):
     }
 
     return render(request, 'rating/search_results.html', context)
+
+
+class PlayerList(generics.ListAPIView):
+    queryset = Player.odjects.all()
+    serializer_class = serializers.PlayerSerializer
