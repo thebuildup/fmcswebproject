@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     "leaderboard",
     "users",
     "engine",
-    "glicko",
+    "glicko.apps.GlickoConfig",
     "team",
     "django_countries",
     "ranking",
@@ -140,13 +140,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 # STATIC_URL = "/static/"
-STATIC_ROOT = "/home/fmchamps/public_html/fmcs/static"
-STATIC_URL = "/fmcs/static/"
+STATIC_ROOT = "C:/Users/raman/PycharmProjects/fmcswebproject/fmcs/public/static"
+STATIC_URL = "/static/"
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
-
-MEDIA_ROOT = "/home/fmchamps/public_html/fmcs/media"
-MEDIA_URL = "/fmcs/media/"
+#
+# MEDIA_ROOT = "/home/fmchamps/public_html/fmcs/media"
+# MEDIA_URL = "/fmcs/media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

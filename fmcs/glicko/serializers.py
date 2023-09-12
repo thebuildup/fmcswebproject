@@ -1,6 +1,7 @@
 """Contains serializers for models."""
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from rest_framework import serializers
@@ -11,7 +12,6 @@ from .models import (
     PlayerRatingNode,
     PlayerStatsNode,
     RatingPeriod,
-    User,
 )
 
 
@@ -155,11 +155,35 @@ class MatchupStatsNodeSerializer(serializers.ModelSerializer):
         )
 
 
+class PlayerNameSerializer(serializers.ModelSerializer):
+    """A serializer for a player."""
+
+    user = serializers.SlugRelatedField(
+        queryset=User.objects.all(),
+        slug_field="username",
+        required=False,
+        allow_null=True,
+    )
+
+    class Meta:
+        model = Player
+
+        fields = (
+            "id",
+            "name",
+            "user",
+        )
+        read_only_fields = (
+            "id",
+        )
+
+
 class PlayerRatingNodeSerializer(serializers.ModelSerializer):
     """A serializer for a player rating node.
 
     This is meant to be read-only.
     """
+    player = PlayerNameSerializer()
 
     class Meta:
         model = PlayerRatingNode

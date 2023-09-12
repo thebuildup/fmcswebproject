@@ -5,7 +5,8 @@ from . import views
 urlpatterns = [
     path('', views.ranking_view, name='fmcs'),
     path('search/', views.search_players, name='search_players'),
-    # path('players/', views.PlayerViewSet.as_view())
+    path('players/', views.PlayerViewSet.as_view()),
+    path('rating/', views.PlayerRatingNoodeViewSet.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
