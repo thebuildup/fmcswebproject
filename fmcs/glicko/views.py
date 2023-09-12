@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics
 from . import serializers
 from .models import Player, PlayerRatingNode
+from rest_framework import viewsets
 
 
 # Create your views here.
@@ -47,6 +48,9 @@ def search_players(request):
     return render(request, 'rating/search_results.html', context)
 
 
-class PlayerList(generics.ListAPIView):
-    queryset = Player.odjects.all()
+class PlayerViewSet(viewsets.ModelViewSet):
+    """A viewset for players."""
+
+    queryset = Player.objects.all()
+    http_method_names = ["get", "post", "patch"]
     serializer_class = serializers.PlayerSerializer
