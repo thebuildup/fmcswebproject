@@ -67,6 +67,7 @@ class PlayerRatingNoodeViewSet(generics.ListAPIView):
     """A viewset for players."""
     last_rating_period = PlayerRatingNode.get_last_rating_period()
     # queryset = PlayerRatingNode.objects.all()
-    queryset = last_rating_period.objects.all()
+    queryset = PlayerRatingNode.objects.filter(rating_period=last_rating_period,
+                                               is_active=True).order_by('ranking')
     http_method_names = ["get"]
     serializer_class = serializers.PlayerRatingNodeSerializer
