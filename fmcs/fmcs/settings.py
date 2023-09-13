@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     "leaderboard",
     "users",
     "engine",
-    "glicko",
+    "glicko.apps.GlickoConfig",
     "team",
     "django_countries",
     "ranking",

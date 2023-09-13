@@ -155,11 +155,35 @@ class MatchupStatsNodeSerializer(serializers.ModelSerializer):
         )
 
 
+class PlayerNameSerializer(serializers.ModelSerializer):
+    """A serializer for a player."""
+
+    user = serializers.SlugRelatedField(
+        queryset=User.objects.all(),
+        slug_field="username",
+        required=False,
+        allow_null=True,
+    )
+
+    class Meta:
+        model = Player
+
+        fields = (
+            "id",
+            "name",
+            "user",
+        )
+        read_only_fields = (
+            "id",
+        )
+
+
 class PlayerRatingNodeSerializer(serializers.ModelSerializer):
     """A serializer for a player rating node.
 
     This is meant to be read-only.
     """
+    player = PlayerNameSerializer()
 
     class Meta:
         model = PlayerRatingNode

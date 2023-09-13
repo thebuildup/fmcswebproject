@@ -47,9 +47,25 @@ def search_players(request):
 
     return render(request, 'rating/search_results.html', context)
 
+
 # class PlayerViewSet(viewsets.ModelViewSet):
 #     """A viewset for players."""
 #
 #     queryset = Player.objects.all()
 #     http_method_names = ["get", "post", "patch"]
 #     serializer_class = serializers.PlayerSerializer
+
+class PlayerViewSet(generics.ListAPIView):
+    """A viewset for players."""
+
+    queryset = Player.objects.all()
+    http_method_names = ["get"]
+    serializer_class = serializers.PlayerSerializer
+
+
+class PlayerRatingNoodeViewSet(generics.ListAPIView):
+    """A viewset for players."""
+
+    queryset = PlayerRatingNode.objects.all()
+    http_method_names = ["get"]
+    serializer_class = serializers.PlayerRatingNodeSerializer
