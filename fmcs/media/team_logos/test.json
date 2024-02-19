@@ -1,0 +1,92 @@
+{
+  "game": "2024-01_FMCS Pro Ladder",
+  "time": "2024-01-08 19:07:06",
+  "teams": [
+    [
+      {
+        "name": "TheBuildUpPlay",
+        "id": 200653540211949568,
+        "mmr": 1238.5891533204558,
+        "role": null,
+        "team_num": 0,
+        "top_role_index": 0,
+        "ign": null,
+        "timestamp": "2024-01-08T19:04:02.010814",
+        "pulled_from": null,
+        "team_name": null,
+        "party_leader": null,
+        "captain": null,
+        "picked": null,
+        "mmr_change": 36.08733352943176,
+        "priority": 0,
+        "guild_id": 981079170257944616,
+        "mmr_multiplier": 1,
+        "points_multiplier": 1
+      }
+    ],
+    [
+      {
+        "name": "nebrosko",
+        "id": 704767130851082350,
+        "mmr": 799.2355707467299,
+        "role": null,
+        "team_num": 1,
+        "top_role_index": 0,
+        "ign": null,
+        "timestamp": "2024-01-08T19:06:57.340295",
+        "pulled_from": null,
+        "team_name": null,
+        "party_leader": null,
+        "captain": null,
+        "picked": null,
+        "mmr_change": -34.69935916291515,
+        "priority": 0,
+        "guild_id": 981079170257944616,
+        "mmr_multiplier": 1,
+        "points_multiplier": 1
+      }
+    ]
+  ],
+  "team_names": [
+    "TheBuildUpPlay",
+    "nebrosko"
+  ],
+  "channel": 1193994271443910806,
+  "queue_channel": 1170291145096577074,
+  "rematch_votes": [],
+  "bets": {
+    "message_id": null,
+    "channel_id": null,
+    "message": null,
+    "participants": {},
+    "timeout": 1704741006.428629
+  },
+  "mmr_change": [
+    50,
+    false,
+    1600,
+    50,
+    null,
+    0,
+    true,
+    true,
+    0
+  ],
+  "mmr_changes": true,
+  "mvp": {
+    "votes": {},
+    "selected": null,
+    "reward": 5,
+    "required_votes": 2,
+    "visible": true
+  },
+  "winner_message": 1194001637774196879,
+  "winner_channel": 1170293179640193104,
+  "guild_id": "981079170257944616",
+  "game_num": 365,
+  "delegated": true,
+  "mod_channel_id": 1170291309588795442,
+  "mod_channel_msg_id": 1193994309251366963,
+  "matchdata": [],
+  "winner": 0
+}

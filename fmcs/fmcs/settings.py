@@ -26,8 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 # ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['fmchamps.vh104.hosterby.com', 'http://127.0.0.1:8000', 'localhost', '127.0.0.1', '0.0.0.0', '']
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "ranking",
     "match",
     'rest_framework',
+    'ladder',
 ]
 
 MIDDLEWARE = [
@@ -140,13 +141,28 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 # STATIC_URL = "/static/"
-STATIC_ROOT = "/home/fmchamps/public_html/fmcs/static"
-STATIC_URL = "/fmcs/static/"
+# STATIC_ROOT = "/home/fmchamps/public_html/fmcs/static"
+# STATIC_ROOT = "/fmcs/public_html/fmcs/static"
+# STATIC_URL = "/static/"
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
-MEDIA_ROOT = "/home/fmchamps/public_html/fmcs/media"
-MEDIA_URL = "/fmcs/media/"
+STATIC_URL = '/static/'
+# STATIC_ROOT = '/static/' # Изначально пустой каталог, куда Django соберёт всё при выполнении manage.py collectstatic
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    # Каталог, куда вам нужно складывать статику проекта, не относящуюся к конкретному приложению
+]
+
+# MEDIA_ROOT = "/home/fmchamps/public_html/fmcs/media"
+# MEDIA_ROOT = "/fmcs/public_html/fmcs/media"
+# MEDIA_URL = "/media/"
+
+# MEDIA_ROOT = '/media/'
+# MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

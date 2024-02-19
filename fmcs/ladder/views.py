@@ -1,0 +1,73 @@
+from django.shortcuts import render
+from rest_framework import generics
+from . import serializers
+from .models import Players, PlayerRatingNode
+from rest_framework import viewsets
+
+
+# Create your views here.
+
+
+def ranking_view(request):
+    last_rating_period = PlayerRatingNode.get_last_rating_period()
+
+    if last_rating_period:
+        players = Players.objects.filter(playerratingnode__rating_period=last_rating_period,
+                                         playerratingnode__is_active=True).order_by('playerratingnode__ranking')
+        top_players = players[:3]
+    else:
+        players = Players.objects.none()
+        top_players = []
+
+    context = {
+        'top_players': top_players,
+        'players': players
+    }
+
+    return render(request, 'rating/team_ranking.html', context)
+
+
+def search_players(request):
+    last_rating_period = PlayerRatingNode.get_last_rating_period()
+
+    if last_rating_period:
+        keyword = request.GET.get('keyword', '')
+        if keyword:
+            players = Players.objects.filter(playerratingnode__rating_period=last_rating_period,
+                                             playerratingnode__is_active=True, name__icontains=keyword)
+        else:
+            players = Players.objects.filter(playerratingnode__rating_period=last_rating_period,
+                                             playerratingnode__is_active=True).order_by('playerratingnode__ranking')
+    else:
+        players = Players.objects.none()
+
+    context = {
+        'all_players': players,
+    }
+
+    return render(request, 'rating/search_results.html', context)
+
+
+# class PlayerViewSet(viewsets.ModelViewSet):
+#     """A viewset for players."""
+#
+#     queryset = Player.objects.all()
+#     http_method_names = ["get", "post", "patch"]
+#     serializer_class = serializers.PlayerSerializer
+
+class PlayerViewSet(generics.ListAPIView):
+    """A viewset for players."""
+
+    queryset = Players.objects.all()
+    http_method_names = ["get"]
+    serializer_class = serializers.PlayerSerializer
+
+
+class PlayerRatingNoodeViewSet(generics.ListAPIView):
+    """A viewset for players."""
+    last_rating_period = PlayerRatingNode.get_last_rating_period()
+    # queryset = PlayerRatingNode.objects.all()
+    queryset = PlayerRatingNode.objects.filter(rating_period=last_rating_period,
+                                               is_active=True).order_by('ranking')
+    http_method_names = ["get"]
+    serializer_class = serializers.PlayerRatingNodeSerializer
